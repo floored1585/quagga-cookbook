@@ -23,9 +23,9 @@ actions :add, :remove
 default_action :add
 
 attribute :name, kind_of: String, name_attribute: true
-attribute :networks, kind_of: Array, default: []
 attribute :protocols, kind_of: Array, default: []
 attribute :router_id, kind_of: String, default: nil
+attribute :areas, kind_of: Hash, default: {}
 attribute :interfaces, kind_of: Hash, default: {}
 attribute :passive_ints, kind_of: Array, default: []
 attribute :ospf_options, kind_of: Array, default: []

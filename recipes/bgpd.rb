@@ -1,9 +1,11 @@
 #
-# Author:: Bao Nguyen <ngqbao@gmail.com>
+# Original Author:: Bao Nguyen <ngqbao@gmail.com>
+# Current Maintainer:: Ian Clark <ian@f85.net>
 # Cookbook Name:: quagga
 # Recipe:: bgpd
 #
 # Copyright 2014, Bao Nguyen
+# Copyright 2015, Ian Clark
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,3 +23,13 @@
 include_recipe 'quagga'
 
 node.set[:quagga][:daemons][:bgpd] = true
+
+unless node.quagga.bgp['local_asn'].empty?
+  node.quagga.bgp.local_asn.each do |asn, data|
+    quagga_bgp asn do
+      peers data['peers'] || {}
+      networks data['networks'] || []
+      router_id data['router_id'] || node.quagga['router_id']
+    end
+  end
+end

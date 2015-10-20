@@ -7,10 +7,10 @@ enable password <%= node.quagga.enabled_password %>
 log file /var/log/quagga/ospfd.log
 !
 <% end -%>
-<% @interfaces.each do |port,options|-%>
+<% @interfaces.each do |port,opts|-%>
 interface <%= port %>
-  <% options.each do |option|-%>
- <%= option %>
+  <% opts.each do |opt|-%>
+ <%= opt %>
   <% end -%>
 !
 <% end -%>
@@ -21,13 +21,15 @@ router ospf
 <% @protocols.each do |protocol| -%>
  redistribute <%= protocol %>
 <% end -%>
-<% @networks.each do |network| -%>
- network <%= network  %> area <%= @area %>
+<% @areas.each do |area, opts| -%>
+  <% opts['networks'].each do |network| -%>
+ network <%= network  %> area <%= area %>
+  <% end -%>
 <% end -%>
 <% if @passive_interface -%>
  passive-interface default
-  <% @interfaces.each do |port,options|-%>
- no passive-interface <%= port %>
+  <% @interfaces.each do |int,opts|-%>
+ no passive-interface <%= int %>
   <% end -%>
 <% end -%>
 <% @passive_ints.each do |int| -%>

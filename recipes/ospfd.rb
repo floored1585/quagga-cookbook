@@ -1,9 +1,11 @@
 #
-# Author:: Bao Nguyen <ngqbao@gmail.com>
+# Original Author:: Bao Nguyen <ngqbao@gmail.com>
+# Current Maintainer:: Ian Clark <ian@f85.net>
 # Cookbook Name:: quagga
 # Recipe:: ospfd
 #
 # Copyright 2014, Bao Nguyen
+# Copyright 2015, Ian Clark
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -22,11 +24,12 @@ include_recipe 'quagga'
 
 node.set[:quagga][:daemons][:ospfd] = true
 
-unless node.quagga.ospf.area.empty?
-  quagga_ospf "#{node.quagga.ospf.area}" do
+ospf = node.quagga.ospf
+unless ospf.areas.empty?
+  quagga_ospf "ospf" do
     ospf = node.quagga['ospf']
-    router_id ospf['router_id']
-    networks ospf['networks']
+    areas ospf.areas
+    router_id ospf['router_id'] || node.quagga['router_id']
     protocols ospf['protocols']
     interfaces ospf['interfaces']
     passive_ints ospf['passive_ints']

@@ -31,8 +31,7 @@ action :add do
     group node.quagga.group
     mode '0644'
     variables(
-      area: new_resource.name,
-      networks: new_resource.networks,
+      areas: new_resource.areas,
       router_id: new_resource.router_id,
       protocols: new_resource.protocols,
       interfaces: new_resource.interfaces,
