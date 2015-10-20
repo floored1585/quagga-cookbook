@@ -20,56 +20,21 @@ Linux
 Attributes
 ==========
 
-See below
+__TODO__
 
 Usage
 =====
 
-## BGP example
-
-```ruby
-include_recipe "quagga"
-
-node.set[:quagga][:daemons][:bgpd] = true
-node.set[:quagga][:loopback]="10.51.239.1"
-node.set[:quagga][:bgp][:local_asn]="65024"
-node.set[:quagga][:bgp][:ebgp_peers]={
-  "65022" => {
-    "ip" => ["10.101.8.69","10.101.16.69"]
-  }
-}
-node.set[:quagga][:bgp][:networks]=["10.51.0.0/16"]
-
-quagga_bgp "65024" do
-  ebgp_peers node.quagga.bgp.ebgp_peers
-  networks node.quagga.bgp.networks
-  loopback node.quagga.loopback
-end
-```
-
-## OSPF example
-
-```ruby
-include_recipe "quagga"
-
-node.set[:quagga][:ospf][:area] = "0.0.0.0"
-node.set[:quagga][:loopback]="127.0.0.1"
-node.set[:quagga][:networks]=["10.0.0.0/16"]
-node.set[:quagga][:ptp_interfaces]=["swp21"]
-node.set[:quagga][:passive_interfaces]=["eth0"]
-
-quagga_ospf "#{node.quagga.ospf.area}" do
-  loopback node.quagga.loopback
-  networks node.quagga.networks
-end
-```
+Simply set the desired attributes (see Attributes section above) then call the proper recipe (quagga::bgpd, quagga::ospfd).  There is also a provider for zebra, but no recipe as of yet.
 
 Author and License
 ===================
 
-__Author__ Bao Nguyen <opensource-cookbooks@ooyala.com>
+__Original Author__ Bao Nguyen <opensource-cookbooks@ooyala.com>
+__Current Author (0.2.0 onwards)__ Ian Clark <ian@f85.net>
 
 Copyright 2014, Ooyala Inc.
+Copyright 2015, Ian Clark
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

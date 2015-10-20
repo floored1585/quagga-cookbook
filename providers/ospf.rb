@@ -19,6 +19,8 @@
 #
 
 action :add do
+  integrated_config = node.quagga.integrated_vtysh_config
+
   ospfd_path = "#{node.quagga.dir}/ospfd.conf"
   Chef::Log.info "Adding #{new_resource.name}: ospf to #{ospfd_path}"
 
@@ -31,17 +33,17 @@ action :add do
     variables(
       area: new_resource.name,
       networks: new_resource.networks,
-      loopback: new_resource.loopback,
+      router_id: new_resource.router_id,
       protocols: new_resource.protocols,
       interfaces: new_resource.interfaces,
+      passive_ints: new_resource.passive_ints,
+      passive_default: new_resource.passive_default,
       ospf_options: new_resource.ospf_options
     )
-    notifies :reload, 'service[quagga]', :delayed
-  end
-
-  if new_resource.ifconfig
-    ifconfig "#{new_resource.loopback}/32" do
-      device 'lo:1'
+    if integrated_config
+      notifies :create, 'template[integrated_config]', :delayed
+    else
+      notifies :restart, 'service[quagga]', :delayed
     end
   end
 end

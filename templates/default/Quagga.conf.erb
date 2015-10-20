@@ -1,0 +1,4 @@
+<%= File.read("#{node.quagga.dir}/zebra.conf") %>
+<%= File.read("#{node.quagga.dir}/bgpd.conf") if node.quagga.daemons.bgpd %>
+<%= File.read("#{node.quagga.dir}/ospfd.conf") if node.quagga.daemons.ospfd %>
+<%= File.read("#{node.quagga.dir}/ospf6d.conf") if node.quagga.daemons.ospf6d %>

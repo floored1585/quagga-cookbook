@@ -1,11 +1,16 @@
+!!! BGP CONFIGURATION
+!
+<% unless node.quagga.integrated_vtysh_config -%>
 hostname bgpd
 password <%= node.quagga.password %>
 enable password <%= node.quagga.enabled_password %>
 log file /var/log/quagga/bgpd.log
-log timestamp precision 6
 !
+<% end -%>
 router bgp <%= @local_asn %>
- bgp router-id <%= @loopback %>
+<% if @router_id -%>
+ bgp router-id <%= @router_id %>
+<% end -%>
  bgp log-neighbor-changes
 <% @networks.each do |i| -%>
  network <%= i %>

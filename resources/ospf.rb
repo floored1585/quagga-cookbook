@@ -25,7 +25,8 @@ default_action :add
 attribute :name, kind_of: String, name_attribute: true
 attribute :networks, kind_of: Array, default: []
 attribute :protocols, kind_of: Array, default: []
-attribute :loopback, kind_of: String, default: '127.0.0.1'
+attribute :router_id, kind_of: String, default: nil
 attribute :interfaces, kind_of: Hash, default: {}
+attribute :passive_ints, kind_of: Array, default: []
 attribute :ospf_options, kind_of: Array, default: []
-attribute :ifconfig, :kind_of => [ TrueClass, FalseClass ], :default => true
+attribute :passive_default, :kind_of => [ TrueClass, FalseClass ], :default => true

@@ -1,8 +1,12 @@
+!!! ZEBRA CONFIGURATION
+!
+<% unless node.quagga.integrated_vtysh_config -%>
 hostname zebra
 password <%= node.quagga.password %>
 enable password <%= node.quagga.enabled_password %>
 log file /var/log/quagga/zebra.log
 !
+<% end -%>
 <% @interfaces.each do |port,options|-%>
 interface <%= port %>
 <% options.each do |option|-%>

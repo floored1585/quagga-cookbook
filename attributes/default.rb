@@ -16,6 +16,4 @@ default[:quagga][:daemons][:babeld] = false
 default[:quagga][:password] = 'quagga'
 default[:quagga][:enabled_password] = 'quagga'
 
-default[:quagga]['integrated-vtysh-config'] = false
-
-default[:quagga][:loopback] = '127.0.0.1'
+default[:quagga]['integrated_vtysh_config'] = false

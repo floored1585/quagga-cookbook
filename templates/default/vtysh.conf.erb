@@ -1,5 +1,11 @@
-<% if node[:quagga]["integrated-vtysh-config"] %>
+!!! VTYSH CONFIGURATION
+!
+<% if node[:quagga]["integrated_vtysh_config"] %>
 service integrated-vtysh-config
 <% end %>
 hostname <%= node.hostname %>
 username root nopassword
+password <%= node.quagga.password %>
+enable password <%= node.quagga.enabled_password %>
+log file /var/log/quagga/vtysh.log
+log timestamp precision 6

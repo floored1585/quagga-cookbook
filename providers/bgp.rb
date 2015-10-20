@@ -32,14 +32,9 @@ action :add do
       local_asn: new_resource.name,
       ebgp_peers: new_resource.ebgp_peers,
       networks: new_resource.networks,
-      loopback: new_resource.loopback
+      router_id: new_resource.router_id
     )
     notifies :reload, 'service[quagga]', :delayed
-  end
-
-  # configure loopback
-  ifconfig "#{new_resource.loopback}/32" do
-    device 'lo:1'
   end
 end
 

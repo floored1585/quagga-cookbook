@@ -50,16 +50,29 @@ if node.platform == 'debian'
   end
 end
 
+integrated_config = node.quagga.integrated_vtysh_config
+
 template "#{node.quagga.dir}/vtysh.conf" do
   source 'vtysh.conf.erb'
   owner node.quagga.user
   group node.quagga.group
   mode '0644'
   # restart needed?
-  notifies :restart, 'service[quagga]', :delayed
+  notifies :restart, 'service[quagga]', :delayed unless integrated_config
 end
 
 service 'quagga' do
   supports status: true, restart: true, reload: true
-  action [:enable, :restart]
+  action [:nothing]
+end
+
+# Combine the templates into a master file to be reloaded
+template "integrated_config" do
+  path "#{node.quagga.dir}/Quagga.conf"
+  source 'Quagga.conf.erb'
+  owner node.quagga.user
+  group node.quagga.group
+  mode '0644'
+  notifies :reload, 'service[quagga]', :delayed
+  action :nothing
 end

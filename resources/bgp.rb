@@ -26,4 +26,4 @@ default_action :add
 attribute :name, kind_of: String, name_attribute: true
 attribute :networks, kind_of: Array, default: []
 attribute :ebgp_peers, kind_of: Hash, default: {}
-attribute :loopback, kind_of: String, default: '127.0.0.1'
+attribute :router_id, kind_of: String, default: nil

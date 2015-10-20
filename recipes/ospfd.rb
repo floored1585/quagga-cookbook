@@ -21,3 +21,15 @@
 include_recipe 'quagga'
 
 node.set[:quagga][:daemons][:ospfd] = true
+
+unless node.quagga.ospf.area.empty?
+  quagga_ospf "#{node.quagga.ospf.area}" do
+    ospf = node.quagga['ospf']
+    router_id ospf['router_id']
+    networks ospf['networks']
+    protocols ospf['protocols']
+    interfaces ospf['interfaces']
+    passive_ints ospf['passive_ints']
+    passive_default ospf['passive_default']
+  end
+end

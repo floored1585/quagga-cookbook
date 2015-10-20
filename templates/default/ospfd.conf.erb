@@ -1,28 +1,37 @@
+!!! OSPF CONFIGURATION
+!
+<% unless node.quagga.integrated_vtysh_config -%>
 hostname ospfd
 password <%= node.quagga.password %>
 enable password <%= node.quagga.enabled_password %>
 log file /var/log/quagga/ospfd.log
-log timestamp precision 6
 !
+<% end -%>
 <% @interfaces.each do |port,options|-%>
 interface <%= port %>
-<% options.each do |option|-%>
+  <% options.each do |option|-%>
  <%= option %>
-<% end -%>
+  <% end -%>
 !
 <% end -%>
-!
 router ospf
- ospf router-id <%= @loopback %>
+<% if @router_id -%>
+ ospf router-id <%= @router_id %>
+<% end -%>
 <% @protocols.each do |protocol| -%>
-  redistribute <%= protocol %>
+ redistribute <%= protocol %>
 <% end -%>
 <% @networks.each do |network| -%>
-  network <%= network  %> area <%= @area %>
+ network <%= network  %> area <%= @area %>
 <% end -%>
-  passive-interface default
-<% @interfaces.each do |port,options|-%>
-  no passive-interface <%= port %>
+<% if @passive_interface -%>
+ passive-interface default
+  <% @interfaces.each do |port,options|-%>
+ no passive-interface <%= port %>
+  <% end -%>
+<% end -%>
+<% @passive_ints.each do |int| -%>
+ passive-interface <%= int %>
 <% end -%>
 <% @ospf_options .each do |option| -%>
   <%= option %>
