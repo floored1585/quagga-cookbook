@@ -30,7 +30,7 @@ Simply set the desired attributes (see Attributes section above) then call the p
 Author and License
 ===================
 
-__Original Author__ Bao Nguyen <opensource-cookbooks@ooyala.com>
+__Original Author__ Bao Nguyen <opensource-cookbooks@ooyala.com>  
 __Current Author (0.2.0 onwards)__ Ian Clark <ian@f85.net>
 
 Copyright 2014, Ooyala Inc.
