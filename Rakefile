@@ -1,73 +1,29 @@
-#!/usr/bin/env rake
-require 'rake'
-require 'rspec/core/rake_task'
+require 'rubocop/rake_task'
 
-task :default => 'test:quick'
-
-namespace :test do
-
-  RSpec::Core::RakeTask.new(:spec) do |t|
-    t.pattern = Dir.glob('test/spec/**/*_spec.rb')
-    t.rspec_opts = "--color -f d"
-  end
-
-  begin
-    require 'kitchen/rake_tasks'
-    Kitchen::RakeTasks.new
-  rescue
-    puts '>>>>> Kitchen gem not loaded, omitting tasks' unless ENV['CI']
-  end
-
-  begin
-    require 'foodcritic/rake_task'
-    require 'foodcritic'
-    task :default => [:foodcritic]
-    FoodCritic::Rake::LintTask.new do |t|
-      t.options = {
-        fail_tags: %w/correctness services libraries deprecated/,
-        exclude_paths: ['test/**/*', 'spec/**/*', 'features/**/*', 'example/**/*']
-       }
-    end
-  rescue LoadError
-    warn "Foodcritic Is missing ZOMG"
-  end
-
-  begin
-    require 'rubocop/rake_task'
-    RuboCop::RakeTask.new do |task|
-      task.fail_on_error = true
-      task.options = %w{-D -a}
-    end
-  rescue LoadError
-    warn "Rubocop gem not installed, now the code will look like crap!"
-  end
-
-
-  desc 'Run all of the quick tests.'
-  task :quick do
-    Rake::Task['test:rubocop'].invoke
-    Rake::Task['test:foodcritic'].invoke
-    Rake::Task['test:spec'].invoke
-  end
-
-
-  desc 'Run _all_ the tests. Go get a coffee.'
-  task :complete do
-    Rake::Task['test:quick'].invoke
-    Rake::Task['test:kitchen:all'].invoke
-  end
-
-  desc 'Run CI tests'
-  task :ci do
-    Rake::Task['test:complete'].invoke
-  end
+RuboCop::RakeTask.new(:rubocop) do |task|
+  task.patterns = ['providers','resources','test/integration/default/serverspec']
+  task.options = ['--display-cop-names']
 end
 
+begin
+  require 'berkshelf'
+  require 'kitchen/rake_tasks'
 
-namespace :release do
-  task :update_metadata do
+  Kitchen::RakeTasks.new
+
+  desc "Install Berkshelf cookbooks for testing"
+  task :berks_install do
+    begin
+      berksfile = Berkshelf::Berksfile.from_file("Berksfile")
+      berksfile.install
+    rescue StandardError => e
+      STDERR.puts("Failed to install Chef cookbooks: #{e.message}")
+    end
   end
 
-  task :tag_release do
+  desc "Converge and run tests"
+  task :test => [:berks_install, 'kitchen:all'] do
   end
+rescue LoadError
+  puts "Couldn't load test-kitchen: kitchen tests are not available"
 end

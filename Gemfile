@@ -1,16 +1,14 @@
 source 'https://rubygems.org'
 
-gem 'test-kitchen', '~> 1.2.1'
-gem 'kitchen-vagrant', '= 0.15.0', group: :integration
-gem 'librarian-chef'
-gem 'berkshelf'
-gem 'chef-zero'
+gem 'rake'
 
-group 'develop' do
-  gem 'kitchen-docker-api'
-  gem 'rake'
-  gem 'foodcritic', git: 'https://github.com/mlafeldt/foodcritic.git', branch: 'improve-rake-task'
+group 'lint' do
   gem 'rubocop'
-  gem 'knife-cookbook-doc'
-  gem 'chefspec', '>= 3.2.0'
+end
+
+group 'kitchen' do
+  gem 'berkshelf'
+  gem 'test-kitchen'
+  gem 'kitchen-vagrant'
+  gem 'serverspec'
 end

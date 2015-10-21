@@ -1,23 +1,12 @@
-AllCops:
-  Include:
-    - metadata.rb
-    - Gemfile
-    - attributes/**
-    - recipes/**
-    - libraries/**
-    - providers/**
-    - resources/**
-  Exclude:
-    - example/**
-    - test/**
-    - vendor/**
-
-Encoding:
+Metrics/LineLength:
   Enabled: false
-
-LineLength:
+Metrics/AbcSize:
   Enabled: false
-
-WordArray:
-  MinSize: 3
-
+Metrics/MethodLength:
+  Enabled: false
+Metrics/PerceivedComplexity:
+  Enabled: false
+Style/RedundantBegin:
+  Enabled: false
+Style/RegexpLiteral:
+  Enabled: false
