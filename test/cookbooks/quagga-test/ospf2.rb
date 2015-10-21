@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: quagga-test
-# Recipe:: interfaces
+# Recipe:: ospf
 #
 # Copyright 2015, Ian Clark
 #

@@ -1,18 +1,19 @@
 #
 # Cookbook Name:: quagga-test
-# Recipe:: interfaces
+# Recipe:: ospf
 #
 # Copyright 2015, Ian Clark
 #
 
 node.set[:quagga] = {
+  enable_reload: false,
+  max_instances: 10,
   router_id: '127.0.0.1',
-  integrated_vtysh_config: true,
   ospf: {
-    passive_ints: [ "pas_1", "pas_2" ],
+    router_id: '1.2.3.4',
     areas: {
-      '0.0.0.1' => {
-        networks: [ '10.0.0.0/8', '192.168.0.0/16' ]
+      '4.3.2.1' => {
+        networks: [ '172.16.0.0/12' ]
       }
     }
   }

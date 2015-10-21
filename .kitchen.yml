@@ -14,6 +14,9 @@ platforms:
       vagrantfiles: ['test/provision-chef.rb']
 
 suites:
-  - name: default
+  - name: a
     run_list:
-      - recipe[quagga-test::ospf]
+      - recipe[quagga-test::default_a]
+  - name: b
+    run_list:
+      - recipe[quagga-test::default_b]
