@@ -17,3 +17,5 @@ default[:quagga][:password] = 'quagga'
 default[:quagga][:enabled_password] = 'quagga'
 
 default[:quagga]['integrated_vtysh_config'] = false
+default[:quagga]['enable_reload'] = true
+default[:quagga]['max_instances'] = 5

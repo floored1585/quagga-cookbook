@@ -48,6 +48,13 @@ if node.platform == 'debian'
     group node.quagga.group
     mode '0644'
   end
+
+  template "/etc/default/quagga" do
+    source "quagga.erb"
+    owner 'root'
+    group 'root'
+    mode '0644'
+  end
 end
 
 integrated_config = node.quagga.integrated_vtysh_config
