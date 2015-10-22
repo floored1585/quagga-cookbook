@@ -19,6 +19,9 @@
 #
 
 action :add do
+  integrated_config = node.quagga.integrated_vtysh_config
+  reload = node.quagga.enable_reload
+
   zebra_path = "#{node.quagga.dir}/zebra.conf"
   Chef::Log.info "Adding #{new_resource.name}: interface to #{zebra_path}"
 
@@ -30,9 +33,14 @@ action :add do
     mode '0644'
     variables(
       interfaces: new_resource.interfaces,
-      static_routes: new_resource.static_routes
+      static_routes: new_resource.static_routes,
+      prefix_lists: new_resource.prefix_lists
     )
-    notifies :reload, 'service[quagga]', :delayed
+    if integrated_config && reload
+      notifies :create, 'template[integrated_config]', :delayed
+    else
+      notifies :restart, 'service[quagga]', :delayed
+    end
   end
 end
 

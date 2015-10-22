@@ -1,9 +1,11 @@
 #
-# Author:: Bao Nguyen <ngqbao@gmail.com>
+# Original Author:: Bao Nguyen <ngqbao@gmail.com>
+# Current Maintainer:: Ian Clark <ian@f85.net>
 # Cookbook Name:: quagga
 # Recipe:: default
 #
 # Copyright 2014, Bao Nguyen
+# Copyright 2015, Ian Clark
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -89,6 +91,10 @@ template "integrated_config" do
   owner node.quagga.user
   group node.quagga.group
   mode '0644'
-  notifies :reload, 'service[quagga]', :delayed
+  if node.quagga.enable_reload
+    notifies :reload, 'service[quagga]', :delayed
+  else
+    notifies :restart, 'service[quagga]', :delayed
+  end
   action :nothing
 end

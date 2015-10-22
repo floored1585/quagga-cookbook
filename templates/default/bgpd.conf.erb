@@ -12,6 +12,10 @@ router bgp <%= asn %>
   <% if router_id = data[:router_id] || node.quagga.router_id -%>
  bgp router-id <%= router_id %>
   <% end -%>
+  <% Array(data[:redistribute]).each do |route_type| -%>
+    <% next unless %w( babel connected isis kernel ospf rip static ).include? route_type -%>
+ redistribute <%= route_type %>
+  <% end -%>
   <% if data[:log_neighbor_changes] -%>
  bgp log-neighbor-changes
   <% end -%>
@@ -22,6 +26,15 @@ router bgp <%= asn %>
  neighbor <%= neighbor %> peer-group
     <% end -%>
  neighbor <%= neighbor %> remote-as <%= opts[:remote_as] %>
+    <% if opts[:soft_reconfig_in] -%>
+ neighbor <%= neighbor %> soft-reconfiguration inbound
+    <% end -%>
+    <% if opts[:prefix_list_in] -%>
+ neighbor <%= neighbor %> prefix-list <%= opts[:prefix_list_in] %> in
+    <% end -%>
+    <% if opts[:prefix_list_out] -%>
+ neighbor <%= neighbor %> prefix-list <%= opts[:prefix_list_out] %> out
+    <% end -%>
     <% if opts[:default_originate] -%>
       <% if opts[:default_originate_map] -%>
  neighbor <%= neighbor %> default-originate route-map <%= opts[:default_originate_map] %>

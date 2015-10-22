@@ -1,9 +1,11 @@
 #
-# Author:: Bao Nguyen <opensource-cookbooks@ooyala.com>
+# Original Author:: Bao Nguyen <opensource-cookbooks@ooyala.com>
+# Current Maintainer:: Ian Clark <ian@f85.net>
 # Cookbook Name:: quagga
 # Provider:: ospf
 #
 # Copyright 2014, Ooyala
+# Copyright 2015, Ian Clark
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.

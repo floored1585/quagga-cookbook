@@ -17,8 +17,17 @@ interface <%= port %>
 !
 <% end -%>
 !
-<% @static_routes.each do |network,nexthop|-%>
+<% @static_routes.each do |network,nexthop| -%>
 ip route <%= network %> <%= nexthop %>
+<% end -%>
+!
+<% @prefix_lists.each do |list,rules| -%>
+  <% rules.each do |seq,data| -%>
+    <% rule = "ip prefix-list #{list} seq #{seq} #{data[:action]} #{data[:prefix]}" -%>
+    <% rule << " le #{data[:le]}" if data[:le] -%>
+    <% rule << " ge #{data[:ge]}" if data[:ge] -%>
+ <%= rule %>
+  <% end -%>
 <% end -%>
 !
 ip forwarding
