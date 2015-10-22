@@ -26,7 +26,7 @@ router ospf
  network <%= network  %> area <%= area %>
   <% end -%>
 <% end -%>
-<% if @passive_interface -%>
+<% if @passive_default -%>
  passive-interface default
   <% @interfaces.each do |int,opts|-%>
  no passive-interface <%= int %>

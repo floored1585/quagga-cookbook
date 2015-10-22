@@ -31,7 +31,7 @@ action :add do
     group node.quagga.group
     mode '0644'
     variables(
-      local_asns: new_resource.local_asns,
+      local_asns: new_resource.local_asns
     )
     if integrated_config
       notifies :create, 'template[integrated_config]', :delayed

@@ -17,6 +17,7 @@ describe file("#{cfg_dir}/bgpd.conf") do
   its(:content) { should contain('neighbor hosts remote-as 64512') }
   its(:content) { should contain('neighbor hosts default-originate') }
   its(:content) { should contain('bgp listen range 10.0.0.0/8 peer-group hosts') }
+  its(:content) { should contain('neighbor 192.168.52.1 default-originate route-map do_map') }
 end
 
 describe file("#{cfg_dir}/Quagga.conf") do

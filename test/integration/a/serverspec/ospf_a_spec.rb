@@ -13,6 +13,8 @@ describe file("#{cfg_dir}/ospfd.conf") do
   its(:content) { should contain('router ospf') }
   its(:content) { should contain('ospf router-id 127.0.0.1') }
   its(:content) { should contain('network 192.168.0.0/16 area 0.0.0.1') }
+  its(:content) { should contain('network 10.0.0.0/8 area 0.0.0.1') }
+  its(:content) { should contain('network 172.16.0.0/12 area 1.1.1.1') }
   its(:content) { should contain('passive-interface pas_1') }
   its(:content) { should contain('passive-interface pas_2') }
 end

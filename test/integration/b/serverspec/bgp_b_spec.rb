@@ -15,5 +15,6 @@ describe file("#{cfg_dir}/bgpd.conf") do
   its(:content) { should contain('neighbor hosts peer-group') }
   its(:content) { should contain('neighbor hosts remote-as 64512') }
   its(:content) { should contain('bgp listen range 10.0.0.0/8 peer-group hosts') }
+  its(:content) { should contain('bgp listen range 192.168.0.0/16 peer-group hosts') }
   its(:content) { should_not contain('neighbor hosts default-originate') }
 end
