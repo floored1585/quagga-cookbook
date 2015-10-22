@@ -62,7 +62,7 @@ Simply set the desired attributes (see Attributes section above) then call the p
 
 ### BGP Example
 
-The following example will create BGP process 64512 with dynamic neighbors.  Devices in the 10.0.0.0/8 range will be able to peer with this process.  A regular neighbor 192.168.52.1 is configured here also.  Neighbors in the group and the normal neighbor will receive a default route when peered with this instance.
+The following example will create BGP process 64512 with dynamic neighbors.  Devices in the 10.0.0.0/8 range ('hosts' peer-group) will be able to peer with this process.  A regular neighbor 192.168.52.1 is configured here also.  Neighbors in the group and the normal neighbor will receive a default route when peered with this instance.
 
 ```ruby
 node.set[:quagga][:bgp]['64512'][:log_neighbor_changes] = true
