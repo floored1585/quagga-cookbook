@@ -15,6 +15,7 @@ router bgp <%= asn %>
   <% if data[:log_neighbor_changes] -%>
  bgp log-neighbor-changes
   <% end -%>
+  <% data[:neighbors] ||= {} -%>
   <% data[:neighbors].each do |neighbor, opts| -%>
     <% next unless opts[:remote_as] -%>
     <% if opts[:peer_group] -%>
@@ -31,7 +32,9 @@ router bgp <%= asn %>
   <% end -%>
   <% data[:neighbors].each do |neighbor, opts| -%>
     <% if opts[:peer_group] && opts[:peer_group_range] -%>
- bgp listen range <%= opts[:peer_group_range] %> peer-group <%= neighbor %>
+      <% Array(opts[:peer_group_range]).each do |range| -%>
+ bgp listen range <%= range %> peer-group <%= neighbor %>
+      <% end -%>
     <% end -%>
   <% end -%>
 <% end -%>
