@@ -60,6 +60,34 @@ Usage
 
 Simply set the desired attributes (see Attributes section above) then call the proper recipe (quagga::bgpd, quagga::ospfd).  There is also a provider for zebra, but no recipe as of yet.
 
+### BGP Example
+
+The following example will create BGP process 64512 with dynamic neighbors.  Devices in the 10.0.0.0/8 range will be able to peer with this process.  A regular neighbor 192.168.52.1 is configured here also.  Neighbors in the group and the normal neighbor will receive a default route when peered with this instance.
+
+```ruby
+node.set[:quagga][:bgp]['64512'][:log_neighbor_changes] = true
+node.set[:quagga][:bgp]['64512'][:neighbors]['hosts'][:remote_as] = 64512
+node.set[:quagga][:bgp]['64512'][:neighbors]['hosts'][:default_originate] = true
+node.set[:quagga][:bgp]['64512'][:neighbors]['hosts'][:peer_group] = true
+node.set[:quagga][:bgp]['64512'][:neighbors]['hosts'][:peer_group_range] = '10.0.0.0/8'
+node.set[:quagga][:bgp]['64512'][:neighbors]['192.168.52.1'][:remote_as] = 23456
+node.set[:quagga][:bgp]['64512'][:neighbors]['192.168.52.1'][:default_originate] = true
+```
+
+### OSPF Example
+
+The following example will create an OSPF area 0, with quagga reload enabled and an OSPF-specific router-id.  All interfaces with addresses in 10.0.0.0/8 will actively participate in OSPF, except for the ones explicitly listed as `:passive_ints`.
+
+```ruby
+node.set[:quagga][:integrated_vtysh_config] = true
+node.set[:quagga][:ospf][:router-id] = 10.0.0.1
+node.set[:quagga][:ospf][:passive_default] = false
+node.set[:quagga][:ospf][:areas][0.0.0.0][:networks] = '10.0.0.0/8'
+node.set[:quagga][:ospf][:passive_ints] = ['lo', 'br-access']
+
+include_recipe 'quagga::ospfd'
+```
+
 Author and License
 ===================
 
