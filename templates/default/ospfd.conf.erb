@@ -22,7 +22,7 @@ router ospf
  redistribute <%= protocol %>
 <% end -%>
 <% @areas.each do |area, opts| -%>
-  <% opts['networks'].each do |network| -%>
+  <% Array(opts['networks']).each do |network| -%>
  network <%= network  %> area <%= area %>
   <% end -%>
 <% end -%>
@@ -32,11 +32,11 @@ router ospf
  no passive-interface <%= int %>
   <% end -%>
 <% end -%>
-<% @passive_ints.each do |int| -%>
+<% Array(@passive_ints).each do |int| -%>
  passive-interface <%= int %>
 <% end -%>
 <% @ospf_options .each do |option| -%>
-  <%= option %>
+ <%= option %>
 <% end -%>
 !
 line vty
