@@ -26,7 +26,7 @@ include_recipe 'quagga'
 
 ospf = node.quagga.ospf
 unless ospf.areas.empty?
-  quagga_ospf "ospf" do
+  quagga_ospf 'ospf' do
     ospf = node.quagga['ospf']
     areas ospf.areas
     router_id ospf['router_id'] || node.quagga['router_id']

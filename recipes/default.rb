@@ -60,8 +60,8 @@ if %w( debian ubuntu ).include? node.platform
     end
   end
 
-  template "/etc/default/quagga" do
-    source "quagga.erb"
+  template '/etc/default/quagga' do
+    source 'quagga.erb'
     owner 'root'
     group 'root'
     mode '0644'
@@ -85,7 +85,7 @@ service 'quagga' do
 end
 
 # Combine the templates into a master file to be reloaded
-template "integrated_config" do
+template 'integrated_config' do
   path "#{node.quagga.dir}/Quagga.conf"
   source 'Quagga.conf.erb'
   owner node.quagga.user
