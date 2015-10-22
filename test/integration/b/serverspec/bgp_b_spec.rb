@@ -17,7 +17,3 @@ describe file("#{cfg_dir}/bgpd.conf") do
   its(:content) { should contain('bgp listen range 10.0.0.0/8 peer-group hosts') }
   its(:content) { should_not contain('neighbor hosts default-originate') }
 end
-
-describe file("#{cfg_dir}/Quagga.conf") do
-  its(:content) { should include(File.read("#{cfg_dir}/bgpd.conf")) }
-end
