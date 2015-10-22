@@ -24,12 +24,8 @@ include_recipe 'quagga'
 
 node.set[:quagga][:daemons][:bgpd] = true
 
-unless node.quagga.bgp['local_asn'].empty?
-  node.quagga.bgp.local_asn.each do |asn, data|
-    quagga_bgp asn do
-      peers data['peers'] || {}
-      networks data['networks'] || []
-      router_id data['router_id'] || node.quagga['router_id']
-    end
+unless node.quagga.bgp.empty?
+  quagga_bgp 'bgp' do
+    local_asns node.quagga.bgp
   end
 end

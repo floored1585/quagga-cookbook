@@ -19,6 +19,8 @@
 #
 
 action :add do
+  integrated_config = node.quagga.integrated_vtysh_config
+
   bgpd_path = "#{node.quagga.dir}/bgpd.conf"
   Chef::Log.info "Adding #{new_resource.name}: acl to #{bgpd_path}"
 
@@ -29,12 +31,13 @@ action :add do
     group node.quagga.group
     mode '0644'
     variables(
-      local_asn: new_resource.name,
-      ebgp_peers: new_resource.ebgp_peers,
-      networks: new_resource.networks,
-      router_id: new_resource.router_id
+      local_asns: new_resource.local_asns,
     )
-    notifies :reload, 'service[quagga]', :delayed
+    if integrated_config
+      notifies :create, 'template[integrated_config]', :delayed
+    else
+      notifies :restart, 'service[quagga]', :delayed
+    end
   end
 end
 

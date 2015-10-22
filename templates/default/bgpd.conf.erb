@@ -7,20 +7,32 @@ enable password <%= node.quagga.enabled_password %>
 log file /var/log/quagga/bgpd.log
 !
 <% end -%>
-router bgp <%= @local_asn %>
-<% if @router_id -%>
- bgp router-id <%= @router_id %>
-<% end -%>
+<% @local_asns.each do |asn, data| -%>
+router bgp <%= asn %>
+  <% if router_id = data[:router_id] || node.quagga.router_id -%>
+ bgp router-id <%= router_id %>
+  <% end -%>
+  <% if data[:log_neighbor_changes] -%>
  bgp log-neighbor-changes
-<% @networks.each do |i| -%>
- network <%= i %>
+  <% end -%>
+  <% data[:neighbors].each do |neighbor, opts| -%>
+    <% next unless opts[:remote_as] -%>
+    <% if opts[:peer_group] -%>
+ neighbor <%= neighbor %> peer-group
+    <% end -%>
+ neighbor <%= neighbor %> remote-as <%= opts[:remote_as] %>
+    <% if opts[:default_originate] -%>
+      <% if opts[:default_originate_map] -%>
+ neighbor <%= neighbor %> default-originate route-map <%= opts[:default_originate_map] %>
+      <% else -%>
+ neighbor <%= neighbor %> default-originate
+      <% end -%>
+    <% end -%>
+  <% end -%>
+  <% data[:neighbors].each do |neighbor, opts| -%>
+    <% if opts[:peer_group] && opts[:peer_group_range] -%>
+ bgp listen range <%= opts[:peer_group_range] %> peer-group <%= neighbor %>
+    <% end -%>
+  <% end -%>
 <% end -%>
-<% @ebgp_peers.each do |asn,v| -%>
- <% v[:ip].each do |ip| -%>
- neighbor <%= ip %> remote-as <%= asn %>
- neighbor <%= ip %> next-hop-self
- <% end -%>
-<% end -%>
-!
-line vty
 !

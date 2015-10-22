@@ -23,7 +23,4 @@ actions :add, :remove
 default_action :add
 
 # resources for bgp
-attribute :name, kind_of: String, name_attribute: true
-attribute :networks, kind_of: Array, default: []
-attribute :ebgp_peers, kind_of: Hash, default: {}
-attribute :router_id, kind_of: String, default: nil
+attribute :local_asns, kind_of: Hash, default: {}
