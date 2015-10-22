@@ -20,9 +20,9 @@
 # limitations under the License.
 #
 
-include_recipe 'quagga'
-
 node.set[:quagga][:daemons][:ospfd] = true
+
+include_recipe 'quagga'
 
 ospf = node.quagga.ospf
 unless ospf.areas.empty?

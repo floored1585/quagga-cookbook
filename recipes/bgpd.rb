@@ -20,9 +20,9 @@
 # limitations under the License.
 #
 
-include_recipe 'quagga'
-
 node.set[:quagga][:daemons][:bgpd] = true
+
+include_recipe 'quagga'
 
 unless node.quagga.bgp.empty?
   quagga_bgp 'bgp' do

@@ -33,7 +33,7 @@ service 'quagga' do
   action :enable
 end
 
-if node.platform == 'debian'
+if %w( debian ubuntu ).include? node.platform
   template "#{node.quagga.dir}/daemons" do
     source 'daemons.erb'
     owner node.quagga.user
@@ -47,6 +47,15 @@ if node.platform == 'debian'
     owner node.quagga.user
     group node.quagga.group
     mode '0644'
+  end
+
+  %w( zebra.conf ospfd.conf bgpd.conf ).each do |file|
+    file "#{node.quagga.dir}/#{file}" do
+      owner node.quagga.user
+      group node.quagga.group
+      mode '0644'
+      action :touch
+    end
   end
 
   template "/etc/default/quagga" do
