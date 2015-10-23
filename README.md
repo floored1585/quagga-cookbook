@@ -56,7 +56,7 @@ Attribute        | Description |Type | Default
 -----------------|-------------|-----|--------
 `node[:quagga][:ospf][:router_id]` | Sets the router-id for OSPF. | String | `nil`
 `node[:quagga][:ospf][:redistribute]` | Route types to redistribute into OSPF (eg: `["connected","bgp"]`. | String or Array | `[]`
-`node[:quagga][:ospf][:passive_default]` | Set passive-interface default (Active interfaces must be defined). | Boolean | `true` ***needs tests***
+`node[:quagga][:ospf][:passive_default]` | Set passive-interface default (Active interfaces must be defined). ***needs tests*** | Boolean | `true`
 `node[:quagga][:ospf][:passive_ints]` | Names of passive interfaces. | String or Array | `nil`
 `node[:quagga][:ospf][:areas]` | A Hash containing areas and their configurations.  Keys are the area IDs (eg: 0.0.0.0), values are the data for that area. | Hash | `{}`
 `node[:quagga][:ospf][:areas][$AREA][:networks]` | Networks to include in the area. | String or Array | `nil`
@@ -121,7 +121,8 @@ Testing requirements:
 * Vagrant
 * VirtualBox
 
-To run the tests:
+To run the tests (after installing prerequisites):
+* `bundle install`
 * `rake rubocop`
 * `rake test`
 
