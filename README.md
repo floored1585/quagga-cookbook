@@ -121,7 +121,8 @@ Testing requirements:
 * Vagrant
 * VirtualBox
 
-To run the tests:
+To run the tests (after installing prerequisites):
+* `bundle install`
 * `rake rubocop`
 * `rake test`
 
