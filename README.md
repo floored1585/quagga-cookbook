@@ -108,6 +108,23 @@ node.set[:quagga][:ospf][:passive_ints] = ['lo', 'br-access']
 include_recipe 'quagga::ospfd'
 ```
 
+Contributing
+============
+
+Any form of contribution is welcome!  Feature requests, bug reports, pull requests, whatever!
+If you add features, make sure there are tests for them, and if you change any code, make sure
+the existing tests all pass _before_ creating a pull request.
+
+Tests are run on a [Cumulus VX](https://cumulusnetworks.com/cumulus-vx) VM using serverspec.
+
+Testing requirements:
+* Vagrant
+* VirtualBox
+
+To run the tests:
+* `rake rubocop`
+* `rake test`
+
 Author and License
 ===================
 
