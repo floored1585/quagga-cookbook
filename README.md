@@ -9,9 +9,9 @@ router configuration as code.
 
 This cookbook currently supports the following daemons:
 
-BGP
-OSPF
-Zebra
+* BGP
+* OSPF
+* Zebra
 
 Requirements
 ============
