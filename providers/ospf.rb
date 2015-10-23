@@ -35,11 +35,10 @@ action :add do
     variables(
       areas: new_resource.areas,
       router_id: new_resource.router_id,
-      protocols: new_resource.protocols,
       interfaces: new_resource.interfaces,
       passive_ints: new_resource.passive_ints,
-      passive_default: new_resource.passive_default,
-      ospf_options: new_resource.ospf_options
+      redistribute: new_resource.redistribute,
+      passive_default: new_resource.passive_default
     )
     if integrated_config
       notifies :create, 'template[integrated_config]', :delayed

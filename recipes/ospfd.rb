@@ -30,9 +30,9 @@ unless ospf.areas.empty?
     ospf = node.quagga['ospf']
     areas ospf.areas
     router_id ospf['router_id'] || node.quagga['router_id']
-    protocols ospf['protocols']
     interfaces ospf['interfaces']
     passive_ints ospf['passive_ints']
+    redistribute ospf['redistribute']
     passive_default ospf['passive_default']
   end
 end

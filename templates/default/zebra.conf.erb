@@ -21,11 +21,12 @@ interface <%= port %>
 ip route <%= network %> <%= nexthop %>
 <% end -%>
 !
-<% @prefix_lists.each do |list,rules| -%>
-  <% rules.each do |seq,data| -%>
-    <% rule = "ip prefix-list #{list} seq #{seq} #{data[:action]} #{data[:prefix]}" -%>
-    <% rule << " le #{data[:le]}" if data[:le] -%>
+<% @prefix_lists.each do |list,entries| -%>
+  <% Array(entries).each do |entry,data| -%>
+    <% next unless %w( permit deny ).include?(data[:action]) -%>
+    <% rule = "ip prefix-list #{list} seq #{entry} #{data[:action]} #{data[:prefix] || 'any'}" -%>
     <% rule << " ge #{data[:ge]}" if data[:ge] -%>
+    <% rule << " le #{data[:le]}" if data[:le] -%>
  <%= rule %>
   <% end -%>
 <% end -%>

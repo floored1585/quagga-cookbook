@@ -18,8 +18,9 @@ router ospf
 <% if @router_id -%>
  ospf router-id <%= @router_id %>
 <% end -%>
-<% @protocols.each do |protocol| -%>
- redistribute <%= protocol %>
+<% Array(@redistribute).each do |route_type| -%>
+  <% next unless %w( babel bgp connected isis kernel ospf rip static table ).include? route_type -%>
+ redistribute <%= route_type %>
 <% end -%>
 <% @areas.each do |area, opts| -%>
   <% Array(opts['networks']).each do |network| -%>
@@ -34,9 +35,6 @@ router ospf
 <% end -%>
 <% Array(@passive_ints).each do |int| -%>
  passive-interface <%= int %>
-<% end -%>
-<% @ospf_options .each do |option| -%>
- <%= option %>
 <% end -%>
 !
 line vty
