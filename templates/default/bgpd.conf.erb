@@ -19,7 +19,7 @@ router bgp <%= asn %>
   <% if data[:log_neighbor_changes] -%>
  bgp log-neighbor-changes
   <% end -%>
-  <% data[:neighbors] ||= {} -%>
+  <% next unless data[:neighbors] -%>
   <% data[:neighbors].each do |neighbor, opts| -%>
     <% next unless opts[:remote_as] -%>
     <% if opts[:peer_group] -%>

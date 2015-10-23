@@ -1,25 +1,28 @@
 Description
 ===========
 
-This cookbook provide an interface via attributes to serveral Quagga daemons. It's written with
-the intention of deploying Quagga on Cumulus OS running on compatible [1] OEM switches.
+This is a fork of [https://github.com/ooyala/quagga-cookbook](https://github.com/ooyala/quagga-cookbook).
 
-It's currently supporting the following daemons:
+This cookbook provides an interface via attributes to serveral Quagga daemons. It's written with
+the intention of deploying Quagga on [Cumulus](http://cumulusnetworks.com) switches, and managing
+router configuration as code.
 
-OSPF
+This cookbook currently supports the following daemons:
+
 BGP
-
-[1] http://cumulusnetworks.com/support/linux-hardware-compatibility-list/
+OSPF
+Zebra
 
 Requirements
 ============
 
-Linux
+Linux (only tested on recent versions of Debian and Ubuntu)
 
 Attributes
 ==========
 
-NOTE! Where you see "String or Array" for type, a String may be used _only_ for single values.  Use an Array of Strings for multiple values.
+NOTE! Where you see "String or Array" for type, a String may be used _only_ for single values.  Use 
+an Array of Strings for multiple values.
 
 ### General
 
@@ -36,24 +39,39 @@ Attribute        | Description |Type | Default
 -----------------|-------------|-----|--------
 `node[:quagga][:bgp]` | A hash containing the BGP processes and their configuration.  Keys are the local ASNs/processes (Integer), values are the data for that process (Hash). | Hash | `{}`
 `node[:quagga][:bgp][$LOCAL_ASN][:router_id]` | Sets the router-id for this BGP process. | String | `nil`
+`node[:quagga][:bgp][$LOCAL_ASN][:redistribute]` | Route types to redistribute into BGP (eg: `["connected","ospf"]`. | String or Array | `nil`
 `node[:quagga][:bgp][$LOCAL_ASN][:neighbors]` | A hash containing neighbors and their configuration.  Keys are the neighbor IPs or group names (String), values are the data for that neighbor or group (Hash). | Hash | `nil`
 `node[:quagga][:bgp][$LOCAL_ASN][:neighbors][$NEIGHBOR][:remote_as]` | The remote-as for this neighbor. | Integer | `nil`
 `node[:quagga][:bgp][$LOCAL_ASN][:neighbors][$NEIGHBOR][:default_originate]` | Set to `true` to advertise a default route to this neighbor. | Boolean | `false`
 `node[:quagga][:bgp][$LOCAL_ASN][:neighbors][$NEIGHBOR][:default_originate_map]` | The name of the route-map to use with default-originate. | String | `nil`
 `node[:quagga][:bgp][$LOCAL_ASN][:neighbors][$NEIGHBOR][:peer_group]` | Set to `true` if this is a peer-group. | String | `nil`
 `node[:quagga][:bgp][$LOCAL_ASN][:neighbors][$NEIGHBOR][:peer_group_range]` | The IP range(s) to permit for this group (BGP Dynamic Neighbors). | String or Array | `nil`
+`node[:quagga][:bgp][$LOCAL_ASN][:neighbors][$NEIGHBOR][:soft_reconfig_in]` | Enable soft-reconfiguration-inbound (to enable dispaly of received routes). | Boolean | `false`
+`node[:quagga][:bgp][$LOCAL_ASN][:neighbors][$NEIGHBOR][:prefix_list_in]` | Name of the prefix-list to use for filtering incoming routes. | String | `nil`
+`node[:quagga][:bgp][$LOCAL_ASN][:neighbors][$NEIGHBOR][:prefix_list_out]` | Name of the prefix-list to use for filtering outgoing routes. | String | `nil`
 
 ### OSPF
 
 Attribute        | Description |Type | Default
 -----------------|-------------|-----|--------
 `node[:quagga][:ospf][:router_id]` | Sets the router-id for OSPF. | String | `nil`
-`node[:quagga][:ospf][:passive_default]` | Set passive-interface default (Active interfaces must be defined). | Boolean | `true` ***needs testing***
+`node[:quagga][:ospf][:redistribute]` | Route types to redistribute into OSPF (eg: `["connected","bgp"]`. | String or Array | `[]`
+`node[:quagga][:ospf][:passive_default]` | Set passive-interface default (Active interfaces must be defined). | Boolean | `true` ***needs tests***
 `node[:quagga][:ospf][:passive_ints]` | Names of passive interfaces. | String or Array | `nil`
 `node[:quagga][:ospf][:areas]` | A Hash containing areas and their configurations.  Keys are the area IDs (eg: 0.0.0.0), values are the data for that area. | Hash | `{}`
 `node[:quagga][:ospf][:areas][$AREA][:networks]` | Networks to include in the area. | String or Array | `nil`
-`node[:quagga][:ospf][:networks]` | ***TODO -- needs testing***. | String or Array | `[]`
-`node[:quagga][:ospf][:protocols]` | ***TODO -- needs testing***. | String or Array | `[]`
+`node[:quagga][:ospf][:networks]` | ***needs description & tests***. | String or Array | `[]`
+
+### Prefix Lists
+
+Attribute        | Description |Type | Default
+-----------------|-------------|-----|--------
+`node[:quagga][:prefix_lists]` | A hash containing all of the prefix-lists to configure in quagga.  Keys are the prefix-list names, values are hashes filled with the entries. | Hash | `{}`
+`node[:quagga][:prefix_lists][$LIST]` | A hash containing all of the entries in a particular $LIST.  Keys are sequence numbers, values are hashes filled with the details of the entry. | Hash | `{}`
+`node[:quagga][:prefix_lists][$LIST][$SEQ][:prefix]` | The prefix affected by this rule (must be `x.x.x.x/x`). If left out, rule will match any prefix | String | `any`
+`node[:quagga][:prefix_lists][$LIST][$SEQ][:ge]` | The minimum prefix length to accept (eg: `24`) | Integer | `nil`
+`node[:quagga][:prefix_lists][$LIST][$SEQ][:le]` | The maximum prefix length to accept (eg: `24`) | Integer | `nil`
+`node[:quagga][:prefix_lists][$LIST][$SEQ][:action]` | The action to take (either 'permit' or 'deny'). | String | `nil`
 
 Usage
 =====
