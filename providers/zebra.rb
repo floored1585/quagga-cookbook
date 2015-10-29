@@ -1,9 +1,11 @@
 #
 # Author:: Bao Nguyen <opensource-cookbooks@ooyala.com>
+# Current Maintainer:: Ian Clark <ian@f85.net>
 # Cookbook Name:: quagga
 # Provider:: zebra
 #
 # Copyright 2014, Ooyala
+# Copyright 2015, Ian Clark
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -20,7 +22,6 @@
 
 action :add do
   integrated_config = node.quagga.integrated_vtysh_config
-  reload = node.quagga.enable_reload
 
   zebra_path = "#{node.quagga.dir}/zebra.conf"
   Chef::Log.info "Adding #{new_resource.name}: interface to #{zebra_path}"
@@ -36,7 +37,7 @@ action :add do
       static_routes: new_resource.static_routes,
       prefix_lists: new_resource.prefix_lists
     )
-    if integrated_config && reload
+    if integrated_config
       notifies :create, 'template[integrated_config]', :delayed
     else
       notifies :restart, 'service[quagga]', :delayed
@@ -45,7 +46,7 @@ action :add do
 end
 
 action :remove do
-  zebra_path = "#{node.quagga.dir}/zebra.conf"
+  zebra_path = "#{node.quagga.dir}/#{new_resource.name}"
   if ::File.exist?(zebra_path)
     Chef::Log.info "Removing #{new_resource.file_type}: interface from #{zebra_path}"
     file zebra_path do
