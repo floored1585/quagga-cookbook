@@ -17,8 +17,8 @@ interface <%= port %>
 !
 <% end -%>
 !
-<% @static_routes.each do |network,options| -%>
-ip route <%= network %> <%= options %>
+<% @static_routes.each do |network,next_hop| -%>
+ip route <%= network %> <%= next_hop %>
 <% end -%>
 !
 <% @prefix_lists.each do |list,entries| -%>
