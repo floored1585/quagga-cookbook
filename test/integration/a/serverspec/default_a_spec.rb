@@ -25,6 +25,7 @@ end
 
 describe file("#{cfg_dir}/vtysh.conf") do
   its(:content) { should contain('service integrated-vtysh-config') }
+  its(:content) { should contain('bgp multiple-instance') }
   its(:content) { should contain('hostname') }
   its(:content) { should contain('username root nopassword') }
   its(:content) { should contain('enable password quagga') }
@@ -34,4 +35,5 @@ end
 
 describe file("#{cfg_dir}/Quagga.conf") do
   its(:content) { should include(File.read("#{cfg_dir}/zebra.conf")) }
+  its(:content) { should include(File.read("#{cfg_dir}/vtysh.conf")) }
 end
