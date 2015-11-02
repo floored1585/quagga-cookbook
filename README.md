@@ -32,6 +32,7 @@ Attribute        | Description |Type | Default
 `node[:quagga][:enable_reload]` | Must be true in to enable reloading the quagga service (only applies to certain versions). | Boolean | `true`
 `node[:quagga][:max_instances]` | Sets /etc/defaults/quagga "MAX_INSTANCES" value. | Integer | `5`
 `node[:quagga][:integrated_vtysh_config]` | Must be set to true in order to reload quagga (vs restart) on config changes. Details [here](http://www.nongnu.org/quagga/docs/docs-multi/VTY-shell-integrated-configuration.html) and [here](http://docs.cumulusnetworks.com/display/DOCS/Configuring+Quagga). | Boolean | `false`
+`node[:quagga][:multiple_instance]` | Must be set to true in order to support multiple routing-instances or vrfs. Supported in Cumulus Linux 2.5.3SE and adopted in Cumulus Linux 3.0. | Boolean | `false`
 
 ### BGP
 
@@ -73,6 +74,22 @@ Attribute        | Description |Type | Default
 `node[:quagga][:prefix_lists][$LIST][$SEQ][:le]` | The maximum prefix length to accept (eg: `24`) | Integer | `nil`
 `node[:quagga][:prefix_lists][$LIST][$SEQ][:action]` | The action to take (either 'permit' or 'deny'). | String | `nil`
 
+### Static Routes
+
+Attribute        | Description |Type | Default
+-----------------|-------------|-----|--------
+`node[:quagga][:static_routes]` | The destination network of the static route.  | String | `any`
+`node[:quagga][:static_routes][:next_hop]` | The next hop of the satic route.  | String | `any`
+
+### Multiple Routing Instances (VRFs)
+
+Attribute        | Description |Type | Default
+-----------------|-------------|-----|--------
+`node[:quagga][:multiple_instance]` | Must be set to true in order to support multiple routing-instances or vrfs. Supported in Cumulus Linux 2.5.3SE and adopted in Cumulus Linux 3.0. | Boolean | `false`
+`node[:quagga][:interfaces][:interface]` | The interface you wish to assign to a routing table followed by a specific table. | String | `any`
+`node[:quagga][:bgp][$LOCAL_ASN][:neighbors]` | A hash containing neighbors and their configuration.  Keys are the neighbor IPs or group names followed by a routing table values and then the data for that neighbor or group (String). Values are the data for that neighbor or group (Hash). | Hash | `nil`
+`node[:quagga][:static_routes][:next_hop]` | The next hop of the satic route followed by a specific table.  | String | `any`
+
 Usage
 =====
 
@@ -106,6 +123,26 @@ node.set[:quagga][:ospf][:areas][0.0.0.0][:networks] = '10.0.0.0/8'
 node.set[:quagga][:ospf][:passive_ints] = ['lo', 'br-access']
 
 include_recipe 'quagga::ospfd'
+```
+
+### Static Route Example
+
+The following example will create a static route to 10.0.0.0/24 using the next hop of 172.16.1.1
+
+```ruby
+node.set[:quagga][:static_routes]['10.0.0.0/24'] = '172.16.1.1'
+
+include_recipe 'quagga::zebra'
+```
+### Mutliple Routing-Instaces (VRFs) Example
+
+The following example will create a routing table with a static route, a bgp neighbor and a specific interface all on table 100.  
+
+```ruby
+node.set[:quagga][:multiple_instance] = true
+node[:quagga][:interfaces][:swp1 table 100] = []
+node[:quagga][:bgp][$LOCAL_ASN]['1.1.1.1 table 100'] = {}
+node[:quagga][:static_routes]['10.0.0.0/24'] = '172.16.1.1 table 100'
 ```
 
 Contributing
