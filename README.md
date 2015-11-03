@@ -171,7 +171,7 @@ Author and License
 | Role			| Individual
 |:----------------------|:-----------------------------------------|
 | **Author** (pre-0.2)  | [Ooyala Inc.](https://github.com/ooyala)
-| **Maintainer** (0.2+) | [Ian Clark](https://https://github.com/floored1585)
+| **Maintainer** (0.2+) | [Ian Clark](https://github.com/floored1585)
 | **Contributor**       | [James Farr](https://github.com/nertwork)
 
 Copyright 2014, Ooyala Inc.  
