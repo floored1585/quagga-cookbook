@@ -86,7 +86,7 @@ Attribute        | Description |Type | Default
 Attribute        | Description |Type | Default
 -----------------|-------------|-----|--------
 `node[:quagga][:multiple_instance]` | Must be set to true in order to support multiple routing-instances or vrfs. Supported in Cumulus Linux 2.5.3SE and adopted in Cumulus Linux 3.0. | Boolean | `false`
-`node[:quagga][:interfaces][$IF_NAME]` | The interface you wish to assign to a routing table followed by a specific table. | String | `any`
+`node[:quagga][:interfaces][$IF_NAME]` | The interface you wish to assign to a routing table followed by a specific table. | Array | `nil`
 `node[:quagga][:bgp][$LOCAL_ASN][:neighbors]` | A hash containing neighbors and their configuration.  Keys are the neighbor IPs or group names followed by a routing table values and then the data for that neighbor or group (String). Values are the data for that neighbor or group (Hash). | Hash | `nil`
 `node[:quagga][:static_routes][:$ROUTE]` |  A hash, with a specified table, containing static routes to configure.  Keys are the prefixes, values are the next-hop addresses.  | Hash | `nil`
 
