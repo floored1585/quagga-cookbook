@@ -105,7 +105,7 @@ node.set[:quagga][:bgp]['64512'][:neighbors]['hosts'][:remote_as] = 64512
 node.set[:quagga][:bgp]['64512'][:neighbors]['hosts'][:default_originate] = true
 node.set[:quagga][:bgp]['64512'][:neighbors]['hosts'][:peer_group] = true
 node.set[:quagga][:bgp]['64512'][:neighbors]['hosts'][:peer_group_range] = '10.0.0.0/8'
-node.set[:quagga][:bgp]['64512'][:neighbors]['192.168.52.1'][:remote_as] = 23456
+node.set[:quagga][:bgp]['64512'][:neighbors]['192.168.52.1'][:remote_as] = 64512
 node.set[:quagga][:bgp]['64512'][:neighbors]['192.168.52.1'][:default_originate] = true
 
 include_recipe 'quagga::bgpd'
@@ -141,7 +141,7 @@ The following example will create a routing table with a static route, a bgp nei
 ```ruby
 node.set[:quagga][:multiple_instance] = true
 node.set[:quagga][:interfaces]['swp1 table 100'] = []
-node.set[:quagga][:bgp]['64512 table 100']['1.1.1.1'] = {}
+node.set[:quagga][:bgp]['64512 table 100'][:neighbors]['1.1.1.1'][:remote_as] = 64512
 node.set[:quagga][:static_routes]['10.0.0.0/24'] = '172.16.1.1 table 100'
 ```
 
@@ -167,15 +167,13 @@ Author and License
 ===================
 ### Maintainer, Authors and Contributors
 
-|                      |                                          |
-|:---------------------|:-----------------------------------------|
-| **Maintainer**       | [Ian Clark](https://https://github.com/floored1585)
-| **Original Author**  | [Ooyala Inc.](https://github.com/ooyala/)
-| **Author**           | [Ian Clark](https://https://github.com/floored1585)
-| **Contributor**      | [James Farr](https://github.com/nertwork)
+|:----------------------|:-----------------------------------------|
+| **Author** (pre-0.2)  | [Ooyala Inc.](https://github.com/ooyala)
+| **Maintainer** (0.2+) | [Ian Clark](https://https://github.com/floored1585)
+| **Contributor**       | [James Farr](https://github.com/nertwork)
 
 Copyright 2014, Ooyala Inc.  
-Copyright 2015, Ian Clark
+Copyright 2015, Contributers
 
 ### License
 
