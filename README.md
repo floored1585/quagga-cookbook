@@ -165,12 +165,19 @@ To run the tests (after installing prerequisites):
 
 Author and License
 ===================
+### Maintainer, Authors and Contributors
 
-__Original Author__ Bao Nguyen <opensource-cookbooks@ooyala.com>  
-__Current Maintainer (0.2.0 onwards)__ Ian Clark <ian@f85.net>
+|                      |                                          |
+|:---------------------|:-----------------------------------------|
+| **Maintainer**       | [Ian Clark](https://https://github.com/floored1585)
+| **Original Author**  | [Ooyala Inc.](https://github.com/ooyala/)
+| **Author**           | [Ian Clark](https://https://github.com/floored1585)
+| **Contributor**      | [James Farr](https://github.com/nertwork)
 
 Copyright 2014, Ooyala Inc.  
 Copyright 2015, Ian Clark
+
+### License
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
