@@ -32,6 +32,7 @@ Attribute        | Description |Type | Default
 `node[:quagga][:enable_reload]` | Must be true in to enable reloading the quagga service (only applies to certain versions). | Boolean | `true`
 `node[:quagga][:max_instances]` | Sets /etc/defaults/quagga "MAX_INSTANCES" value. | Integer | `5`
 `node[:quagga][:integrated_vtysh_config]` | Must be set to true in order to reload quagga (vs restart) on config changes. Details [here](http://www.nongnu.org/quagga/docs/docs-multi/VTY-shell-integrated-configuration.html) and [here](http://docs.cumulusnetworks.com/display/DOCS/Configuring+Quagga). | Boolean | `false`
+`node[:quagga][:multiple_instance]` | Must be set to true in order to support multiple routing-instances or vrfs. Supported in Cumulus Linux 2.5.3SE and adopted in Cumulus Linux 3.0. | Boolean | `false`
 
 ### BGP
 
@@ -73,6 +74,22 @@ Attribute        | Description |Type | Default
 `node[:quagga][:prefix_lists][$LIST][$SEQ][:le]` | The maximum prefix length to accept (eg: `24`) | Integer | `nil`
 `node[:quagga][:prefix_lists][$LIST][$SEQ][:action]` | The action to take (either 'permit' or 'deny'). | String | `nil`
 
+### Static Routes
+
+Attribute        | Description |Type | Default
+-----------------|-------------|-----|--------
+`node[:quagga][:static_routes]` | A hash containing static routes to configure.  Keys are the prefixes, values are the next-hop addresses.  | Hash | `nil`
+`node[:quagga][:static_routes][$ROUTE]` | The next-hop address for given $ROUTE | String | `any`
+
+### Multiple Routing Instances (VRFs)
+
+Attribute        | Description |Type | Default
+-----------------|-------------|-----|--------
+`node[:quagga][:multiple_instance]` | Must be set to true in order to support multiple routing-instances or vrfs. Supported in Cumulus Linux 2.5.3SE and adopted in Cumulus Linux 3.0. | Boolean | `false`
+`node[:quagga][:interfaces][$IF_NAME]` | The interface you wish to assign to a routing table followed by a specific table. | Array | `nil`
+`node[:quagga][:bgp][$LOCAL_ASN][:neighbors]` | A hash containing neighbors and their configuration. Local ASN need to have the table specified. Keys are the neighbor IPs or group names followed by (String) values for that neighbor or group (Hash). | Hash | `nil`
+`node[:quagga][:static_routes][$ROUTE]` |  A hash, with a specified table, containing static routes to configure.  Keys are the prefixes, values are the next-hop addresses.  | Hash | `nil`
+
 Usage
 =====
 
@@ -108,6 +125,26 @@ node.set[:quagga][:ospf][:passive_ints] = ['lo', 'br-access']
 include_recipe 'quagga::ospfd'
 ```
 
+### Static Route Example
+
+The following example will create a static route to 10.0.0.0/24 using the next hop of 172.16.1.1
+
+```ruby
+node.set[:quagga][:static_routes]['10.0.0.0/24'] = '172.16.1.1'
+
+include_recipe 'quagga::zebra'
+```
+### Mutliple Routing-Instaces (VRFs) Example
+
+The following example will create a routing table with a static route, a bgp neighbor and a specific interface all on table 100.  
+
+```ruby
+node.set[:quagga][:multiple_instance] = true
+node.set[:quagga][:interfaces]['swp1 table 100'] = []
+node.set[:quagga][:bgp]['64512 table 100']['1.1.1.1'] = {}
+node.set[:quagga][:static_routes]['10.0.0.0/24'] = '172.16.1.1 table 100'
+```
+
 Contributing
 ============
 
@@ -128,12 +165,19 @@ To run the tests (after installing prerequisites):
 
 Author and License
 ===================
+### Maintainer, Authors and Contributors
 
-__Original Author__ Bao Nguyen <opensource-cookbooks@ooyala.com>  
-__Current Maintainer (0.2.0 onwards)__ Ian Clark <ian@f85.net>
+|                      |                                          |
+|:---------------------|:-----------------------------------------|
+| **Maintainer**       | [Ian Clark](https://https://github.com/floored1585)
+| **Original Author**  | [Ooyala Inc.](https://github.com/ooyala/)
+| **Author**           | [Ian Clark](https://https://github.com/floored1585)
+| **Contributor**      | [James Farr](https://github.com/nertwork)
 
 Copyright 2014, Ooyala Inc.  
 Copyright 2015, Ian Clark
+
+### License
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
