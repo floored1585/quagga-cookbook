@@ -79,7 +79,7 @@ Attribute        | Description |Type | Default
 Attribute        | Description |Type | Default
 -----------------|-------------|-----|--------
 `node[:quagga][:static_routes]` | A hash containing static routes to configure.  Keys are the prefixes, values are the next-hop addresses.  | Hash | `nil`
-`node[:quagga][:static_routes][:$ROUTE]` | The next-hop address for given $ROUTE | String | `any`
+`node[:quagga][:static_routes][$ROUTE]` | The next-hop address for given $ROUTE | String | `any`
 
 ### Multiple Routing Instances (VRFs)
 
@@ -88,7 +88,7 @@ Attribute        | Description |Type | Default
 `node[:quagga][:multiple_instance]` | Must be set to true in order to support multiple routing-instances or vrfs. Supported in Cumulus Linux 2.5.3SE and adopted in Cumulus Linux 3.0. | Boolean | `false`
 `node[:quagga][:interfaces][$IF_NAME]` | The interface you wish to assign to a routing table followed by a specific table. | Array | `nil`
 `node[:quagga][:bgp][$LOCAL_ASN][:neighbors]` | A hash containing neighbors and their configuration.  Keys are the neighbor IPs or group names followed by a routing table values and then the data for that neighbor or group (String). Values are the data for that neighbor or group (Hash). | Hash | `nil`
-`node[:quagga][:static_routes][:$ROUTE]` |  A hash, with a specified table, containing static routes to configure.  Keys are the prefixes, values are the next-hop addresses.  | Hash | `nil`
+`node[:quagga][:static_routes][$ROUTE]` |  A hash, with a specified table, containing static routes to configure.  Keys are the prefixes, values are the next-hop addresses.  | Hash | `nil`
 
 Usage
 =====
@@ -140,9 +140,9 @@ The following example will create a routing table with a static route, a bgp nei
 
 ```ruby
 node.set[:quagga][:multiple_instance] = true
-node[:quagga][:interfaces]['swp1 table 100'] = []
-node[:quagga][:bgp][$LOCAL_ASN]['1.1.1.1 table 100'] = {}
-node[:quagga][:static_routes]['10.0.0.0/24'] = '172.16.1.1 table 100'
+node.set[:quagga][:interfaces]['swp1 table 100'] = []
+node.set[:quagga][:bgp]['64512']['1.1.1.1 table 100'] = {}
+node.set[:quagga][:static_routes]['10.0.0.0/24'] = '172.16.1.1 table 100'
 ```
 
 Contributing
