@@ -167,6 +167,8 @@ Author and License
 ===================
 ### Maintainer, Authors and Contributors
 
+
+| Role			| Individual
 |:----------------------|:-----------------------------------------|
 | **Author** (pre-0.2)  | [Ooyala Inc.](https://github.com/ooyala)
 | **Maintainer** (0.2+) | [Ian Clark](https://https://github.com/floored1585)
