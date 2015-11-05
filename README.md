@@ -1,7 +1,7 @@
 Description
 ===========
 
-This is a fork of [https://github.com/ooyala/quagga-cookbook](https://github.com/ooyala/quagga-cookbook).
+This is a fork of [https://github.com/ooyala/quagga-cookbook](https://github.com/ooyala/quagga-cookbook).  The functionality here is much different, and this cookbook is not backwards comptaible.
 
 This cookbook provides an interface via attributes to serveral Quagga daemons. It's written with
 the intention of deploying Quagga on [Cumulus](http://cumulusnetworks.com) switches, and managing
