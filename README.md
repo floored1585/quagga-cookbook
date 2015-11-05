@@ -16,7 +16,9 @@ This cookbook currently supports the following daemons:
 Requirements
 ============
 
-Linux (only tested on recent versions of Debian and Ubuntu)
+Tested on:
+* Cumulus Linux 1.5.3
+* Ubuntu 14.04
 
 Attributes
 ==========
@@ -162,6 +164,7 @@ To run the tests (after installing prerequisites):
 * `bundle install`
 * `rake rubocop`
 * `rake test`
+* `foodcritic .`
 
 Author and License
 ===================

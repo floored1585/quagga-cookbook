@@ -10,8 +10,20 @@ platforms:
   - name: cumulus-vx-2.5.3
     driver:
       box: cumulus-vx-2.5.3
+      box_url: 'https://objects.dreamhost.com/public-github/vagrant/boxes/cumulus-vx-2.5.3-chef-vbox.box'
       provision: true
       vagrantfiles: ['test/provision-chef.rb']
+  - name: ubuntu/trusty64
+    driver:
+      box: ubuntu/trusty64
+      box_url: 'ubuntu/trusty64'
+      provision: true
+      vagrantfiles: ['test/provision-chef.rb']
+    provisioner:
+      name: chef_solo
+      chef_omnibus_root: '/usr'
+    busser:
+      ruby_bindir: /usr/bin
 
 suites:
   - name: a

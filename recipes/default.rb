@@ -32,6 +32,7 @@ directory node.quagga.dir do
 end
 
 service 'quagga' do
+  supports status: true, restart: true, reload: true
   action :enable
 end
 
@@ -66,11 +67,6 @@ if %w( debian ubuntu ).include? node.platform
     group 'root'
     mode '0644'
   end
-end
-
-service 'quagga' do
-  supports status: true, restart: true, reload: true
-  action [:nothing]
 end
 
 integrated_config = node.quagga.integrated_vtysh_config
