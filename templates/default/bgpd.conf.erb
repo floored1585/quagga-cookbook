@@ -1,15 +1,15 @@
 !!! BGP CONFIGURATION
 !
-<% unless node.quagga.integrated_vtysh_config -%>
+<% unless node['quagga']['integrated_vtysh_config'] -%>
 hostname bgpd
-password <%= node.quagga.password %>
-enable password <%= node.quagga.enabled_password %>
+password <%= node['quagga']['password'] %>
+enable password <%= node['quagga']['enabled_password'] %>
 log file /var/log/quagga/bgpd.log
 !
 <% end -%>
 <% @local_asns.each do |asn, data| -%>
 router bgp <%= asn %>
-  <% if router_id = data['router_id'] || node.quagga.router_id -%>
+  <% if router_id = data['router_id'] || node['quagga']['router_id'] -%>
  bgp router-id <%= router_id %>
   <% end -%>
   <% Array(data['redistribute']).each do |route_type| -%>

@@ -6,9 +6,9 @@ service integrated-vtysh-config
 <% if node['quagga']['multiple_instance'] %>
 bgp multiple-instance
 <% end -%>
-hostname <%= node.hostname %>
+hostname <%= node['hostname'] %>
 username root nopassword
-password <%= node.quagga.password %>
-enable password <%= node.quagga.enabled_password %>
+password <%= node['quagga']['password'] %>
+enable password <%= node['quagga']['enabled_password'] %>
 log file /var/log/quagga/vtysh.log
 log timestamp precision 6
