@@ -20,19 +20,18 @@
 # limitations under the License.
 #
 
-node.set[:quagga][:daemons][:ospfd] = true
+node.set['quagga']['daemons']['ospfd'] = true
 
 include_recipe 'quagga'
 
-ospf = node.quagga.ospf
-unless ospf.areas.empty?
-  quagga_ospf 'ospf' do
-    ospf = node.quagga['ospf']
-    areas ospf.areas
-    router_id ospf['router_id'] || node.quagga['router_id']
-    interfaces ospf['interfaces']
-    passive_ints ospf['passive_ints']
-    redistribute ospf['redistribute']
-    passive_default ospf['passive_default']
-  end
+ospf = node['quagga']['ospf']
+quagga_ospf 'ospf' do
+  ospf = node['quagga']['ospf']
+  areas ospf['areas']
+  router_id ospf['router_id'] || node['quagga']['router_id']
+  interfaces ospf['interfaces']
+  passive_ints ospf['passive_ints']
+  redistribute ospf['redistribute']
+  passive_default ospf['passive_default']
+  not_if ospf['areas'].empty?
 end

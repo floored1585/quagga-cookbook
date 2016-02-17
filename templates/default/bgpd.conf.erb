@@ -9,43 +9,43 @@ log file /var/log/quagga/bgpd.log
 <% end -%>
 <% @local_asns.each do |asn, data| -%>
 router bgp <%= asn %>
-  <% if router_id = data[:router_id] || node.quagga.router_id -%>
+  <% if router_id = data['router_id'] || node.quagga.router_id -%>
  bgp router-id <%= router_id %>
   <% end -%>
-  <% Array(data[:redistribute]).each do |route_type| -%>
+  <% Array(data['redistribute']).each do |route_type| -%>
     <% next unless %w( babel connected isis kernel ospf rip static ).include? route_type -%>
  redistribute <%= route_type %>
   <% end -%>
-  <% if data[:log_neighbor_changes] -%>
+  <% if data['log_neighbor_changes'] -%>
  bgp log-neighbor-changes
   <% end -%>
-  <% next unless data[:neighbors] -%>
-  <% data[:neighbors].each do |neighbor, opts| -%>
-    <% next unless opts[:remote_as] -%>
-    <% if opts[:peer_group] -%>
+  <% next unless data['neighbors'] -%>
+  <% data['neighbors'].each do |neighbor, opts| -%>
+    <% next unless opts['remote_as'] -%>
+    <% if opts['peer_group'] -%>
  neighbor <%= neighbor %> peer-group
     <% end -%>
- neighbor <%= neighbor %> remote-as <%= opts[:remote_as] %>
-    <% if opts[:soft_reconfig_in] -%>
+ neighbor <%= neighbor %> remote-as <%= opts['remote_as'] %>
+    <% if opts['soft_reconfig_in'] -%>
  neighbor <%= neighbor %> soft-reconfiguration inbound
     <% end -%>
-    <% if opts[:prefix_list_in] -%>
- neighbor <%= neighbor %> prefix-list <%= opts[:prefix_list_in] %> in
+    <% if opts['prefix_list_in'] -%>
+ neighbor <%= neighbor %> prefix-list <%= opts['prefix_list_in'] %> in
     <% end -%>
-    <% if opts[:prefix_list_out] -%>
- neighbor <%= neighbor %> prefix-list <%= opts[:prefix_list_out] %> out
+    <% if opts['prefix_list_out'] -%>
+ neighbor <%= neighbor %> prefix-list <%= opts['prefix_list_out'] %> out
     <% end -%>
-    <% if opts[:default_originate] -%>
-      <% if opts[:default_originate_map] -%>
- neighbor <%= neighbor %> default-originate route-map <%= opts[:default_originate_map] %>
+    <% if opts['default_originate'] -%>
+      <% if opts['default_originate_map'] -%>
+ neighbor <%= neighbor %> default-originate route-map <%= opts['default_originate_map'] %>
       <% else -%>
  neighbor <%= neighbor %> default-originate
       <% end -%>
     <% end -%>
   <% end -%>
-  <% data[:neighbors].each do |neighbor, opts| -%>
-    <% if opts[:peer_group] && opts[:peer_group_range] -%>
-      <% Array(opts[:peer_group_range]).each do |range| -%>
+  <% data['neighbors'].each do |neighbor, opts| -%>
+    <% if opts['peer_group'] && opts['peer_group_range'] -%>
+      <% Array(opts['peer_group_range']).each do |range| -%>
  bgp listen range <%= range %> peer-group <%= neighbor %>
       <% end -%>
     <% end -%>

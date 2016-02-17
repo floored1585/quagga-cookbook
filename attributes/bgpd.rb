@@ -1,3 +1,3 @@
 include_attribute 'quagga'
 
-default[:quagga][:bgp] = {}
+default['quagga']['bgp'] = {}

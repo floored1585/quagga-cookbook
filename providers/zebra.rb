@@ -21,16 +21,16 @@
 #
 
 action :add do
-  integrated_config = node.quagga.integrated_vtysh_config
+  integrated_config = node['quagga']['integrated_vtysh_config']
 
-  zebra_path = "#{node.quagga.dir}/zebra.conf"
+  zebra_path = "#{node['quagga']['dir']}/zebra.conf"
   Chef::Log.info "Adding #{new_resource.name}: interface to #{zebra_path}"
 
-  template "#{zebra_path}" do
+  template zebra_path do
     cookbook 'quagga'
     source 'zebra.conf.erb'
-    owner node.quagga.user
-    group node.quagga.group
+    owner node['quagga']['user']
+    group node['quagga']['group']
     mode '0644'
     variables(
       interfaces: new_resource.interfaces,
@@ -46,7 +46,7 @@ action :add do
 end
 
 action :remove do
-  zebra_path = "#{node.quagga.dir}/#{new_resource.name}"
+  zebra_path = "#{node['quagga']['dir']}/#{new_resource.name}"
   if ::File.exist?(zebra_path)
     Chef::Log.info "Removing #{new_resource.file_type}: interface from #{zebra_path}"
     file zebra_path do
