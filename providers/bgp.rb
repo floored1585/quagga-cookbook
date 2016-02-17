@@ -21,16 +21,16 @@
 #
 
 action :add do
-  integrated_config = node.quagga.integrated_vtysh_config
+  integrated_config = node['quagga']['integrated_vtysh_config']
 
-  bgpd_path = "#{node.quagga.dir}/bgpd.conf"
+  bgpd_path = "#{node['quagga']['dir']}/bgpd.conf"
   Chef::Log.info "Adding #{new_resource.name}: acl to #{bgpd_path}"
 
-  template "#{bgpd_path}" do
+  template bgpd_path do
     cookbook 'quagga'
     source 'bgpd.conf.erb'
-    owner node.quagga.user
-    group node.quagga.group
+    owner node['quagga']['user']
+    group node['quagga']['group']
     mode '0644'
     variables(
       local_asns: new_resource.local_asns
@@ -44,7 +44,7 @@ action :add do
 end
 
 action :remove do
-  bgpd_path = "#{node.quagga.dir}/#{new_resource.name}"
+  bgpd_path = "#{node['quagga']['dir']}/#{new_resource.name}"
   if ::File.exist?(bgpd_path)
     Chef::Log.info "Removing #{new_resource.file_type}: bgp from #{bgpd_path}"
     file bgpd_path do

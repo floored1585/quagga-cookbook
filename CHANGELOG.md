@@ -1,3 +1,9 @@
+## 0.2.5 (2016-02-17)
+
+Bugfixes:
+
+  - fix multiple lint issues / improve code consistency (@floored1585)
+
 ## 0.2.4 (2015-11-04)
 
 Features:

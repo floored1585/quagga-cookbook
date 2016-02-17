@@ -1,9 +1,9 @@
 !!! VTYSH CONFIGURATION
 !
-<% if node[:quagga]["integrated_vtysh_config"] %>
+<% if node['quagga']['integrated_vtysh_config'] %>
 service integrated-vtysh-config
 <% end %>
-<% if node[:quagga]["multiple_instance"] %>
+<% if node['quagga']['multiple_instance'] %>
 bgp multiple-instance
 <% end -%>
 hostname <%= node.hostname %>

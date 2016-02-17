@@ -20,12 +20,11 @@
 # limitations under the License.
 #
 
-node.set[:quagga][:daemons][:bgpd] = true
+node.set['quagga']['daemons']['bgpd'] = true
 
 include_recipe 'quagga'
 
-unless node.quagga.bgp.empty?
-  quagga_bgp 'bgp' do
-    local_asns node.quagga.bgp
-  end
+quagga_bgp 'bgp' do
+  local_asns node['quagga']['bgp']
+  not_if node['quagga']['bgp'].empty?
 end

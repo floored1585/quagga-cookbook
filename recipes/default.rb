@@ -24,9 +24,9 @@ package 'quagga' do
   action :install
 end
 
-directory node.quagga.dir do
-  owner node.quagga.user
-  group node.quagga.group
+directory node['quagga']['dir'] do
+  owner node['quagga']['user']
+  group node['quagga']['group']
   mode '0755'
   action :create
 end
@@ -36,26 +36,26 @@ service 'quagga' do
   action :enable
 end
 
-if %w( debian ubuntu ).include? node.platform
-  template "#{node.quagga.dir}/daemons" do
+if %w( debian ubuntu ).include? node['platform']
+  template "#{node['quagga']['dir']}/daemons" do
     source 'daemons.erb'
-    owner node.quagga.user
-    group node.quagga.group
+    owner node['quagga']['user']
+    group node['quagga']['group']
     mode '0644'
     notifies :restart, 'service[quagga]', :delayed
   end
 
-  template "#{node.quagga.dir}/debian.conf" do
+  template "#{node['quagga']['dir']}/debian.conf" do
     source 'debian.conf.erb'
-    owner node.quagga.user
-    group node.quagga.group
+    owner node['quagga']['user']
+    group node['quagga']['group']
     mode '0644'
   end
 
   %w( zebra.conf ospfd.conf bgpd.conf ).each do |file|
-    file "#{node.quagga.dir}/#{file}" do
-      owner node.quagga.user
-      group node.quagga.group
+    file "#{node['quagga']['dir']}/#{file}" do
+      owner node['quagga']['user']
+      group node['quagga']['group']
       mode '0644'
       action :touch
     end
@@ -69,16 +69,16 @@ if %w( debian ubuntu ).include? node.platform
   end
 end
 
-integrated_config = node.quagga.integrated_vtysh_config
+integrated_config = node['quagga']['integrated_vtysh_config']
 
 # Combine the templates into a master file to be reloaded
 template 'integrated_config' do
-  path "#{node.quagga.dir}/Quagga.conf"
+  path "#{node['quagga']['dir']}/Quagga.conf"
   source 'Quagga.conf.erb'
-  owner node.quagga.user
-  group node.quagga.group
+  owner node['quagga']['user']
+  group node['quagga']['group']
   mode '0644'
-  if node.quagga.enable_reload
+  if node['quagga']['enable_reload']
     notifies :reload, 'service[quagga]', :delayed
   else
     notifies :restart, 'service[quagga]', :delayed
@@ -87,10 +87,10 @@ template 'integrated_config' do
 end
 
 # vtysh configuration
-template "#{node.quagga.dir}/vtysh.conf" do
+template "#{node['quagga']['dir']}/vtysh.conf" do
   source 'vtysh.conf.erb'
-  owner node.quagga.user
-  group node.quagga.group
+  owner node['quagga']['user']
+  group node['quagga']['group']
   mode '0644'
   if integrated_config
     notifies :create, 'template[integrated_config]', :delayed
