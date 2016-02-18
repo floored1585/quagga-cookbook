@@ -1,4 +1,10 @@
-## 0.2.5 (2016-02-17)
+## 0.2.7 (2016-02-18)
+
+Features:
+
+  - add BGP maximum-paths support
+
+## 0.2.6 (2016-02-17)
 
 Bugfixes:
 

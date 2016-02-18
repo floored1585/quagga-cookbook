@@ -50,5 +50,8 @@ router bgp <%= asn %>
       <% end -%>
     <% end -%>
   <% end -%>
+  <% if max_paths = data['max_paths'] -%>
+ maximum-paths <%= max_paths %>
+  <% end -%>
 <% end -%>
 !

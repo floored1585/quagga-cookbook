@@ -22,6 +22,7 @@ describe file("#{cfg_dir}/bgpd.conf") do
   its(:content) { should contain('neighbor 192.168.52.1 soft-reconfiguration inbound') }
   its(:content) { should contain('neighbor 192.168.52.1 prefix-list TEST_IN in') }
   its(:content) { should contain('neighbor 192.168.52.1 prefix-list TEST_OUT out') }
+  its(:content) { should contain('maximum-paths 5') }
 end
 
 describe file("#{cfg_dir}/Quagga.conf") do

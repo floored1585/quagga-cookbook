@@ -43,6 +43,7 @@ Attribute        | Description |Type | Default
 `node[:quagga][:bgp]` | A hash containing the BGP processes and their configuration.  Keys are the local ASNs/processes (Integer), values are the data for that process (Hash). | Hash | `{}`
 `node[:quagga][:bgp][$LOCAL_ASN][:router_id]` | Sets the router-id for this BGP process. | String | `nil`
 `node[:quagga][:bgp][$LOCAL_ASN][:redistribute]` | Route types to redistribute into BGP (eg: `["connected","ospf"]`. | String or Array | `nil`
+`node[:quagga][:bgp][$LOCAL_ASN][:max_paths]` | Maximum number of ECMP paths. | Integer | `nil`
 `node[:quagga][:bgp][$LOCAL_ASN][:neighbors]` | A hash containing neighbors and their configuration.  Keys are the neighbor IPs or group names (String), values are the data for that neighbor or group (Hash). | Hash | `nil`
 `node[:quagga][:bgp][$LOCAL_ASN][:neighbors][$NEIGHBOR][:remote_as]` | The remote-as for this neighbor. | Integer | `nil`
 `node[:quagga][:bgp][$LOCAL_ASN][:neighbors][$NEIGHBOR][:default_originate]` | Set to `true` to advertise a default route to this neighbor. | Boolean | `false`
