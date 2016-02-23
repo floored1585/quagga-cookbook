@@ -1,3 +1,9 @@
+## 0.2.8 (2016-02-22)
+
+Features:
+
+  - add global BGP timer attributes (@floored1585)
+
 ## 0.2.7 (2016-02-18)
 
 Features:
