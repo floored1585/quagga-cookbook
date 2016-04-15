@@ -25,6 +25,5 @@ node.set['quagga']['daemons']['bgpd'] = true
 include_recipe 'quagga'
 
 quagga_bgp 'bgp' do
-  local_asns node['quagga']['bgp']
   not_if node['quagga']['bgp'].empty?
 end

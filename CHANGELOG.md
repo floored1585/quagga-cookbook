@@ -1,3 +1,9 @@
+## 0.2.9 (2016-04-15)
+
+Bugfixes:
+
+  - fix issues with override attributes and the LWRPs (removed new_resource attribute passing)
+
 ## 0.2.8 (2016-02-22)
 
 Features:

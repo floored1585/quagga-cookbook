@@ -33,12 +33,12 @@ action :add do
     group node['quagga']['group']
     mode '0644'
     variables(
-      areas: new_resource.areas,
-      router_id: new_resource.router_id,
-      interfaces: new_resource.interfaces,
-      passive_ints: new_resource.passive_ints,
-      redistribute: new_resource.redistribute,
-      passive_default: new_resource.passive_default
+      areas: node['quagga']['ospf']['areas'],
+      router_id: node['quagga']['ospf']['router_id'] || node['quagga']['router_id'],
+      interfaces: node['quagga']['ospf']['interfaces'],
+      passive_ints: node['quagga']['ospf']['passive_ints'],
+      redistribute: node['quagga']['ospf']['redistribute'],
+      passive_default: node['quagga']['ospf']['passive_default']
     )
     if integrated_config
       notifies :create, 'template[integrated_config]', :delayed
