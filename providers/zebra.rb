@@ -33,9 +33,9 @@ action :add do
     group node['quagga']['group']
     mode '0644'
     variables(
-      interfaces: new_resource.interfaces,
-      static_routes: new_resource.static_routes,
-      prefix_lists: new_resource.prefix_lists
+      interfaces: node['quagga']['interfaces'],
+      static_routes: node['quagga']['static_routes'],
+      prefix_lists: node['quagga']['prefix_lists']
     )
     if integrated_config
       notifies :create, 'template[integrated_config]', :delayed
