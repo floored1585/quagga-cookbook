@@ -1,3 +1,7 @@
+## 0.2.10 (2016-04-20)
+
+No changes made, just a version bump
+
 ## 0.2.9 (2016-04-15)
 
 Bugfixes:
