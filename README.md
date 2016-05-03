@@ -92,7 +92,7 @@ Attribute        | Description |Type | Default
 `node[:quagga][:route_maps][$LIST][$SEQ][:set][:aggregator]` | The aggregator AS as well as the aggregator IP address | Hash | `{}`
 `node[:quagga][:route_maps][$LIST][$SEQ][:set][:aggregator]` | Hash containing the aggregator AS and IP address | Hash | `{}`
 `node[:quagga][:route_maps][$LIST][$SEQ][:set][:aggregator][:as]` | The aggregator AS | Integer | `nil`
-`node[:quagga][:route_maps][$LIST][$SEQ][:set][:aggregator][:ip]` | The aggregator IP address | Integer | `nil`
+`node[:quagga][:route_maps][$LIST][$SEQ][:set][:aggregator][:ip]` | The aggregator IP address | String | `nil`
 `node[:quagga][:route_maps][$LIST][$SEQ][:set][:local_preference]` | The local prefernce to set on the route | Integer | `nil`
 
 ### Static Routes
