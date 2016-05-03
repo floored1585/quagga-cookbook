@@ -45,16 +45,22 @@ router bgp <%= asn %>
  neighbor <%= neighbor %> default-originate
       <% end -%>
     <% end -%>
+    <% if opts['route_map_in'] -%>
+      neighbor <%= neighbor %> route-map <%= opts['route_map_in'] %> in
+    <% end -%>
+    <% if opts['route_map_out'] -%>
+      neighbor <%= neighbor %> route-map <%= opts['route_map_out'] %> out
+    <% end -%>
   <% end -%>
   <% data['neighbors'].each do |neighbor, opts| -%>
     <% if opts['peer_group'] && opts['peer_group_range'] -%>
       <% Array(opts['peer_group_range']).each do |range| -%>
- bgp listen range <%= range %> peer-group <%= neighbor %>
-      <% end -%>
+        bgp listen range <%= range %> peer-group <%= neighbor %>
     <% end -%>
   <% end -%>
-  <% if max_paths = data['max_paths'] -%>
- maximum-paths <%= max_paths %>
+<% end -%>
+<% if max_paths = data['max_paths'] -%>
+  maximum-paths <%= max_paths %>
   <% end -%>
 <% end -%>
 !

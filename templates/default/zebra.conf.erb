@@ -27,7 +27,25 @@ ip route <%= network %> <%= next_hop %>
     <% rule = "ip prefix-list #{list} seq #{entry} #{data['action']} #{data['prefix'] || 'any'}" -%>
     <% rule << " ge #{data['ge']}" if data['ge'] -%>
     <% rule << " le #{data['le']}" if data['le'] -%>
- <%= rule %>
+    <%= rule %>
+  <% end -%>
+<% end -%>
+<% @route_maps.each do |map,entries| -%>
+  <% Array(entries).each do |entry,data| -%>
+    <% next unless %w( permit deny ).include?(data['action']) -%>
+    <% rule = "route-map #{map} #{data['action']} #{entry}" -%>
+    <% if data['set'] -%>
+      <% data['set'].each do |set, opts| -%>
+        <% if opts['aggregator'] -%>
+          <% opts['aggregator'].each do |aggregator, opts| -%>
+            set aggregator as <%= opts['as']%> <%= opts['ip']%>
+          <% end -%>
+        <% end -%>
+      <% end -%>
+      <% if opts['local_preference'] -%>
+        set local-preference <%= opts['local_preference']%>
+      <% end -%>
+    <% end -%>
   <% end -%>
 <% end -%>
 !
