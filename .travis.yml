@@ -11,6 +11,6 @@ before_script:
 - source <(curl -sL https://raw.githubusercontent.com/zuazo/kitchen-in-travis/master/scripts/start_docker.sh)
 
 script:
-- travis_retry bundle exec rake integration:docker
+- travis_retry bundle exec rake integration:docker --without kitchen-vagrant
 
 after_failure: cat docker_daemon.log
