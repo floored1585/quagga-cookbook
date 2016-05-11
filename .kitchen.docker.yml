@@ -26,4 +26,4 @@ suites:
     driver:
       provision_command:
         - wget https://objects-us-west-1.dream.io/public_github/docker/dpkg/quagga_0.99.23.1-1%2Bcl3u1_trusty_amd64.deb
-        - dpkg -i quagga_0.99.23.1-1%2Bcl3u1_trusty_amd64.deb
+        - sudo dpkg -i quagga_0.99.23.1-1%2Bcl3u1_trusty_amd64.deb
