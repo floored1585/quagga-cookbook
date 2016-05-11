@@ -17,6 +17,7 @@ platforms:
   driver:
     provision_command:
       - curl -L https://www.opscode.com/chef/install.sh | bash
+      - sudo sh -c 'ENABLE_RELOAD=yes >> /etc/default/quagga'
       - sudo apt-get install quagga -y
       - URL='https://objects-us-west-1.dream.io/public_github/docker/dpkg/quagga_0.99.23.1-1%2Bcl3u1_trusty_amd64.deb'; FILE=`mktemp`; wget "$URL" -qO $FILE && sudo dpkg -i $FILE; rm $FILE
   run_list:
