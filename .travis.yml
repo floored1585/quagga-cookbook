@@ -9,4 +9,5 @@ install:
   - sudo apt-get install vagrant
   - sudo vagrant plugin install vagrant-plugin-bundler
 script:
+  - bundler install
   - rake test
