@@ -23,5 +23,3 @@ platforms:
       - sudo sh -c 'ENABLE_RELOAD=yes >> /etc/default/quagga'
   run_list:
     - recipe[quagga-test::default_b]
-  busser:                    
-    ruby_bindir: /usr/bin
