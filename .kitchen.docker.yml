@@ -16,7 +16,7 @@ platforms:
     chef_omnibus_root: '/usr'
   driver:
     provision_command:
-      - sudo apt-get install quagga
+      - sudo apt-get install quagga -y
       - URL='https://objects-us-west-1.dream.io/public_github/docker/dpkg/quagga_0.99.23.1-1%2Bcl3u1_trusty_amd64.deb'; FILE=`mktemp`; wget "$URL" -qO $FILE && sudo dpkg -i $FILE; rm $FILE
   run_list:
     - recipe[quagga-test::default_a]
