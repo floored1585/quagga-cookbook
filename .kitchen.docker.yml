@@ -12,7 +12,7 @@ platforms:
   provisioner:               
     name: chef_solo          
     chef_omnibus_root: '/usr'
-- name: cumulusnetworks/docker-router
+- name: cumulusnetworks/docker-router:latest
   provisioner:               
     name: chef_solo          
     chef_omnibus_root: '/usr'
