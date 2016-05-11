@@ -7,20 +7,16 @@ driver_config:
   provision_command: curl -L https://www.opscode.com/chef/install.sh | bash
   require_chef_omnibus: false
 
-provision_command:
-
 platforms:
 - name: ubuntu-14.04
   provisioner:               
     name: chef_solo          
     chef_omnibus_root: '/usr'
-  driver:
-    provision_command:
-      - curl -L https://www.opscode.com/chef/install.sh | bash
 
 suites:
   - name: a
-    except: [ubuntu-14.04]
+    excludes: 
+      - ubuntu-14.04
     run_list:
       - recipe[quagga-test::default_a]
   - name: b
