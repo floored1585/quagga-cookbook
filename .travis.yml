@@ -12,5 +12,6 @@ install:
   - sudo vagrant plugin install vagrant-plugin-bundler
   - gem install bundler
   - bundle install
+  - sudo chown -R travis /home/travis/vagrant.d
 script:
   - bundle exec rake test
