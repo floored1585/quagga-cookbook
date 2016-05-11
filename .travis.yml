@@ -1,29 +1,12 @@
-sudo: required
-services:
-  - docker
-addons:
-  apt:
-    sources:
-      - chef-current-precise
-    packages:
-      - chefdk
+rvm:
+- 2.0.0
+- 2.1
+- 2.2
 
-env:
-  global:
-  - KITCHEN_ARGS="--destroy=always"
-  - KITCHEN_LOCAL_YAML=.kitchen.docker.yml
-  matrix:
-# CHEF_VERSION is only for unit tests, no for test-kitchen:
-  - TESTS="style unit"
-# Split up the test-kitchen run to avoid exceeding 50 minutes:
-  - TESTS="integration" KITCHEN_REGEXP=centos
-  - TESTS="integration" KITCHEN_REGEXP=ubuntu
+sudo: true
 
-install: echo "skip bundle install"
-
-# Ensure we make ChefDK's Ruby the default
 before_script:
-  - eval "$(/opt/chefdk/bin/chef shell-init bash)"
+- source <(curl -sL https://raw.githubusercontent.com/zuazo/kitchen-in-travis/0.4.0/scripts/start_docker.sh)
 
 script:
-  - /opt/chefdk/embedded/bin/chef exec rake $TESTS
+- travis_retry bundle exec rake integration:docker
