@@ -1,17 +1,29 @@
-rvm:
-- 2.2
+sudo: required
+services:
+  - docker
+addons:
+  apt:
+    sources:
+      - chef-current-precise
+    packages:
+      - chefdk
 
-sudo: true
+env:
+  global:
+  - KITCHEN_ARGS="--destroy=always"
+  - KITCHEN_LOCAL_YAML=.kitchen.docker.yml
+  matrix:
+# CHEF_VERSION is only for unit tests, no for test-kitchen:
+  - TESTS="style unit"
+# Split up the test-kitchen run to avoid exceeding 50 minutes:
+  - TESTS="integration" KITCHEN_REGEXP=centos
+  - TESTS="integration" KITCHEN_REGEXP=ubuntu
 
-install:
-  - sudo apt-get update -q
-  - sudo apt-get install -q virtualbox --fix-missing # Everything falls apart here exactly.
-  - sudo apt-get install -q virtualbox-dkms
-  - wget -nv https://releases.hashicorp.com/vagrant/1.8.1/vagrant_1.8.1_x86_64.deb
-  - sudo dpkg -i vagrant_1.8.1_x86_64.deb
-  - sudo vagrant plugin install vagrant-plugin-bundler
-  - gem install bundler
-  - bundle install
-  - sudo chown -R travis /home/travis/.vagrant.d
+install: echo "skip bundle install"
+
+# Ensure we make ChefDK's Ruby the default
+before_script:
+  - eval "$(/opt/chefdk/bin/chef shell-init bash)"
+
 script:
-  - bundle exec rake test
+  - /opt/chefdk/embedded/bin/chef exec rake $TESTS
