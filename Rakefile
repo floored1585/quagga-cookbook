@@ -8,38 +8,79 @@ end
 # Rakefile
 require 'bundler/setup'
 
+def ci?
+    ENV['CI'] == 'true'
+end
+
 desc 'Run Test Kitchen integration tests'
 namespace :integration do
-  desc 'Run integration tests with kitchen-docker'
-  task :docker do
+  # Gets a collection of instances.
+  #
+  # @param regexp [String] regular expression to match against instance names.
+  # @param config [Hash] configuration values for the `Kitchen::Config` class.
+  # @return [Collection<Instance>] all instances.
+  def kitchen_instances(regexp, config)
+    instances = Kitchen::Config.new(config).instances
+    return instances if regexp.nil? || regexp == 'all'
+    instances.get_all(Regexp.new(regexp))
+  end
+
+  # Runs a test kitchen action against some instances.
+  #
+  # @param action [String] kitchen action to run (defaults to `'test'`).
+  # @param regexp [String] regular expression to match against instance names.
+  # @param loader_config [Hash] loader configuration options.
+  # @return void
+  def run_kitchen(action, regexp, loader_config = {})
+    action = 'test' if action.nil?
     require 'kitchen'
     Kitchen.logger = Kitchen.default_file_logger
-    @loader = Kitchen::Loader::YAML.new(local_config: '.kitchen.docker.yml')
-    Kitchen::Config.new(loader: @loader).instances.each do |instance|
-      instance.test(:always)
-    end
+    config = { loader: Kitchen::Loader::YAML.new(loader_config) }
+    kitchen_instances(regexp, config).each { |i| i.send(action) }
+  end
+
+  desc 'Run Test Kitchen integration tests using vagrant'
+  task :vagrant, [:regexp, :action] do |_t, args|
+    run_kitchen(args.action, args.regexp)
+  end
+
+  desc 'Run Test Kitchen integration tests using docker'
+  task :docker, [:regexp, :action] do |_t, args|
+    run_kitchen(args.action, args.regexp, local_config: '.kitchen.docker.yml')
+  end
+
+  desc 'Run Test Kitchen integration tests in the cloud'
+  task :cloud, [:regexp, :action] do |_t, args|
+    run_kitchen(args.action, args.regexp, local_config: '.kitchen.cloud.yml')
   end
 end
 
-begin
-  require 'berkshelf'
-  require 'kitchen/rake_tasks'
+desc 'Run Test Kitchen integration tests'
+task :integration, [:regexp, :action] =>
+  ci? ? %w(integration:docker) : %w(integration:vagrant)
 
-  Kitchen::RakeTasks.new
+desc 'Run doc, style, unit and integration tests'
+task default: %w(doc style unit integration)
 
-  desc "Install Berkshelf cookbooks for testing"
-  task :berks_install do
-    begin
-      berksfile = Berkshelf::Berksfile.from_file("Berksfile")
-      berksfile.install
-    rescue StandardError => e
-      STDERR.puts("Failed to install Chef cookbooks: #{e.message}")
-    end
-  end
-
-  desc "Converge and run tests"
-  task :test => [:berks_install, 'kitchen:all'] do
-  end
-rescue LoadError
-  puts "Couldn't load test-kitchen: kitchen tests are not available"
-end
+#begin
+#  require 'berkshelf'
+#  require 'kitchen/rake_tasks'
+#
+#  Kitchen::RakeTasks.new
+#
+#  desc "Install Berkshelf cookbooks for testing"
+#  task :berks_install do
+#    begin
+#      berksfile = Berkshelf::Berksfile.from_file("Berksfile")
+#      berksfile.install
+#    rescue StandardError => e
+#      STDERR.puts("Failed to install Chef cookbooks: #{e.message}")
+#    end
+#  end
+#
+#  desc "Converge and run tests"
+#  task :test => [:berks_install, 'kitchen:all'] do
+#  end
+#rescue LoadError
+#  puts "Couldn't load test-kitchen: kitchen tests are not available"
+#end

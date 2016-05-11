@@ -10,6 +10,7 @@ group 'kitchen' do
   gem 'berkshelf'
   gem 'test-kitchen'
   gem 'kitchen-vagrant'
+  gem 'kitchen-docker'
   gem 'serverspec'
   gem 'docker'
 end
