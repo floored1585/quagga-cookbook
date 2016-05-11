@@ -18,7 +18,7 @@ platforms:
     provision_command:
       - curl -L https://www.opscode.com/chef/install.sh | bash
       - sudo apt-get install iproute -y
-      - URL='https://objects-us-west-1.dream.io/public_github/docker/dpkg/quagga_0.99.23.1-1%2Bcl3u1_trusty_amd64.deb'; FILE=`mktemp`; wget "$URL" -qO $FILE && sudo dpkg -i --force-confnew $FILE; rm $FILE'
+      - URL='https://objects-us-west-1.dream.io/public_github/docker/dpkg/quagga_0.99.23.1-1%2Bcl3u1_trusty_amd64.deb'; FILE=`mktemp`; wget "$URL" -qO $FILE && sudo dpkg -i --force-confnew $FILE; rm $FILE
       - sudo sh -c 'ENABLE_RELOAD=yes >> /etc/default/quagga'
   run_list:
     - recipe[quagga-test::default_a]
