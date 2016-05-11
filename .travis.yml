@@ -12,4 +12,4 @@ install:
   - gem install bundler
   - bundle install
 script:
-  - rake test
+  - bundle exec rake test
