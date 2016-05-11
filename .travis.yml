@@ -5,6 +5,12 @@ rvm:
 
 sudo: true
 
+env:
+  matrix:
+# CHEF_VERSION is only for unit tests, no for test-kitchen:
+  - TESTS="style unit" CHEF_VERSION="~> 11.0"
+  - TESTS="style unit" CHEF_VERSION="~> 12.0"
+
 bundler_args: --jobs=3 --retry=3 --without='doc integration_vagrant integration_cloud guard'
 
 before_script:
