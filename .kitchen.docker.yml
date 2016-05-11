@@ -10,7 +10,7 @@ driver_config:
 provision_command:
 
 platforms:
-- name: ubuntu-14.04
+- name: cumulusnetworks/docker-router
   provisioner:               
     name: chef_solo          
     chef_omnibus_root: '/usr'
@@ -19,10 +19,18 @@ platforms:
     - recipe[quagga-test::default_b]
   busser:                    
     ruby_bindir: /usr/bin
+- name: ubuntu-14.04
+  provisioner:               
+    name: chef_solo          
+    chef_omnibus_root: '/usr'
+  run_list:
+    - recipe[quagga-test::default_b]
+  busser:                    
+    ruby_bindir: /usr/bin
 
 suites:
   - name: install_quagga
-    excludes: []
+    excludes: [cumulusnetworks/docker-router]
     driver:
       provision_command:
         - URL='https://objects-us-west-1.dream.io/public_github/docker/dpkg/quagga_0.99.23.1-1%2Bcl3u1_trusty_amd64.deb'; FILE=`mktemp`; wget "$URL" -qO $FILE && sudo dpkg -i $FILE; rm $FILE
