@@ -8,8 +8,6 @@ end
 # Rakefile
 require 'bundler/setup'
 
-# [...]
-
 desc 'Run Test Kitchen integration tests'
 namespace :integration do
   desc 'Run integration tests with kitchen-docker'
