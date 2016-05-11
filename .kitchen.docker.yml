@@ -7,3 +7,7 @@ platforms:
     run_list:
             - recipe[quagga-test::default_a]
             - recipe[quagga-test::default_b]
+  - name: cumulusnetworks/docker-router
+    run_list:
+            - recipe[quagga-test::default_a]
+            - recipe[quagga-test::default_b]
