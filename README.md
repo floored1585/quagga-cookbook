@@ -184,7 +184,8 @@ Testing requirements:
 To run the tests (after installing prerequisites):
 * `bundle install`
 * `rake rubocop`
-* `rake test`
+* `bundle exec rake integration:vagrant` #Vagrant Tests
+* `bundle exec rake integration:docker` #Docker Tests
 * `foodcritic .`
 
 Author and License

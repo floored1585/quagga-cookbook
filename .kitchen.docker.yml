@@ -17,7 +17,9 @@ suites:
   - name: a
     run_list:
       - recipe[quagga-test::default_a]
-    attributes: { node.set[:quagga][:enable_reload]= "false" }
+    attributes: 
+      quagga: 
+        enable_reload: false
   - name: b
     run_list:
       - recipe[quagga-test::default_b]
