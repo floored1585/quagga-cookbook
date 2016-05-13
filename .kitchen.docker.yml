@@ -3,16 +3,22 @@ driver:
   name: docker
   privileged: true
 
+driver_config:
+  provision_command: curl -L https://www.opscode.com/chef/install.sh | bash
+  require_chef_omnibus: false
+
 platforms:
-- name: centos-6.6
 - name: ubuntu-14.04
-  run_list:
-    - recipe[quagga-test::default_a]
-    - recipe[quagga-test::default_b]
-  driver:
-    run_command: ['test/provision-chef.rb']
   provisioner:               
     name: chef_solo          
     chef_omnibus_root: '/usr'
-  busser:                    
-    ruby_bindir: /usr/bin
+
+suites:
+  - name: a
+    excludes: 
+      - ubuntu-14.04
+    run_list:
+      - recipe[quagga-test::default_a]
+  - name: b
+    run_list:
+      - recipe[quagga-test::default_b]
