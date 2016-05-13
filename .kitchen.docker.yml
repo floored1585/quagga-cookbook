@@ -12,11 +12,6 @@ platforms:
   provisioner:               
     name: chef_solo          
     chef_omnibus_root: '/usr'
-- name: cumulus
-    image: cumulusnetworks/docker-router
-  provisioner:               
-    name: chef_solo          
-    chef_omnibus_root: '/usr'
 
 suites:
   - name: a
