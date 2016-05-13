@@ -15,10 +15,9 @@ platforms:
 
 suites:
   - name: a
-    excludes: 
-      - ubuntu-14.04
     run_list:
       - recipe[quagga-test::default_a]
+    attributes: { node.set[:quagga][:enable_reload]= "false" }
   - name: b
     run_list:
       - recipe[quagga-test::default_b]
