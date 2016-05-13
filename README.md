@@ -180,6 +180,7 @@ Tests are run on a [Cumulus VX](https://cumulusnetworks.com/cumulus-vx) VM using
 Testing requirements:
 * Vagrant
 * VirtualBox
+* Docker
 
 To run the tests (after installing prerequisites):
 * `bundle install`
