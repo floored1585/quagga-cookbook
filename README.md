@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.org/nertwork/quagga-cookbook.svg?branch=master)](https://travis-ci.org/nertwork/quagga-cookbook)
+[![Code Climate](https://codeclimate.com/github/nertwork/quagga-cookbook/badges/gpa.svg)](https://codeclimate.com/github/nertwork/quagga-cookbook)
+[![GitHub version](https://badge.fury.io/gh/nertwork%2Fquagga-cookbook.svg)](https://badge.fury.io/gh/nertwork%2Fquagga-cookbook)
+
 Description
 ===========
 
@@ -55,6 +59,8 @@ Attribute        | Description |Type | Default
 `node[:quagga][:bgp][$LOCAL_ASN][:neighbors][$NEIGHBOR][:soft_reconfig_in]` | Enable soft-reconfiguration-inbound (to enable dispaly of received routes). | Boolean | `false`
 `node[:quagga][:bgp][$LOCAL_ASN][:neighbors][$NEIGHBOR][:prefix_list_in]` | Name of the prefix-list to use for filtering incoming routes. | String | `nil`
 `node[:quagga][:bgp][$LOCAL_ASN][:neighbors][$NEIGHBOR][:prefix_list_out]` | Name of the prefix-list to use for filtering outgoing routes. | String | `nil`
+`node[:quagga][:bgp][$LOCAL_ASN][:neighbors][$NEIGHBOR][:route_map_in]` | Name of the route-map to use for filtering incoming routes. | String | `nil`
+`node[:quagga][:bgp][$LOCAL_ASN][:neighbors][$NEIGHBOR][:route_map_out]` | Name of the route-map to use for filtering outgoing routes. | String | `nil`
 
 ### OSPF
 
@@ -78,6 +84,20 @@ Attribute        | Description |Type | Default
 `node[:quagga][:prefix_lists][$LIST][$SEQ][:ge]` | The minimum prefix length to accept (eg: `24`) | Integer | `nil`
 `node[:quagga][:prefix_lists][$LIST][$SEQ][:le]` | The maximum prefix length to accept (eg: `24`) | Integer | `nil`
 `node[:quagga][:prefix_lists][$LIST][$SEQ][:action]` | The action to take (either 'permit' or 'deny'). | String | `nil`
+
+### Route Maps
+
+Attribute        | Description |Type | Default
+-----------------|-------------|-----|--------
+`node[:quagga][:route_maps]` | A hash containing all of the route-maps to configure in quagga.  Keys are the route-map names, values are hashes filled with the entries. | Hash | `{}`
+`node[:quagga][:route_maps][$LIST]` | A hash containing all of the entries in a particular $LIST.  Keys are sequence numbers, values are hashes filled with the details of the entry. | Hash | `{}`
+`node[:quagga][:route_maps][$LIST][$SEQ][:action]` | The action to take (either 'permit' or 'deny'). | String | `nil`
+`node[:quagga][:route_maps][$LIST][$SEQ][:set]` | A hash containing all the actions to set when mapping the route (must be a identified below). If left out the rule will not do anything  | Hash | `{}`
+`node[:quagga][:route_maps][$LIST][$SEQ][:set][:aggregator]` | The aggregator AS as well as the aggregator IP address | Hash | `{}`
+`node[:quagga][:route_maps][$LIST][$SEQ][:set][:aggregator]` | Hash containing the aggregator AS and IP address | Hash | `{}`
+`node[:quagga][:route_maps][$LIST][$SEQ][:set][:aggregator][:as]` | The aggregator AS | Integer | `nil`
+`node[:quagga][:route_maps][$LIST][$SEQ][:set][:aggregator][:ip]` | The aggregator IP address | String | `nil`
+`node[:quagga][:route_maps][$LIST][$SEQ][:set][:local_preference]` | The local prefernce to set on the route | Integer | `nil`
 
 ### Static Routes
 
@@ -162,11 +182,13 @@ Tests are run on a [Cumulus VX](https://cumulusnetworks.com/cumulus-vx) VM using
 Testing requirements:
 * Vagrant
 * VirtualBox
+* Docker
 
 To run the tests (after installing prerequisites):
 * `bundle install`
 * `rake rubocop`
-* `rake test`
+* `bundle exec rake integration:vagrant` #Vagrant Tests
+* `bundle exec rake integration:docker` #Docker Tests
 * `foodcritic .`
 
 Author and License

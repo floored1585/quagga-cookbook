@@ -27,3 +27,5 @@ attribute :name, kind_of: String, name_attribute: true
 attribute :interfaces, kind_of: Hash, default: {}
 attribute :static_routes, kind_of: Hash, default: {}
 attribute :prefix_lists, kind_of: Hash, default: {}
+attribute :route_maps, kind_of: Hash, default: {}
+attribute :set, kind_of: Hash, default: {}
