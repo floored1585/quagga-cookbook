@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/nertwork/quagga-cookbook.svg?branch=master)](https://travis-ci.org/nertwork/quagga-cookbook)
+[![Build Status](https://travis-ci.org/nertwork/quagga-cookbook.svg?branch=master)](https://travis-ci.org/nertwork/quagga-cookbook)[![Code Climate](https://codeclimate.com/github/nertwork/quagga-cookbook/badges/gpa.svg)](https://codeclimate.com/github/nertwork/quagga-cookbook)[![GitHub version](https://badge.fury.io/gh/nertwork%2Fquagga-cookbook.svg)](https://badge.fury.io/gh/nertwork%2Fquagga-cookbook)
 
 Description
 ===========
