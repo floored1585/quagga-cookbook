@@ -1,6 +1,6 @@
 ## 0.3.0 (2016-05-18)
 
-Features: 
+Features:
 
   - Added in support for Travis CI Testing (@nertwork)
 

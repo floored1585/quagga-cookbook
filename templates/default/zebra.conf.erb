@@ -33,7 +33,7 @@ ip route <%= network %> <%= next_hop %>
 <% @route_maps.each do |map,entries| -%>
   <% entries.each do |entry,data| -%>
     <% next unless %w( permit deny ).include?(data['action']) -%>
-route-map <%= map%> <%= data['action']%> <%= entry%> 
+route-map <%= map%> <%= data['action']%> <%= entry%>
       <% if data['set'] -%>
  set aggregator as <%= data['set']['aggregator']['as']%> <%= data['set']['aggregator']['ip']%>
         <% if data['set']['local_preference'] -%>
