@@ -5,12 +5,13 @@ driver:
 provisioner:
   name: chef_solo
   require_chef_omnibus: false
+  chef_solo_path: '/usr/bin/chef-solo'
 
 platforms:
   - name: cumulus-vx-2.5.3
     driver:
       box: cumulus-vx-2.5.3
-      box_url: 'https://objects.dreamhost.com/public-github/vagrant/boxes/cumulus-vx-2.5.3-chef-vbox.box'
+      box_url: 'https://objects-us-west-1.dream.io/public-github/vagrant/boxes/cumulus-vx-2.5.3-chef-vbox.box'
       provision: true
       vagrantfiles: ['test/provision-chef.rb']
   - name: ubuntu/trusty64

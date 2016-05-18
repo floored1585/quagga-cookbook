@@ -35,7 +35,8 @@ action :add do
     variables(
       interfaces: node['quagga']['interfaces'],
       static_routes: node['quagga']['static_routes'],
-      prefix_lists: node['quagga']['prefix_lists']
+      prefix_lists: node['quagga']['prefix_lists'],
+      route_maps: node['quagga']['route_maps']
     )
     if integrated_config
       notifies :create, 'template[integrated_config]', :delayed
