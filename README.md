@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/floored1585/quagga-cookbook.svg?branch=master)](https://travis-ci.org/floored1585/quagga-cookbook)
 [![Code Climate](https://codeclimate.com/github/floored1585/quagga-cookbook/badges/gpa.svg)](https://codeclimate.com/github/floored1585/quagga-cookbook)
-[[GitHub version](https://badge.fury.io/gh/floored1585%2Fquagga-cookbook.svg)](https://badge.fury.io/gh/floored1585%2Fquagga-cookbook)!
+[![GitHub version](https://badge.fury.io/gh/floored1585%2Fquagga-cookbook.svg)](https://badge.fury.io/gh/floored1585%2Fquagga-cookbook)
 
 Description
 ===========
