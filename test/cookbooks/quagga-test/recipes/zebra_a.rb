@@ -16,7 +16,8 @@ node.set[:quagga][:route_maps][:MAP_A1]['10']['set'][:aggregator][:as] = 1234
 node.set[:quagga][:route_maps][:MAP_A1]['10']['set'][:aggregator][:ip] = '12.34.56.78'
 node.set[:quagga][:route_maps][:MAP_A1]['10']['set'][:local_preference] = 100
 node.set[:quagga][:route_maps][:MAP_A1]['20'][:action] = 'deny'
-node.set[:quagga][:route_maps][:MAP_A2]['5'][:action] = 'deny'
+node.set[:quagga][:route_maps][:MAP_A2]['5'][:action] = 'permit'
+node.set[:quagga][:route_maps][:MAP_A2]['5']['set'][:local_preference] = 100
 node.set[:quagga][:static_routes]['10.0.0.0/24'] = '172.16.1.1'
 node.set[:quagga][:static_routes]['10.0.0.0/24'] = '172.16.1.1 table 12'
 
