@@ -1,3 +1,7 @@
+## 0.3.0 (2016-05-18)
+
+Changes made to add in support for TRAVIS CI testing, as well as changes made to the zebra configuration to allow for route-maps.
+
 ## 0.2.10 (2016-04-20)
 
 No changes made, just a version bump
