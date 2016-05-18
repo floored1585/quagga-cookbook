@@ -27,7 +27,7 @@ ip route <%= network %> <%= next_hop %>
     <% rule = "ip prefix-list #{list} seq #{entry} #{data['action']} #{data['prefix'] || 'any'}" -%>
     <% rule << " ge #{data['ge']}" if data['ge'] -%>
     <% rule << " le #{data['le']}" if data['le'] -%>
-    <%= rule %>
+ <%= rule %>
   <% end -%>
 <% end -%>
 <% @route_maps.each do |map,entries| -%>
