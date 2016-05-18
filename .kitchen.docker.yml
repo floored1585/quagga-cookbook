@@ -9,16 +9,16 @@ driver_config:
 
 platforms:
 - name: ubuntu-14.04
-  provisioner:               
-    name: chef_solo          
+  provisioner:
+    name: chef_solo
     chef_omnibus_root: '/usr'
 
 suites:
   - name: a
     run_list:
       - recipe[quagga-test::default_a]
-    attributes: 
-      quagga: 
+    attributes:
+      quagga:
         enable_reload: false
   - name: b
     run_list:
