@@ -1,3 +1,17 @@
+## 0.3.0 (2016-05-18)
+
+Features: 
+
+  - Added in support for Travis CI Testing (@nertwork)
+
+  - Added in support for route-mapping (@nertwork)
+
+  - Added in support for CodeClimate (@nertwork)
+
+Bugfixes:
+
+  - Some code cleanup (@nertwork)
+
 ## 0.2.10 (2016-04-20)
 
 No changes made, just a version bump
