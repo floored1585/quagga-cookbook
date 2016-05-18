@@ -20,7 +20,6 @@
 # limitations under the License.
 #
 
-use_inline_resources
 action :add do
   integrated_config = node['quagga']['integrated_vtysh_config']
 

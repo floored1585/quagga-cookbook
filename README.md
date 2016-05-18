@@ -90,14 +90,14 @@ Attribute        | Description |Type | Default
 Attribute        | Description |Type | Default
 -----------------|-------------|-----|--------
 `node[:quagga][:route_maps]` | A hash containing all of the route-maps to configure in quagga.  Keys are the route-map names, values are hashes filled with the entries. | Hash | `{}`
-`node[:quagga][:route_maps][$LIST]` | A hash containing all of the entries in a particular $LIST.  Keys are sequence numbers, values are hashes filled with the details of the entry. | Hash | `{}`
-`node[:quagga][:route_maps][$LIST][$SEQ][:action]` | The action to take (either 'permit' or 'deny'). | String | `nil`
-`node[:quagga][:route_maps][$LIST][$SEQ][:set]` | A hash containing all the actions to set when mapping the route (must be a identified below). If left out the rule will not do anything  | Hash | `{}`
-`node[:quagga][:route_maps][$LIST][$SEQ][:set][:aggregator]` | The aggregator AS as well as the aggregator IP address | Hash | `{}`
-`node[:quagga][:route_maps][$LIST][$SEQ][:set][:aggregator]` | Hash containing the aggregator AS and IP address | Hash | `{}`
-`node[:quagga][:route_maps][$LIST][$SEQ][:set][:aggregator][:as]` | The aggregator AS | Integer | `nil`
-`node[:quagga][:route_maps][$LIST][$SEQ][:set][:aggregator][:ip]` | The aggregator IP address | String | `nil`
-`node[:quagga][:route_maps][$LIST][$SEQ][:set][:local_preference]` | The local prefernce to set on the route | Integer | `nil`
+`node[:quagga][:route_maps][$MAP]` | A hash containing all of the entries in a particular $MAP.  Keys are sequence numbers, values are hashes filled with the details of the entry. | Hash | `{}`
+`node[:quagga][:route_maps][$MAP][$SEQ][:action]` | The action to take (either 'permit' or 'deny'). | String | `nil`
+`node[:quagga][:route_maps][$MAP][$SEQ][:set]` | A hash containing all the actions to set when mapping the route (must be a identified below). If left out the rule will not do anything  | Hash | `{}`
+`node[:quagga][:route_maps][$MAP][$SEQ][:set][:aggregator]` | The aggregator AS as well as the aggregator IP address | Hash | `{}`
+`node[:quagga][:route_maps][$MAP][$SEQ][:set][:aggregator]` | Hash containing the aggregator AS and IP address | Hash | `{}`
+`node[:quagga][:route_maps][$MAP][$SEQ][:set][:aggregator][:as]` | The aggregator AS | Integer | `nil`
+`node[:quagga][:route_maps][$MAP][$SEQ][:set][:aggregator][:ip]` | The aggregator IP address | String | `nil`
+`node[:quagga][:route_maps][$MAP][$SEQ][:set][:local_preference]` | The local prefernce to set on the route | Integer | `nil`
 
 ### Static Routes
 
@@ -182,13 +182,11 @@ Tests are run on a [Cumulus VX](https://cumulusnetworks.com/cumulus-vx) VM using
 Testing requirements:
 * Vagrant
 * VirtualBox
-* Docker
 
 To run the tests (after installing prerequisites):
 * `bundle install`
 * `rake rubocop`
-* `bundle exec rake integration:vagrant` #Vagrant Tests
-* `bundle exec rake integration:docker` #Docker Tests
+* `bundle exec rake integration:vagrant`
 * `foodcritic .`
 
 Author and License
