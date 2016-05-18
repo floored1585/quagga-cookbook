@@ -1,3 +1,9 @@
+## 0.3.1 (2016-05-18)
+
+Bugfixes:
+
+  - Fixing route_map bug (@nertwork)
+
 ## 0.3.0 (2016-05-18)
 
 Features:
