@@ -17,7 +17,7 @@ describe file("#{cfg_dir}/zebra.conf") do
   its(:content) { should contain('set aggregator as 1234 12.34.56.78') }
   its(:content) { should contain('set local-preference 100') }
   its(:content) { should contain('route-map MAP_A1 deny 20') }
-  its(:content) { should contain('route-map MAP_A2 deny 5') }
+  its(:content) { should contain('route-map MAP_A2 permit 5') }
   its(:content) { should contain('ip route 10.0.0.0/24 172.16.1.1') }
   its(:content) { should contain('ip route 10.0.0.0/24 172.16.1.1 table 12') }
 end
