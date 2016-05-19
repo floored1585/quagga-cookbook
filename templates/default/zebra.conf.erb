@@ -34,12 +34,14 @@ ip route <%= network %> <%= next_hop %>
   <% entries.each do |entry,data| -%>
     <% next unless %w( permit deny ).include?(data['action']) -%>
 route-map <%= map%> <%= data['action']%> <%= entry%>
-      <% if data['set'] -%>
+    <% if data['set'] -%>
+      <% if data['set']['aggregator'] -%>
  set aggregator as <%= data['set']['aggregator']['as']%> <%= data['set']['aggregator']['ip']%>
-        <% if data['set']['local_preference'] -%>
- set local-preference <%= data['set']['local_preference']%>
-        <% end -%>
       <% end -%>
+      <% if data['set']['local_preference'] -%>
+ set local-preference <%= data['set']['local_preference']%>
+      <% end -%>
+    <% end -%>
   <% end -%>
 <% end -%>
 !
