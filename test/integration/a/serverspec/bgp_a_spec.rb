@@ -24,6 +24,7 @@ describe file("#{cfg_dir}/bgpd.conf") do
   its(:content) { should contain('neighbor 192.168.52.1 prefix-list TEST_OUT out') }
   its(:content) { should contain('neighbor 192.168.52.1 route-map TEST_IN in') }
   its(:content) { should contain('neighbor 192.168.52.1 route-map TEST_OUT out') }
+  its(:content) { should contain('neighbor 192.168.52.1 timers connect 5') }
   its(:content) { should contain('maximum-paths 5') }
   its(:content) { should contain('timers bgp 10 30') }
 end
