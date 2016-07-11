@@ -1,3 +1,9 @@
+## 0.3.2 (2016-07-11)
+
+Features:
+
+  - Added in support BGP connect_timer (@fzylogic)
+
 ## 0.3.1 (2016-05-18)
 
 Bugfixes:

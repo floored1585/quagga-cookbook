@@ -52,6 +52,7 @@ Attribute        | Description |Type | Default
 `node[:quagga][:bgp][$LOCAL_ASN][:max_paths]` | Maximum number of ECMP paths. | Integer | `nil`
 `node[:quagga][:bgp][$LOCAL_ASN][:neighbors]` | A hash containing neighbors and their configuration.  Keys are the neighbor IPs or group names (String), values are the data for that neighbor or group (Hash). | Hash | `nil`
 `node[:quagga][:bgp][$LOCAL_ASN][:neighbors][$NEIGHBOR][:remote_as]` | The remote-as for this neighbor. | Integer | `nil`
+`node[:quagga][:bgp][$LOCAL_ASN][:neighbors][$NEIGHBOR][:connect_timer]` | Time in seconds between connection attempts. | Integer | `nil`
 `node[:quagga][:bgp][$LOCAL_ASN][:neighbors][$NEIGHBOR][:default_originate]` | Set to `true` to advertise a default route to this neighbor. | Boolean | `false`
 `node[:quagga][:bgp][$LOCAL_ASN][:neighbors][$NEIGHBOR][:default_originate_map]` | The name of the route-map to use with default-originate. | String | `nil`
 `node[:quagga][:bgp][$LOCAL_ASN][:neighbors][$NEIGHBOR][:peer_group]` | Set to `true` if this is a peer-group. | String | `nil`
