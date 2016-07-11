@@ -32,6 +32,9 @@ router bgp <%= asn %>
     <% if opts['soft_reconfig_in'] -%>
  neighbor <%= neighbor %> soft-reconfiguration inbound
     <% end -%>
+    <% if opts['connect_timer'] -%>
+ neighbor <%= neighbor %> timers connect <%= opts['connect_timer'] %>
+    <% end -%>
     <% if opts['prefix_list_in'] -%>
  neighbor <%= neighbor %> prefix-list <%= opts['prefix_list_in'] %> in
     <% end -%>
