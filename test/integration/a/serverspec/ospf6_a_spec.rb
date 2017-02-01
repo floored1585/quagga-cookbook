@@ -12,7 +12,7 @@ end
 describe file("#{cfg_dir}/ospf6d.conf") do
   its(:content) { should contain('router ospf6') }
   its(:content) { should contain('router-id 127.0.0.1') }
-  its(:content) { should contain('redistribute static') }
+  its(:content) { should contain('redistribute ospf') }
   its(:content) { should contain('interface swp1 area 0.0.0.1') }
   its(:content) { should contain('interface swp2 area 0.0.0.1') }
   its(:content) { should contain('interface swp4 area 1.1.1.1') }
