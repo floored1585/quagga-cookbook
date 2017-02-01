@@ -1,0 +1,31 @@
+!!! OSPF6 CONFIGURATION
+!
+<% unless node['quagga']['integrated_vtysh_config'] -%>
+hostname ospf6d
+password <%= node['quagga']['password'] %>
+enable password <%= node['quagga']['enabled_password'] %>
+log file /var/log/quagga/ospf6d.log
+!
+<% end -%>
+<% @interfaces.each do |port,opts|-%>
+interface <%= port %>
+  <% opts.each do |opt|-%>
+ <%= opt %>
+  <% end -%>
+!
+<% end -%>
+router ospf6
+<% if @router_id -%>
+ router-id <%= @router_id %>
+<% end -%>
+<% Array(@redistribute).each do |route_type| -%>
+  <% next unless %w( babel bgp connected isis kernel ospf6 rip static table ).include? route_type -%>
+ redistribute <%= route_type %>
+<% end -%>
+<% @areas.each do |area, opts| -%>
+  <% Array(opts['interfaces']).each do |interface| -%>
+ interface <%= interface %> area <%= area %>
+  <% end -%>
+<% end -%>
+!
+line vty

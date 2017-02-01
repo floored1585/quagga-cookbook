@@ -18,6 +18,11 @@ describe file("#{cfg_dir}/zebra.conf") do
   its(:content) { should contain('set local-preference 100') }
   its(:content) { should contain('route-map MAP_A1 deny 20') }
   its(:content) { should contain('route-map MAP_A2 permit 5') }
+  its(:content) { should match('interface test1\n no ipv6 nd supress-ra') }
+  its(:content) { should match('interface test2\n ipv6 ospf6 passive') }
+  its(:content) { should match('interface test3\n ipv6 ospf6 network point-to-point') }
+  its(:content) { should match('interface test4\n ipv6 nd supress-ra') }
+  its(:content) { should contain('route-map MAP_A2 permit 5') }
   its(:content) { should contain('ip route 10.0.0.0/24 172.16.1.1') }
   its(:content) { should contain('ip route 10.0.0.0/24 172.16.1.1 table 12') }
 end
