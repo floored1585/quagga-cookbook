@@ -12,8 +12,10 @@ interface <%= port %>
 <% options.each do |option|-%>
  <%= option %>
 <% end -%>
- link-detect
+<% unless options.include?('no ipv6 nd suppress-ra') -%>
  ipv6 nd suppress-ra
+<% end -%>
+ link-detect
 !
 <% end -%>
 !

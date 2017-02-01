@@ -1,10 +1,10 @@
-!!! OSPF CONFIGURATION
+!!! OSPF6 CONFIGURATION
 !
 <% unless node['quagga']['integrated_vtysh_config'] -%>
-hostname ospfd
+hostname ospf6d
 password <%= node['quagga']['password'] %>
 enable password <%= node['quagga']['enabled_password'] %>
-log file /var/log/quagga/ospfd.log
+log file /var/log/quagga/ospf6d.log
 !
 <% end -%>
 <% @interfaces.each do |port,opts|-%>
@@ -14,27 +14,18 @@ interface <%= port %>
   <% end -%>
 !
 <% end -%>
-router ospf
+router ospf6
 <% if @router_id -%>
- ospf router-id <%= @router_id %>
+ router-id <%= @router_id %>
 <% end -%>
 <% Array(@redistribute).each do |route_type| -%>
   <% next unless %w( babel bgp connected isis kernel ospf ospf6 rip static table ).include? route_type -%>
  redistribute <%= route_type %>
 <% end -%>
 <% @areas.each do |area, opts| -%>
-  <% Array(opts['networks']).each do |network| -%>
- network <%= network  %> area <%= area %>
+  <% Array(opts['interfaces']).each do |interface| -%>
+ interface <%= interface %> area <%= area %>
   <% end -%>
-<% end -%>
-<% if @passive_default -%>
- passive-interface default
-  <% @interfaces.each do |int,opts|-%>
- no passive-interface <%= int %>
-  <% end -%>
-<% end -%>
-<% Array(@passive_ints).each do |int| -%>
- passive-interface <%= int %>
 <% end -%>
 !
 line vty

@@ -52,7 +52,7 @@ if %w( debian ubuntu ).include? node['platform']
     mode '0644'
   end
 
-  %w( zebra.conf ospfd.conf bgpd.conf ).each do |file|
+  %w( zebra.conf ospfd.conf ospf6d.conf bgpd.conf ).each do |file|
     file "#{node['quagga']['dir']}/#{file}" do
       owner node['quagga']['user']
       group node['quagga']['group']
