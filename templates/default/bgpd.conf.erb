@@ -24,11 +24,15 @@ router bgp <%= asn %>
   <% end -%>
   <% next unless data['neighbors'] -%>
   <% data['neighbors'].each do |neighbor, opts| -%>
-    <% next unless opts['remote_as'] -%>
     <% if opts['peer_group'] -%>
  neighbor <%= neighbor %> peer-group
     <% end -%>
+    <% if opts['peer_type'] -%>
+ neighbor <%= neighbor %> <%= opts['peer_type'] %>
+    <% end -%>
+    <% if opts['remote_as'] -%>
  neighbor <%= neighbor %> remote-as <%= opts['remote_as'] %>
+    <% end -%>
     <% if opts['soft_reconfig_in'] -%>
  neighbor <%= neighbor %> soft-reconfiguration inbound
     <% end -%>
@@ -59,11 +63,31 @@ router bgp <%= asn %>
     <% if opts['peer_group'] && opts['peer_group_range'] -%>
       <% Array(opts['peer_group_range']).each do |range| -%>
  bgp listen range <%= range %> peer-group <%= neighbor %>
+      <% end -%>
     <% end -%>
   <% end -%>
-<% end -%>
-<% if max_paths = data['max_paths'] -%>
+  <% if max_paths = data['max_paths'] -%>
  maximum-paths <%= max_paths %>
+  <% end -%>
+  <% if data['address_family'] -%>
+    <% data['address_family'].each do |address_family, opts| -%>
+ !
+ address-family <%= address_family %>
+      <% Array(opts['redistribute']).each do |route_type| -%>
+        <% next unless %w( babel connected isis kernel ospf6 ripng static ).include? route_type -%>
+ redistribute <%= route_type %>
+      <% end -%>
+      <% if data['neighbors'] -%>
+        <% data['neighbors'].each do |neighbor, neighbor_opts| -%>
+          <% next unless neighbor_opts['ipv6'] -%>
+ neighbor <%= neighbor %> activate
+          <% if neighbor_opts['soft_reconfig_in'] -%>
+ neighbor <%= neighbor %> soft-reconfiguration inbound
+          <% end -%>
+        <% end -%>
+      <% end -%>
+ exit-address-family
+    <% end -%>
   <% end -%>
 <% end -%>
 !

@@ -52,17 +52,20 @@ Attribute        | Description |Type | Default
 `node[:quagga][:bgp][$LOCAL_ASN][:keepalive_interval]` | BGP keepalive interval (must also set `hold_time`). | Integer | `nil`
 `node[:quagga][:bgp][$LOCAL_ASN][:max_paths]` | Maximum number of ECMP paths. | Integer | `nil`
 `node[:quagga][:bgp][$LOCAL_ASN][:neighbors]` | A hash containing neighbors and their configuration.  Keys are the neighbor IPs or group names (String), values are the data for that neighbor or group (Hash). | Hash | `nil`
+`node[:quagga][:bgp][$LOCAL_ASN][:neighbors][$NEIGHBOR][:peer_group]` | Set to `true` if this is a peer-group. | String | `nil`
+`node[:quagga][:bgp][$LOCAL_ASN][:neighbors][$NEIGHBOR][:peer_type]` | The neighbor peer type to use with interface or peer-group. | String | `nil`
 `node[:quagga][:bgp][$LOCAL_ASN][:neighbors][$NEIGHBOR][:remote_as]` | The remote-as for this neighbor. | Integer | `nil`
 `node[:quagga][:bgp][$LOCAL_ASN][:neighbors][$NEIGHBOR][:connect_timer]` | Time in seconds between connection attempts. | Integer | `nil`
 `node[:quagga][:bgp][$LOCAL_ASN][:neighbors][$NEIGHBOR][:default_originate]` | Set to `true` to advertise a default route to this neighbor. | Boolean | `false`
 `node[:quagga][:bgp][$LOCAL_ASN][:neighbors][$NEIGHBOR][:default_originate_map]` | The name of the route-map to use with default-originate. | String | `nil`
-`node[:quagga][:bgp][$LOCAL_ASN][:neighbors][$NEIGHBOR][:peer_group]` | Set to `true` if this is a peer-group. | String | `nil`
 `node[:quagga][:bgp][$LOCAL_ASN][:neighbors][$NEIGHBOR][:peer_group_range]` | The IP range(s) to permit for this group (BGP Dynamic Neighbors). | String or Array | `nil`
 `node[:quagga][:bgp][$LOCAL_ASN][:neighbors][$NEIGHBOR][:soft_reconfig_in]` | Enable soft-reconfiguration-inbound (to enable dispaly of received routes). | Boolean | `false`
 `node[:quagga][:bgp][$LOCAL_ASN][:neighbors][$NEIGHBOR][:prefix_list_in]` | Name of the prefix-list to use for filtering incoming routes. | String | `nil`
 `node[:quagga][:bgp][$LOCAL_ASN][:neighbors][$NEIGHBOR][:prefix_list_out]` | Name of the prefix-list to use for filtering outgoing routes. | String | `nil`
 `node[:quagga][:bgp][$LOCAL_ASN][:neighbors][$NEIGHBOR][:route_map_in]` | Name of the route-map to use for filtering incoming routes. | String | `nil`
 `node[:quagga][:bgp][$LOCAL_ASN][:neighbors][$NEIGHBOR][:route_map_out]` | Name of the route-map to use for filtering outgoing routes. | String | `nil`
+`node[:quagga][:bgp][$LOCAL_ASN][:address_family]` | A hash containing address families and their configuration.  Keys are the family-type names (String), values are the data for that family (Hash). | Hash | `nil`
+`node[:quagga][:bgp][$LOCAL_ASN][:address_family][$FAMILY][:redistribute]` | Route types to redistribute into BGP (eg: `["connected","ripng","ospf6"]`. | String or Array | `nil`
 
 ### OSPF
 
@@ -147,6 +150,19 @@ node.set[:quagga][:bgp]['64512'][:neighbors]['192.168.52.1'][:default_originate]
 
 include_recipe 'quagga::bgpd'
 ```
+### Unnumbered BGPv6 Example
+
+The following example will create BGP process 64511 with unnumbered neighbors. We are also required to set the address family when working with these interfaces.
+
+```ruby
+node.set[:quagga][:bgp]['64511'][:neighbors]['swp1'][:peer_type] = 'interface'
+node.set[:quagga][:bgp]['64511'][:neighbors]['swp1'][:remote_as] = 64512
+node.set[:quagga][:bgp]['64511'][:neighbors]['swp1'][:soft_reconfig_in] = true
+node.set[:quagga][:bgp]['64511'][:neighbors]['swp1'][:ipv6] = true
+node.set[:quagga][:bgp]['64511'][:address_family]['ipv6'] = true
+
+include_recipe 'quagga::bgpd'
+```
 
 ### OSPF Example
 
@@ -210,10 +226,10 @@ Author and License
 |:----------------------|:-----------------------------------------|
 | **Author** (pre-0.2)  | [Ooyala Inc.](https://github.com/ooyala)
 | **Maintainer** (0.2+) | [Ian Clark](https://github.com/floored1585)
-| **Contributor**       | [James Farr](https://github.com/nertwork)
+| **Contributor**       | [James Farr Gomez](https://github.com/nertwork)
 
 Copyright 2014, Ooyala Inc.  
-Copyright 2015, Contributers
+Copyright 2017, Contributers
 
 ### License
 
