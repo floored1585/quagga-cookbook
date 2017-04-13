@@ -28,7 +28,7 @@ router bgp <%= asn %>
  neighbor <%= neighbor %> peer-group
     <% end -%>
     <% if opts['peer_type'] -%>
- neighbor <%= neighbor %> <%= opts['peer_type'] -%>
+ neighbor <%= neighbor %> <%= opts['peer_type'] %>
     <% end -%>
     <% if opts['remote_as'] -%>
  neighbor <%= neighbor %> remote-as <%= opts['remote_as'] %>
@@ -71,6 +71,7 @@ router bgp <%= asn %>
   <% end -%>
   <% if data['address_family'] -%>
     <% data['address_family'].each do |address_family, opts| -%>
+ !
  address-family <%= address_family %>
       <% Array(opts['redistribute']).each do |route_type| -%>
         <% next unless %w( babel connected isis kernel ospf6 ripng static ).include? route_type -%>
