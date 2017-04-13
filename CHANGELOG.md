@@ -1,3 +1,9 @@
+## 0.3.5 (2017-04-13)
+
+Features:
+
+  - Added in support for ipv6 bgp and static routes (@nertwork)
+
 ## 0.3.4 (2017-02-01)
 
 No changes made just version bump
