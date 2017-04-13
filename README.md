@@ -121,6 +121,13 @@ Attribute        | Description |Type | Default
 `node[:quagga][:static_routes]` | A hash containing static routes to configure.  Keys are the prefixes, values are the next-hop addresses.  | Hash | `nil`
 `node[:quagga][:static_routes][$ROUTE]` | The next-hop address for given $ROUTE | String | `any`
 
+### Static V6 Routes
+
+Attribute        | Description |Type | Default
+-----------------|-------------|-----|--------
+`node[:quagga][:static_routes_v6]` | A hash containing static routes to configure.  Keys are the prefixes, values are the next-hop addresses.  | Hash | `nil`
+`node[:quagga][:static_routes_v6][$ROUTE]` | The next-hop address for given $ROUTE | String | `any`
+
 ### Multiple Routing Instances (VRFs)
 
 Attribute        | Description |Type | Default

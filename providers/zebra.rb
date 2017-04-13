@@ -35,6 +35,7 @@ action :add do
     variables(
       interfaces: node['quagga']['interfaces'],
       static_routes: node['quagga']['static_routes'],
+      static_routes_v6: node['quagga']['static_routes_v6'],
       prefix_lists: node['quagga']['prefix_lists'],
       route_maps: node['quagga']['route_maps']
     )

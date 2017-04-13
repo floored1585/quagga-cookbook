@@ -8,5 +8,6 @@ include_recipe 'quagga'
 quagga_zebra 'zebra' do
   not_if node['quagga']['prefix_lists'].empty? &&
          node['quagga']['interfaces'].empty? &&
-         node['quagga']['static_routes'].empty?
+         node['quagga']['static_routes'].empty? &&
+         node['quagga']['static_routes_v6'].empty?
 end
