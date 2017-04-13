@@ -18,6 +18,9 @@ describe file("#{cfg_dir}/bgpd.conf") do
   its(:content) { should contain('neighbor hosts remote-as 64512') }
   its(:content) { should contain('neighbor hosts default-originate') }
   its(:content) { should contain('bgp listen range 10.0.0.0/8 peer-group hosts') }
+  its(:content) { should contain('neighbor swp1 interface') }
+  its(:content) { should contain('neighbor swp1 remote-as 64511') }
+  its(:content) { should contain('neighbor swp1 soft-reconfiguration inbound') }
   its(:content) { should contain('neighbor 192.168.52.1 default-originate route-map do_map') }
   its(:content) { should contain('neighbor 192.168.52.1 soft-reconfiguration inbound') }
   its(:content) { should contain('neighbor 192.168.52.1 prefix-list TEST_IN in') }
@@ -27,6 +30,8 @@ describe file("#{cfg_dir}/bgpd.conf") do
   its(:content) { should contain('neighbor 192.168.52.1 timers connect 5') }
   its(:content) { should contain('maximum-paths 5') }
   its(:content) { should contain('timers bgp 10 30') }
+  its(:content) { should contain('address-family ipv6') }
+  its(:content) { should contain('neighbor swp1 activate') }
 end
 
 describe file("#{cfg_dir}/Quagga.conf") do
