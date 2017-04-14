@@ -166,7 +166,7 @@ node.set[:quagga][:bgp]['64511'][:neighbors]['swp1'][:peer_type] = 'interface'
 node.set[:quagga][:bgp]['64511'][:neighbors]['swp1'][:remote_as] = 64512
 node.set[:quagga][:bgp]['64511'][:neighbors]['swp1'][:soft_reconfig_in] = true
 node.set[:quagga][:bgp]['64511'][:neighbors]['swp1'][:ipv6] = true
-node.set[:quagga][:bgp]['64511'][:address_family]['ipv6'] = true
+node.set[:quagga][:bgp]['64511'][:address_family]['ipv6'] = {}
 
 include_recipe 'quagga::bgpd'
 ```
@@ -236,7 +236,7 @@ Author and License
 | **Contributor**       | [James Farr Gomez](https://github.com/nertwork)
 
 Copyright 2014, Ooyala Inc.  
-Copyright 2017, Contributers
+Copyright 2015-2017, Contributers
 
 ### License
 
