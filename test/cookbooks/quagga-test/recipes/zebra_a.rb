@@ -24,5 +24,6 @@ node.set[:quagga][:interfaces]['test3'] = ['ipv6 ospf6 network point-to-point']
 node.set[:quagga][:interfaces]['test4'] = []
 node.set[:quagga][:static_routes]['10.0.0.0/24'] = '172.16.1.1'
 node.set[:quagga][:static_routes]['10.0.0.0/24'] = '172.16.1.1 table 12'
+node.set[:quagga][:static_routes]['1::1/128'] = 'lo'
 
 include_recipe 'quagga::zebra'

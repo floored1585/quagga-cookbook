@@ -79,7 +79,7 @@ router bgp <%= asn %>
       <% end -%>
       <% if data['neighbors'] -%>
         <% data['neighbors'].each do |neighbor, neighbor_opts| -%>
-          <% next unless neighbor_opts['ipv6'] -%>
+          <% next unless neighbor_opts[address_family] -%>
  neighbor <%= neighbor %> activate
           <% if neighbor_opts['soft_reconfig_in'] -%>
  neighbor <%= neighbor %> soft-reconfiguration inbound
