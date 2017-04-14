@@ -20,9 +20,13 @@ interface <%= port %>
 <% end -%>
 !
 <% @static_routes.each do |network,next_hop| -%>
+  <% if network.include? ':' %>
+ipv6 route <%= network %> <%= next_hop %>
+  <% else %>
 ip route <%= network %> <%= next_hop %>
-<% end -%>
+  <% end %>
 !
+<% end -%>
 <% @prefix_lists.each do |list,entries| -%>
   <% Array(entries).each do |entry,data| -%>
     <% next unless %w( permit deny ).include?(data['action']) -%>

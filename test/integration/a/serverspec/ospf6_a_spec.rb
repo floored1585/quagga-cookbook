@@ -17,8 +17,8 @@ describe file("#{cfg_dir}/ospf6d.conf") do
   its(:content) { should contain('interface swp2 area 0.0.0.1') }
   its(:content) { should contain('interface swp4 area 1.1.1.1') }
   its(:content) { should contain('interface swp5 area 1.1.1.1') }
-
 end
+
 describe file("#{cfg_dir}/Quagga.conf") do
   its(:content) { should include(File.read("#{cfg_dir}/ospf6d.conf")) }
 end

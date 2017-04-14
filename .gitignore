@@ -18,3 +18,4 @@ Berksfile.lock
 bin/
 tmp/
 vendor/
+Gemfile.lock
