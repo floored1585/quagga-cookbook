@@ -2,7 +2,7 @@
 
 Features:
 
-  - Added in support for multi-path bgp for ipv6 routes (@nertwork)
+  - Added in support for multi-path bgp for different address-family routes (@nertwork)
 
 ## 0.3.5 (2017-04-13)
 
