@@ -28,5 +28,6 @@ node.set[:quagga][:bgp]['64512']['hold_time'] = 30
 node.set[:quagga][:bgp][:prefix_lists][:TEST_IN]['10'][:action] = "permit"
 node.set[:quagga][:bgp][:prefix_lists][:TEST_OUT]['10'][:action] = "deny"
 node.set[:quagga][:bgp]['64512'][:address_family]['ipv6'][:redistribute] = "connected"
+node.set[:quagga][:bgp]['64512'][:address_family]['ipv6']['max_paths'] = 5
 
 include_recipe 'quagga::bgpd'

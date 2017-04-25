@@ -86,6 +86,9 @@ router bgp <%= asn %>
           <% end -%>
         <% end -%>
       <% end -%>
+      <% if max_paths = opts['max_paths'] -%>
+ maximum-paths <%= max_paths %>
+      <% end -%>
  exit-address-family
     <% end -%>
   <% end -%>

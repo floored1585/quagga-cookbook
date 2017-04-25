@@ -1,3 +1,9 @@
+## 0.3.6 (2017-04-25)
+
+Features:
+
+  - Added in support for multi-path bgp for ipv6 routes (@nertwork)
+
 ## 0.3.5 (2017-04-13)
 
 Features:
