@@ -66,6 +66,7 @@ Attribute        | Description |Type | Default
 `node[:quagga][:bgp][$LOCAL_ASN][:neighbors][$NEIGHBOR][:route_map_out]` | Name of the route-map to use for filtering outgoing routes. | String | `nil`
 `node[:quagga][:bgp][$LOCAL_ASN][:address_family]` | A hash containing address families and their configuration.  Keys are the family-type names (String), values are the data for that family (Hash). | Hash | `nil`
 `node[:quagga][:bgp][$LOCAL_ASN][:address_family][$FAMILY][:redistribute]` | Route types to redistribute into BGP (eg: `["connected","ripng","ospf6"]`. | String or Array | `nil`
+`node[:quagga][:bgp][$LOCAL_ASN][:address_family][$FAMILY][:max_paths]` | Maximum number of ECMP paths in the address family. | Integer | `nil`
 
 ### OSPF
 
