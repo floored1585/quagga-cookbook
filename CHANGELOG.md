@@ -1,3 +1,9 @@
+## 0.3.7 (2017-04-28)
+
+Features:
+
+  - Added in support for bgp multipath-relax (@nertwork)
+
 ## 0.3.6 (2017-04-25)
 
 Features:
