@@ -5,6 +5,7 @@
 
 node.set[:quagga][:bgp]['64512'][:log_neighbor_changes] = true
 node.set[:quagga][:bgp]['64512'][:redistribute] = 'static'
+node.set[:quagga][:bgp]['64512'][:multipath_relax] = true
 node.set[:quagga][:bgp]['64512'][:neighbors]['hosts'][:remote_as] = 64512
 node.set[:quagga][:bgp]['64512'][:neighbors]['hosts'][:default_originate] = true
 node.set[:quagga][:bgp]['64512'][:neighbors]['hosts'][:peer_group] = true
