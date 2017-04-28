@@ -13,6 +13,7 @@ describe file("#{cfg_dir}/bgpd.conf") do
   its(:content) { should contain('router bgp 64512') }
   its(:content) { should contain('redistribute static') }
   its(:content) { should contain('bgp log-neighbor-changes') }
+  its(:content) { should contain('bgp bestpath as-path multipath-relax') }
   its(:content) { should contain('bgp router-id 127.0.0.1') }
   its(:content) { should contain('neighbor hosts peer-group') }
   its(:content) { should contain('neighbor hosts remote-as 64512') }
