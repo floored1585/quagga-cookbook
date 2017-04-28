@@ -12,6 +12,9 @@ router bgp <%= asn %>
   <% if router_id = data['router_id'] || node['quagga']['router_id'] -%>
  bgp router-id <%= router_id %>
   <% end -%>
+  <% if data['multipath_relax'] -%>
+ bgp bestpath as-path multipath-relax
+  <% end %>
   <% if data['hold_time'] && data['keepalive_interval'] -%>
  timers bgp <%= data['keepalive_interval'] %> <%= data['hold_time'] %>
   <% end -%>
