@@ -15,6 +15,9 @@ router bgp <%= asn %>
   <% if data['multipath_relax'] -%>
  bgp bestpath as-path multipath-relax
   <% end %>
+  <% if data['compare_routerid'] -%>
+ bgp bestpath compare-routerid
+  <% end %>
   <% if data['hold_time'] && data['keepalive_interval'] -%>
  timers bgp <%= data['keepalive_interval'] %> <%= data['hold_time'] %>
   <% end -%>
@@ -63,7 +66,7 @@ router bgp <%= asn %>
     <% end -%>
   <% end -%>
   <% data['neighbors'].each do |neighbor, opts| -%>
-    <% if opts['peer_group'] && opts['peer_group_range'] -%>
+    <% if opts['peer_group_range'] -%>
       <% Array(opts['peer_group_range']).each do |range| -%>
  bgp listen range <%= range %> peer-group <%= neighbor %>
       <% end -%>

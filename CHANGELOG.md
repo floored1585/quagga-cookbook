@@ -1,3 +1,9 @@
+## 0.3.8 (2017-05-09)
+
+Features:
+
+  - Added in support for bgp compare router-id (@nertwork)
+
 ## 0.3.7 (2017-04-28)
 
 Features:
