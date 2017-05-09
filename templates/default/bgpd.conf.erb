@@ -15,6 +15,9 @@ router bgp <%= asn %>
   <% if data['multipath_relax'] -%>
  bgp bestpath as-path multipath-relax
   <% end %>
+  <% if data['compare_routerid'] -%>
+ bgp bestpath compare-routerid
+  <% end %>
   <% if data['hold_time'] && data['keepalive_interval'] -%>
  timers bgp <%= data['keepalive_interval'] %> <%= data['hold_time'] %>
   <% end -%>
