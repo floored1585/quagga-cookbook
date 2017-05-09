@@ -21,7 +21,7 @@ end
 describe file('/etc/default/quagga') do
   its(:content) { should contain('MAX_INSTANCES=5') }
 end
-describe file('/etc/default/quagga'), unless: os[:family] == 'ubuntu' do
+describe file('/etc/default/quagga'), unless: os['family'] == 'ubuntu' do
   its(:content) { should contain('ENABLE_RELOAD=yes') }
 end
 
