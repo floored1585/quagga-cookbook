@@ -23,3 +23,6 @@ suites:
   - name: b
     run_list:
       - recipe[quagga-test::default_b]
+  - name: c
+    run_list:
+      - recipe[quagga-test::default_c]
