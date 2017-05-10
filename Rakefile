@@ -40,23 +40,23 @@ namespace :integration do
   end
 
   desc 'Run Test Kitchen integration tests using vagrant'
-  task :vagrant, ['regexp', :action] do |_t, args|
+  task :vagrant, [:regexp, :action] do |_t, args|
     run_kitchen(args.action, args.regexp)
   end
 
   desc 'Run Test Kitchen integration tests using docker'
-  task :docker, ['regexp', :action] do |_t, args|
+  task :docker, [:regexp, :action] do |_t, args|
     run_kitchen(args.action, args.regexp, local_config: '.kitchen.docker.yml')
   end
 
   desc 'Run Test Kitchen integration tests in the cloud'
-  task :cloud, ['regexp', :action] do |_t, args|
+  task :cloud, [:regexp, :action] do |_t, args|
     run_kitchen(args.action, args.regexp, local_config: '.kitchen.cloud.yml')
   end
 end
 
 desc 'Run Test Kitchen integration tests'
-task :integration, ['regexp', :action] =>
+task :integration, [:regexp, :action] =>
   ci? ? %w(integration:docker) : %w(integration:vagrant)
 
 desc 'Run doc, style, unit and integration tests'
