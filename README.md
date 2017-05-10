@@ -59,7 +59,9 @@ Attribute        | Description |Type | Default
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['remote_as']` | The remote-as for this neighbor. | Integer | `nil`
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['connect_timer']` | Time in seconds between connection attempts. | Integer | `nil`
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['default_originate']` | Set to `true` to advertise a default route to this neighbor. | Boolean | `false`
+`node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['default_originate_v6']` | Set to `true` to advertise a default ipv6 route to this neighbor. | Boolean | `false`
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['default_originate_map']` | The name of the route-map to use with default-originate. | String | `nil`
+`node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['default_originate_map_v6']` | The name of the v6 route-map to use with default-originate. | String | `nil`
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['peer_group_range']` | The IP range(s) to permit for this group (BGP Dynamic Neighbors). | String or Array | `nil`
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['soft_reconfig_in']` | Enable soft-reconfiguration-inbound (to enable dispaly of received routes). | Boolean | `false`
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['prefix_list_in']` | Name of the prefix-list to use for filtering incoming routes. | String | `nil`
