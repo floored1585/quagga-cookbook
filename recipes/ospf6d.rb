@@ -20,7 +20,7 @@
 # limitations under the License.
 #
 
-node.set['quagga']['daemons']['ospf6d'] = true
+node.default['quagga']['daemons']['ospf6d'] = true
 
 include_recipe 'quagga'
 

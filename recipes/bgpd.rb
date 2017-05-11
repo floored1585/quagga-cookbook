@@ -20,7 +20,7 @@
 # limitations under the License.
 #
 
-node.set['quagga']['daemons']['bgpd'] = true
+node.default['quagga']['daemons']['bgpd'] = true
 
 include_recipe 'quagga'
 
