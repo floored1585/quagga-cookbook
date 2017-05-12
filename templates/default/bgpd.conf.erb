@@ -90,6 +90,12 @@ router bgp <%= asn %>
           <% if neighbor_opts['soft_reconfig_in'] -%>
  neighbor <%= neighbor %> soft-reconfiguration inbound
           <% end -%>
+          <% if neighbor_opts['prefix_list_in_v6'] -%>
+ neighbor <%= neighbor %> prefix-list <%= neighbor_opts['prefix_list_in_v6'] %> in
+          <% end -%>
+          <% if neighbor_opts['prefix_list_out_v6'] -%>
+ neighbor <%= neighbor %> prefix-list <%= neighbor_opts['prefix_list_out_v6'] %> out
+          <% end -%>
           <% if neighbor_opts['default_originate_v6'] -%>
             <% if neighbor_opts['default_originate_map_v6'] -%>
  neighbor <%= neighbor %> default-originate route-map <%= neighbor_opts['default_originate_map_v6'] %>

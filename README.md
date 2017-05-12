@@ -66,6 +66,8 @@ Attribute        | Description |Type | Default
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['soft_reconfig_in']` | Enable soft-reconfiguration-inbound (to enable dispaly of received routes). | Boolean | `false`
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['prefix_list_in']` | Name of the prefix-list to use for filtering incoming routes. | String | `nil`
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['prefix_list_out']` | Name of the prefix-list to use for filtering outgoing routes. | String | `nil`
+`node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['prefix_list_in_v6']` | Name of the prefix-list to use for filtering ipv6 incoming routes. | String | `nil`
+`node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['prefix_list_out_v6']` | Name of the prefix-list to use for filtering ipv6 outgoing routes. | String | `nil`
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['route_map_in']` | Name of the route-map to use for filtering incoming routes. | String | `nil`
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['route_map_out']` | Name of the route-map to use for filtering outgoing routes. | String | `nil`
 `node['quagga']['bgp'][$LOCAL_ASN]['address_family']` | A hash containing address families and their configuration.  Keys are the family-type names (String), values are the data for that family (Hash). | Hash | `nil`
@@ -100,9 +102,9 @@ Attribute        | Description |Type | Default
 -----------------|-------------|-----|--------
 `node['quagga']['prefix_lists']` | A hash containing all of the prefix-lists to configure in quagga.  Keys are the prefix-list names, values are hashes filled with the entries. | Hash | `{}`
 `node['quagga']['prefix_lists'][$LIST]` | A hash containing all of the entries in a particular $LIST.  Keys are sequence numbers, values are hashes filled with the details of the entry. | Hash | `{}`
-`node['quagga']['prefix_lists'][$LIST][$SEQ]['prefix']` | The prefix affected by this rule (must be `x.x.x.x/x`). If left out, rule will match any prefix | String | `any`
-`node['quagga']['prefix_lists'][$LIST][$SEQ]['ge']` | The minimum prefix length to accept (eg: `24`) | Integer | `nil`
-`node['quagga']['prefix_lists'][$LIST][$SEQ]['le']` | The maximum prefix length to accept (eg: `24`) | Integer | `nil`
+`node['quagga']['prefix_lists'][$LIST][$SEQ]['prefix']` | The prefix affected by this rule (must be `x.x.x.x/x` or `x::x/x` or `any_v6` for any ipv6 prefix). If left out, rule will match any ipv4 prefix | String | `any`
+`node['quagga']['prefix_lists'][$LIST][$SEQ]['ge']` | The minimum prefix length to accept (eg: `24` or `128`) | Integer | `nil`
+`node['quagga']['prefix_lists'][$LIST][$SEQ]['le']` | The maximum prefix length to accept (eg: `24` or `128`) | Integer | `nil`
 `node['quagga']['prefix_lists'][$LIST][$SEQ]['action']` | The action to take (either 'permit' or 'deny'). | String | `nil`
 
 ### Route Maps
