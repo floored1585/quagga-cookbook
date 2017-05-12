@@ -36,7 +36,7 @@ service 'quagga' do
   action :enable
 end
 
-if %w( debian ubuntu ).include? node['platform']
+if %w( debian ubuntu cumulus ).include? node['platform']
   template "#{node['quagga']['dir']}/daemons" do
     source 'daemons.erb'
     owner node['quagga']['user']

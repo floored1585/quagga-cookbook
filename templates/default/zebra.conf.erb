@@ -30,7 +30,15 @@ ip route <%= network %> <%= next_hop %>
 <% @prefix_lists.each do |list,entries| -%>
   <% Array(entries).each do |entry,data| -%>
     <% next unless %w( permit deny ).include?(data['action']) -%>
-    <% rule = "ip prefix-list #{list} seq #{entry} #{data['action']} #{data['prefix'] || 'any'}" -%>
+    <% if !data['prefix'] %>
+      <% rule = "ip prefix-list #{list} seq #{entry} #{data['action']} any" -%>
+    <% elsif data['prefix'].include? ':' %>
+      <% rule = "ipv6 prefix-list #{list} seq #{entry} #{data['action']} #{data['prefix'] }" -%>
+    <% elsif data['prefix'] == 'any_v6' %>
+      <% rule = "ipv6 prefix-list #{list} seq #{entry} #{data['action']} any" -%>
+    <% else %>
+      <% rule = "ip prefix-list #{list} seq #{entry} #{data['action']} #{data['prefix']}" -%>
+    <% end %>
     <% rule << " ge #{data['ge']}" if data['ge'] -%>
     <% rule << " le #{data['le']}" if data['le'] -%>
  <%= rule %>
