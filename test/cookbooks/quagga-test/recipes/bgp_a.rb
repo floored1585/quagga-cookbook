@@ -25,6 +25,7 @@ node.set['quagga']['bgp']['64512']['neighbors']['192.168.52.1']['route_map_in'] 
 node.set['quagga']['bgp']['64512']['neighbors']['192.168.52.1']['route_map_out'] = "TEST_OUT"
 node.set['quagga']['bgp']['64512']['neighbors']['192.168.52.1']['connect_timer'] = "5"
 node.set['quagga']['bgp']['64512']['neighbors']['hosts_v6']['remote_as'] = 1111
+node.set['quagga']['bgp']['64512']['neighbors']['hosts_v6']['ipv6'] = true
 node.set['quagga']['bgp']['64512']['neighbors']['hosts_v6']['default_originate_v6'] = true
 node.set['quagga']['bgp']['64512']['neighbors']['hosts_v6']['peer_type'] = 'peer-group'
 node.set['quagga']['bgp']['64512']['neighbors']['hosts_v6']['prefix_list_in_v6'] = "TEST_IN_V6"
