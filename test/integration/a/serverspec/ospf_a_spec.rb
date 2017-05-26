@@ -18,6 +18,7 @@ describe file("#{cfg_dir}/ospfd.conf") do
   its(:content) { should contain('network 172.16.0.0/12 area 1.1.1.1') }
   its(:content) { should contain('passive-interface pas_1') }
   its(:content) { should contain('passive-interface pas_2') }
+  its(:content) { should contain('area 2.2.2.2 stub') }
 end
 describe file("#{cfg_dir}/Quagga.conf") do
   its(:content) { should include(File.read("#{cfg_dir}/ospfd.conf")) }

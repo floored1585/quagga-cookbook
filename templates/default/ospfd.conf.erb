@@ -26,6 +26,9 @@ router ospf
   <% Array(opts['networks']).each do |network| -%>
  network <%= network  %> area <%= area %>
   <% end -%>
+  <% if opts['stub_area'] -%>
+ area <%= area %> stub
+  <% end -%>
 <% end -%>
 <% if @passive_default -%>
  passive-interface default

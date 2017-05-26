@@ -26,6 +26,9 @@ router ospf6
   <% Array(opts['interfaces']).each do |interface| -%>
  interface <%= interface %> area <%= area %>
   <% end -%>
+  <% if opts['stub_area'] -%>
+ area <%= area %> stub
+  <% end -%>
 <% end -%>
 !
 line vty

@@ -1,4 +1,10 @@
-## unreleased
+## 0.3.10 (2017-05-26)
+
+Features:
+
+  - Added in support for ospf and ospf6 stub areas (@nertwork)
+
+## 0.3.9 (2017-05-15)
 
 Features:
 
