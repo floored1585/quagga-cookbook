@@ -18,6 +18,9 @@ router ospf
 <% if @router_id -%>
  ospf router-id <%= @router_id %>
 <% end -%>
+<% if @reference_bandwidth -%>
+ auto-cost reference-bandwidth <%= @reference_bandwidth%>
+<% end -%>
 <% Array(@redistribute).each do |route_type| -%>
   <% next unless %w( babel bgp connected isis kernel ospf ospf6 rip static table ).include? route_type -%>
  redistribute <%= route_type %>
@@ -25,6 +28,9 @@ router ospf
 <% @areas.each do |area, opts| -%>
   <% Array(opts['networks']).each do |network| -%>
  network <%= network  %> area <%= area %>
+  <% end -%>
+  <% if opts['stub_area'] -%>
+ area <%= area %> stub
   <% end -%>
 <% end -%>
 <% if @passive_default -%>

@@ -35,6 +35,7 @@ action :add do
     variables(
       areas: node['quagga']['ospf6']['areas'],
       router_id: node['quagga']['ospf6']['router_id'] || node['quagga']['router_id'],
+      reference_bandwidth: node['quagga']['ospf6']['reference_bandwidth'] || node['quagga']['reference_bandwidth'],
       redistribute: node['quagga']['ospf6']['redistribute'],
       interfaces: node['quagga']['ospf6']['interfaces']
     )
