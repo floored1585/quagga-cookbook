@@ -34,6 +34,7 @@ action :add do
     mode '0644'
     variables(
       areas: node['quagga']['ospf']['areas'],
+      reference_bandwidth: node['quagga']['ospf']['reference_bandwidth'] || node['quagga']['reference_bandwidth'],
       router_id: node['quagga']['ospf']['router_id'] || node['quagga']['router_id'],
       interfaces: node['quagga']['ospf']['interfaces'],
       passive_ints: node['quagga']['ospf']['passive_ints'],

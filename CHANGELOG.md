@@ -3,6 +3,7 @@
 Features:
 
   - Added in support for ospf and ospf6 stub areas (@nertwork)
+  - Added in support for ospf and ospf6 reference bandwidth (@nertwork)
 
 ## 0.3.9 (2017-05-15)
 
