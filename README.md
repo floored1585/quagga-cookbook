@@ -79,11 +79,13 @@ Attribute        | Description |Type | Default
 Attribute        | Description |Type | Default
 -----------------|-------------|-----|--------
 `node['quagga']['ospf']['router_id']` | Sets the router-id for OSPF. | String | `nil`
+`node['quagga']['ospf']['reference_bandwidth']` | Sets the reference bandwidth for OSPF. | String | `nil`
 `node['quagga']['ospf']['redistribute']` | Route types to redistribute into OSPF (eg: `["connected","bgp"]`. | String or Array | `[]`
 `node['quagga']['ospf']['passive_default']` | Set passive-interface default (Active interfaces must be defined). ***needs tests*** | Boolean | `true`
 `node['quagga']['ospf']['passive_ints']` | Names of passive interfaces. | String or Array | `nil`
 `node['quagga']['ospf']['areas']` | A Hash containing areas and their configurations.  Keys are the area IDs (eg: 0.0.0.0), values are the data for that area. | Hash | `{}`
 `node['quagga']['ospf']['areas'][$AREA]['networks']` | Networks to include in the area. | String or Array | `nil`
+`node['quagga']['ospf']['areas'][$AREA]['stub_area']` | Make specific area a stub area | Boolean | `nil`
 `node['quagga']['ospf']['networks']` | ***needs description & tests***. | String or Array | `[]`
 
 ### OSPF6
@@ -91,9 +93,11 @@ Attribute        | Description |Type | Default
 Attribute        | Description |Type | Default
 -----------------|-------------|-----|--------
 `node['quagga']['ospf6']['router_id']` | Sets the router-id for OSPF. | String | `nil`
+`node['quagga']['ospf6']['reference_bandwidth']` | Sets the reference bandwidth for OSPF. | String | `nil`
 `node['quagga']['ospf6']['redistribute']` | Route types to redistribute into OSPF (eg: `["connected","bgp"]`. | String or Array | `[]`
 `node['quagga']['ospf6']['areas']` | A Hash containing areas and their configurations.  Keys are the area IDs (eg: 0.0.0.0), values are the data for that area. | Hash | `{}`
 `node['quagga']['ospf6']['areas'][$AREA]['interfaces']` | Interfaces to include in the area. | String or Array | `nil`
+`node['quagga']['ospf6']['areas'][$AREA]['stub_area']` | Make specific area a stub area | Boolean | `nil`
 `node['quagga']['ospf6']['networks']` | ***needs description & tests***. | String or Array | `[]`
 
 ### Prefix Lists
