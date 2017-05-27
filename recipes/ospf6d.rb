@@ -25,5 +25,5 @@ node.default['quagga']['daemons']['ospf6d'] = true
 include_recipe 'quagga'
 
 quagga_ospf6 'ospf6' do
-  not_if node['quagga']['ospf6']['areas'].empty?
+  not_if { node['quagga']['ospf6']['areas'].empty? }
 end

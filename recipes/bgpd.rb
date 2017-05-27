@@ -25,5 +25,5 @@ node.default['quagga']['daemons']['bgpd'] = true
 include_recipe 'quagga'
 
 quagga_bgp 'bgp' do
-  not_if node['quagga']['bgp'].empty?
+  not_if { node['quagga']['bgp'].empty? }
 end
