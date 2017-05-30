@@ -1,3 +1,9 @@
+## unreleased
+
+Features
+
+  - Added in support for aggregate-address (@robbat2)
+
 ## 0.3.10 (2017-05-26)
 
 Features:
