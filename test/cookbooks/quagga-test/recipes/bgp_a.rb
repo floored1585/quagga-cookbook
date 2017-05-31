@@ -7,6 +7,8 @@ node.set['quagga']['bgp']['64512']['log_neighbor_changes'] = true
 node.set['quagga']['bgp']['64512']['redistribute'] = 'static'
 node.set['quagga']['bgp']['64512']['multipath_relax'] = true
 node.set['quagga']['bgp']['64512']['compare_routerid'] = true
+node.set['quagga']['bgp']['64512']['aggregate_address']['10.0.0.0/8'] = true
+node.set['quagga']['bgp']['64512']['aggregate_address']['192.168.0.0/16'] = 'summary-only'
 node.set['quagga']['bgp']['64512']['neighbors']['hosts']['remote_as'] = 64512
 node.set['quagga']['bgp']['64512']['neighbors']['hosts']['default_originate'] = true
 node.set['quagga']['bgp']['64512']['neighbors']['hosts']['peer_group'] = true
@@ -35,5 +37,7 @@ node.set['quagga']['bgp']['64512']['max_paths'] = 5
 node.set['quagga']['bgp']['64512']['keepalive_interval'] = 10
 node.set['quagga']['bgp']['64512']['hold_time'] = 30
 node.set['quagga']['bgp']['64512']['address_family']['ipv6']['redistribute'] = "connected"
+node.set['quagga']['bgp']['64512']['address_family']['ipv6']['aggregate_address']['100::/64'] = true
+node.set['quagga']['bgp']['64512']['address_family']['ipv6']['aggregate_address']['200::/64'] = 'summary-only'
 
 include_recipe 'quagga::bgpd'
