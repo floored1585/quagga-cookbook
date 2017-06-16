@@ -26,24 +26,41 @@ router bgp <%= asn %>
  redistribute <%= route_type %>
   <% end -%>
   <% (data['aggregate_address'] || {}).each do |range, opts| -%>
- aggregate-address <%= range %> <%= opts if opts.is_a? String %>
+ aggregate-address <%= range %> <%= opts if opts.is_a?(String) %>
   <% end -%>
   <% if data['log_neighbor_changes'] -%>
  bgp log-neighbor-changes
   <% end -%>
   <% next unless data['neighbors'] -%>
-  <% data['neighbors'].each do |neighbor, opts| -%>
-    <% if opts['peer_group'] -%>
+  <% data['neighbors'].sort_by(&method(:sort_by_bgp_neighbor)).each do |neighbor, opts| -%>
+    <%  # A Neighbor MUST start with one of the following:
+        # - neighbor 1.2.3.4 remote-as  (numbered peer)
+        # - neighbor string peer-group (peer-group definition)
+        # - neighbor eth0 interface (peer_type='interface', peer_type='interface v6only')
+        # Failure to do so will cause Quagga error: "Specify remote-as or peer-group commands first"
+        # peer-group definitions also need to come BEFORE any neighbors that are members of those peer-groups
+    -%>
+    <% if opts['peer_group'] && opts['peer_group'].is_a?(TrueClass) -%>
  neighbor <%= neighbor %> peer-group
-    <% end -%>
-    <% if opts['peer_type'] -%>
- neighbor <%= neighbor %> <%= opts['peer_type'] %>
     <% end -%>
     <% if opts['remote_as'] -%>
  neighbor <%= neighbor %> remote-as <%= opts['remote_as'] %>
     <% end -%>
+    <% if opts['peer_type'] -%>
+ neighbor <%= neighbor %> <%= opts['peer_type'] %>
+    <% end -%>
+    <% # End of required first items ######################################### -%>
+    <% if opts['peer_group'] && opts['peer_group'].is_a?(String) -%>
+ neighbor <%= neighbor %> peer-group <%= opts['peer_group'] %>
+    <% end -%>
+    <% if opts['description'] -%>
+ neighbor <%= neighbor %> description <%= opts['description'] %>
+    <% end -%>
     <% if opts['soft_reconfig_in'] -%>
  neighbor <%= neighbor %> soft-reconfiguration inbound
+    <% end -%>
+    <% if opts['next_hop_self'] -%>
+ neighbor <%= neighbor %> next-hop-self <%= opts['next_hop_self'] if opts['next_hop_self'].is_a?(String) %>
     <% end -%>
     <% if opts['connect_timer'] -%>
  neighbor <%= neighbor %> timers connect <%= opts['connect_timer'] %>
@@ -55,11 +72,7 @@ router bgp <%= asn %>
  neighbor <%= neighbor %> prefix-list <%= opts['prefix_list_out'] %> out
     <% end -%>
     <% if opts['default_originate'] -%>
-      <% if opts['default_originate_map'] -%>
- neighbor <%= neighbor %> default-originate route-map <%= opts['default_originate_map'] %>
-      <% else -%>
- neighbor <%= neighbor %> default-originate
-      <% end -%>
+ neighbor <%= neighbor %> default-originate <%= 'route-map' if opts['default_originate_map'] %> <%= opts['default_originate_map'] %>
     <% end -%>
     <% if opts['route_map_in'] -%>
  neighbor <%= neighbor %> route-map <%= opts['route_map_in'] %> in
@@ -68,7 +81,7 @@ router bgp <%= asn %>
  neighbor <%= neighbor %> route-map <%= opts['route_map_out'] %> out
     <% end -%>
   <% end -%>
-  <% data['neighbors'].each do |neighbor, opts| -%>
+  <% data['neighbors'].sort_by(&method(:sort_by_bgp_neighbor)).each do |neighbor, opts| -%>
     <% if opts['peer_group_range'] -%>
       <% Array(opts['peer_group_range']).each do |range| -%>
  bgp listen range <%= range %> peer-group <%= neighbor %>
@@ -87,10 +100,10 @@ router bgp <%= asn %>
  redistribute <%= route_type %>
       <% end -%>
       <% (opts['aggregate_address'] || {}).each do |range, opts| -%>
- aggregate-address <%= range %> <%= opts if opts.is_a? String %>
+ aggregate-address <%= range %> <%= opts if opts.is_a?(String) %>
       <% end -%>
       <% if data['neighbors'] -%>
-        <% data['neighbors'].each do |neighbor, neighbor_opts| -%>
+        <% data['neighbors'].sort_by(&method(:sort_by_bgp_neighbor)).each do |neighbor, neighbor_opts| -%>
           <% next unless neighbor_opts[address_family] -%>
  neighbor <%= neighbor %> activate
           <% if neighbor_opts['soft_reconfig_in'] -%>
@@ -103,11 +116,7 @@ router bgp <%= asn %>
  neighbor <%= neighbor %> prefix-list <%= neighbor_opts['prefix_list_out_v6'] %> out
           <% end -%>
           <% if neighbor_opts['default_originate_v6'] -%>
-            <% if neighbor_opts['default_originate_map_v6'] -%>
- neighbor <%= neighbor %> default-originate route-map <%= neighbor_opts['default_originate_map_v6'] %>
-            <% else -%>
- neighbor <%= neighbor %> default-originate
-            <% end -%>
+ neighbor <%= neighbor %> default-originate <%= 'route-map' if opts['default_originate_map_v6'] %> <%= opts['default_originate_map_v6'] %>
           <% end -%>
         <% end -%>
       <% end -%>

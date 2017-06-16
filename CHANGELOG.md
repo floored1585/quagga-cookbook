@@ -3,6 +3,7 @@
 Features
 
   - Added in support for aggregate-address (@robbat2)
+  - Added in support for neighbour description, next-hop-self, peer-group member (@robbat2)
 
 ## 0.3.10 (2017-05-26)
 

@@ -54,14 +54,16 @@ Attribute        | Description |Type | Default
 `node['quagga']['bgp'][$LOCAL_ASN]['multipath_relax']` | Allow for ECMP of different ASNs. | Boolean | `false`
 `node['quagga']['bgp'][$LOCAL_ASN]['compare_routerid']` | Enable comparison of the router-id during best path selection. | Boolean | `false`
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors']` | A hash containing neighbors and their configuration.  Keys are the neighbor IPs or group names (String), values are the data for that neighbor or group (Hash). | Hash | `nil`
-`node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['peer_group']` | Set to `true` if this is a peer-group. | String | `nil`
+`node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['description']` | String describing this neighbour or group. | String | `nil`
+`node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['peer_group']` | Set to `true` if this is a peer-group. Set to string if peer-group member. | Boolean or String | `nil`
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['peer_type']` | The neighbor peer type to use with interface or peer-group. | String | `nil`
-`node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['remote_as']` | The remote-as for this neighbor. | Integer | `nil`
+`node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['remote_as']` | The remote-as for this neighbor. | Integer or String | `nil`
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['connect_timer']` | Time in seconds between connection attempts. | Integer | `nil`
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['default_originate']` | Set to `true` to advertise a default route to this neighbor. | Boolean | `false`
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['default_originate_v6']` | Set to `true` to advertise a default ipv6 route to this neighbor. | Boolean | `false`
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['default_originate_map']` | The name of the route-map to use with default-originate. | String | `nil`
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['default_originate_map_v6']` | The name of the v6 route-map to use with default-originate. | String | `nil`
+`node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['next_hop_self']` | Set to `true` to advertise ourselfs as nexthop, Set to `"all"` for iBGP. | Boolean or string. | `false`
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['peer_group_range']` | The IP range(s) to permit for this group (BGP Dynamic Neighbors). | String or Array | `nil`
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['soft_reconfig_in']` | Enable soft-reconfiguration-inbound (to enable dispaly of received routes). | Boolean | `false`
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['prefix_list_in']` | Name of the prefix-list to use for filtering incoming routes. | String | `nil`
@@ -70,6 +72,7 @@ Attribute        | Description |Type | Default
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['prefix_list_out_v6']` | Name of the prefix-list to use for filtering ipv6 outgoing routes. | String | `nil`
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['route_map_in']` | Name of the route-map to use for filtering incoming routes. | String | `nil`
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['route_map_out']` | Name of the route-map to use for filtering outgoing routes. | String | `nil`
+`node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR][$FAMILY_TYPE]` | Enable this neighbor for family `$FAMILY_TYPE`, e.g. `ipv6`. | Boolean | `false`
 `node['quagga']['bgp'][$LOCAL_ASN]['address_family']` | A hash containing address families and their configuration.  Keys are the family-type names (String), values are the data for that family (Hash). | Hash | `nil`
 `node['quagga']['bgp'][$LOCAL_ASN]['address_family'][$FAMILY]['redistribute']` | Route types to redistribute into BGP (eg: `["connected","ripng","ospf6"]`. | String or Array | `nil`
 `node['quagga']['bgp'][$LOCAL_ASN]['address_family'][$FAMILY]['max_paths']` | Maximum number of ECMP paths in the address family. | Integer | `nil`
@@ -148,7 +151,7 @@ Simply set the desired attributes (see Attributes section above) then call the p
 
 ### BGP Example
 
-The following example will create BGP process 64512 with dynamic neighbors.  Devices in the 10.0.0.0/8 range ('hosts' peer-group) will be able to peer with this process.  A regular neighbor 192.168.52.1 is configured here also.  Neighbors in the group and the normal neighbor will receive a default route when peered with this instance.
+The following example will create BGP process 64512 with dynamic neighbors.  Devices in the 10.0.0.0/8 range ('hosts' peer-group) will be able to peer with this process.  Two regular neighbor 192.168.52.1 & 192.168.99.1 are configured here also, one of which is in the peer-group.  Neighbors in the group and the normal neighbor will receive a default route when peered with this instance.
 
 ```ruby
 node.set['quagga']['bgp']['64512']['log_neighbor_changes'] = true
@@ -158,6 +161,7 @@ node.set['quagga']['bgp']['64512']['neighbors']['hosts']['peer_group'] = true
 node.set['quagga']['bgp']['64512']['neighbors']['hosts']['peer_group_range'] = '10.0.0.0/8'
 node.set['quagga']['bgp']['64512']['neighbors']['192.168.52.1']['remote_as'] = 64512
 node.set['quagga']['bgp']['64512']['neighbors']['192.168.52.1']['default_originate'] = true
+node.set['quagga']['bgp']['64512']['neighbors']['192.168.99.1']['peer_group'] = 'hosts'
 
 include_recipe 'quagga::bgpd'
 ```
