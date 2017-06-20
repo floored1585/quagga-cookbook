@@ -1,4 +1,4 @@
-## unreleased
+## 0.3.13 (2017-06-20)
 
 Features
 
