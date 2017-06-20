@@ -54,7 +54,7 @@ Attribute        | Description |Type | Default
 `node['quagga']['bgp'][$LOCAL_ASN]['multipath_relax']` | Allow for ECMP of different ASNs. | Boolean | `false`
 `node['quagga']['bgp'][$LOCAL_ASN]['compare_routerid']` | Enable comparison of the router-id during best path selection. | Boolean | `false`
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors']` | A hash containing neighbors and their configuration.  Keys are the neighbor IPs or group names (String), values are the data for that neighbor or group (Hash). | Hash | `nil`
-`node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['description']` | String describing this neighbour or group. | String | `nil`
+`node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['description']` | String describing this neighbor or group. | String | `nil`
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['peer_group']` | Set to `true` if this is a peer-group. Set to string if peer-group member. | Boolean or String | `nil`
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['peer_type']` | The neighbor peer type to use with interface or peer-group. | String | `nil`
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['remote_as']` | The remote-as for this neighbor. | Integer or String | `nil`
