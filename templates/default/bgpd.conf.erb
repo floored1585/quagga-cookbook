@@ -106,6 +106,9 @@ router bgp <%= asn %>
         <% data['neighbors'].sort_by(&method(:sort_by_bgp_neighbor)).each do |neighbor, neighbor_opts| -%>
           <% next unless neighbor_opts[address_family] -%>
  neighbor <%= neighbor %> activate
+          <% if neighbor_opts['peer_group'] && neighbor_opts['peer_group'].is_a?(String) -%>
+ neighbor <%= neighbor %> peer-group <%= neighbor_opts['peer_group'] %>
+          <% end -%>
           <% if neighbor_opts['soft_reconfig_in'] -%>
  neighbor <%= neighbor %> soft-reconfiguration inbound
           <% end -%>

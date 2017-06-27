@@ -1,3 +1,11 @@
+## unreleased
+
+Bugfixes:
+
+  - (POTENTIALLY BREAKING CHANGE) peer-group membership needs to be re-applied
+	to peer inside each address-family, otherwise any peer-group properties in
+	that address-family scope are not used (@robbat2).
+
 ## 0.3.13 (2017-06-20)
 
 Features
