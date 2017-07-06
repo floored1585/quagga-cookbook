@@ -40,6 +40,7 @@ Attribute        | Description |Type | Default
 `node['quagga']['max_instances']` | Sets /etc/defaults/quagga "MAX_INSTANCES" value. | Integer | `5`
 `node['quagga']['integrated_vtysh_config']` | Must be set to true in order to reload quagga (vs restart) on config changes. Details [here](http://www.nongnu.org/quagga/docs/docs-multi/VTY-shell-integrated-configuration.html) and [here](http://docs.cumulusnetworks.com/display/DOCS/Configuring+Quagga). | Boolean | `false`
 `node['quagga']['multiple_instance']` | Must be set to true in order to support multiple routing-instances or vrfs. Supported in Cumulus Linux 2.5.3SE and adopted in Cumulus Linux 3.0. | Boolean | `false`
+`node['quagga']['interfaces'][$IF_NAME]` | The interface you wish to assign properties to (e.g. `eth0`). | Hash or Array (deprecated) | `nil`
 
 ### BGP General
 General BGP settings, not specific to any neighbor or peer.
@@ -162,7 +163,7 @@ Attribute        | Description |Type | Default
 Attribute        | Description |Type | Default
 -----------------|-------------|-----|--------
 `node['quagga']['multiple_instance']` | Must be set to true in order to support multiple routing-instances or vrfs. Supported in Cumulus Linux 2.5.3SE and adopted in Cumulus Linux 3.0. | Boolean | `false`
-`node['quagga']['interfaces'][$IF_NAME]` | The interface you wish to assign to a routing table followed by a specific table. | Array | `nil`
+`node['quagga']['interfaces'][$IF_NAME]` | The interface you wish to assign to a routing table followed by a specific table (e.g. `swp1 table 100`). | Hash or Array | `nil`
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors']` | A hash containing neighbors and their configuration. Local ASN need to have the table specified. Keys are the neighbor IPs or group names followed by (String) values for that neighbor or group (Hash). | Hash | `nil`
 `node['quagga']['static_routes'][$ROUTE]` |  A hash, with a specified table, containing static routes to configure.  Keys are the prefixes, values are the next-hop addresses.  | Hash | `nil`
 
@@ -230,7 +231,7 @@ The following example will create a routing table with a static route, a bgp nei
 
 ```ruby
 node.set['quagga']['multiple_instance'] = true
-node.set['quagga']['interfaces']['swp1 table 100'] = []
+node.set['quagga']['interfaces']['swp1 table 100'] = {}
 node.set['quagga']['bgp']['64512 table 100']['neighbors']['1.1.1.1']['remote_as'] = 64512
 node.set['quagga']['static_routes']['10.0.0.0/24'] = '172.16.1.1 table 100'
 ```
