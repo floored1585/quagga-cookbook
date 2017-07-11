@@ -61,7 +61,7 @@ Attribute        | Description |Type | Default
 `node['quagga']['bgp'][$LOCAL_ASN]['address_family'][$FAMILY]['max_paths']` | Maximum number of ECMP paths in the address family. | Integer | `nil`
 `node['quagga']['bgp'][$LOCAL_ASN]['address_family'][$FAMILY]['aggregate_address']` | Hash of address ranges to aggregate, with optional values. (eg: `{ '100::/64': true, '200::/64': 'summary-only' }`) | Hash | `nil`
 
-### BGP Neighbour
+### BGP Neighbor
 
 Attribute        | Description |Type | Default
 -----------------|-------------|-----|--------

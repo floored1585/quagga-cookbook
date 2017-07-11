@@ -44,11 +44,11 @@ router bgp <%= asn %>
     <% if opts['peer_group'] && opts['peer_group'].is_a?(TrueClass) -%>
  neighbor <%= neighbor %> peer-group
     <% end -%>
-    <% if opts['remote_as'] -%>
- neighbor <%= neighbor %> remote-as <%= opts['remote_as'] %>
-    <% end -%>
     <% if opts['peer_type'] -%>
  neighbor <%= neighbor %> <%= opts['peer_type'] %>
+    <% end -%>
+    <% if opts['remote_as'] -%>
+ neighbor <%= neighbor %> remote-as <%= opts['remote_as'] %>
     <% end -%>
     <% # End of required first items ######################################### -%>
     <% if opts['peer_group'] && opts['peer_group'].is_a?(String) -%>
