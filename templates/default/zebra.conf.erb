@@ -7,15 +7,27 @@ enable password <%= node['quagga']['enabled_password'] %>
 log file /var/log/quagga/zebra.log
 !
 <% end -%>
-<% @interfaces.each do |port,options|-%>
+<% @interfaces.each do |port, _options|-%>
 interface <%= port %>
-<% options.each do |option|-%>
+<% # Chef node[] fake-Hash is read-only
+   # Use temp variables instead
+   options = if _options.is_a?(Hash)
+                 _options
+             elsif _options.is_a?(Array)
+                 # Old Chef is Ruby1.9 without Enumerable.to_h
+                 Hash[_options.map { |v| [v, true] }]
+             else
+                 Chef::Application.fatal!("node['quagga']['interfaces']['#{port}'] must be Hash or Array!")
+             end -%>
+<% options.select { |_k, v| v }.each do |option, val| -%>
  <%= option %>
 <% end -%>
-<% unless options.include?('no ipv6 nd suppress-ra') -%>
+<% unless options.include?('no ipv6 nd suppress-ra') && (options.is_a?(Array) || options['no ipv6 nd suppress-ra']) -%>
  ipv6 nd suppress-ra
 <% end -%>
+<% unless options.include?('no link-detect') && (options.is_a?(Array) || options['no link-detect']) -%>
  link-detect
+<% end -%>
 !
 <% end -%>
 !

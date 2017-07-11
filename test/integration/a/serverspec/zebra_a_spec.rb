@@ -24,6 +24,12 @@ describe file("#{cfg_dir}/zebra.conf") do
   its(:content) { should match("interface test2\n ipv6 ospf6 passive") }
   its(:content) { should match("interface test3\n ipv6 ospf6 network point-to-point") }
   its(:content) { should match("interface test4\n ipv6 nd suppress-ra") }
+  its(:content) { should match("interface test5\n no ipv6 nd suppress-ra") }
+  its(:content) { should match("interface test6\n ipv6 nd suppress-ra") }
+  its(:content) { should match("interface test7\n ip address 192.168.1.1/32") }
+  # Might have to watch out for order of items in this test in the future:
+  its(:content) { should match("interface test8\n ipv6 address 2001:db8::1/128") }
+  its(:content) { should match("interface test9\n ipv6 nd suppress-ra") }
   its(:content) { should contain('route-map MAP_A2 permit 5') }
   its(:content) { should contain('ip route 10.0.0.0/24 172.16.1.1') }
   its(:content) { should contain('ip route 10.0.0.0/24 172.16.1.1 table 12') }

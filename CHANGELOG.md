@@ -1,3 +1,24 @@
+## 0.3.14 (unreleased)
+
+Features:
+
+  - Added support for: (@robbat2)
+    - capability
+    - ebgp-multihop
+    - local-as
+    - neighbor N route-map RM export
+    - neighbor N route-map RM import
+    - address-family F neighbor N route-map RM ...
+    - address-family F neighbor N prefix-list PL ...
+  - Easier to use neighbor properties within a specific address-family (@robbat2)
+  - Improved test coverage for existing code.
+
+Bugfixes:
+
+  - (POTENTIALLY BREAKING CHANGE) peer-group membership needs to be re-applied
+	to peer inside each address-family, otherwise any peer-group properties in
+	that address-family scope are not used (@robbat2).
+
 ## 0.3.13 (2017-06-20)
 
 Features

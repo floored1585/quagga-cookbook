@@ -40,8 +40,10 @@ Attribute        | Description |Type | Default
 `node['quagga']['max_instances']` | Sets /etc/defaults/quagga "MAX_INSTANCES" value. | Integer | `5`
 `node['quagga']['integrated_vtysh_config']` | Must be set to true in order to reload quagga (vs restart) on config changes. Details [here](http://www.nongnu.org/quagga/docs/docs-multi/VTY-shell-integrated-configuration.html) and [here](http://docs.cumulusnetworks.com/display/DOCS/Configuring+Quagga). | Boolean | `false`
 `node['quagga']['multiple_instance']` | Must be set to true in order to support multiple routing-instances or vrfs. Supported in Cumulus Linux 2.5.3SE and adopted in Cumulus Linux 3.0. | Boolean | `false`
+`node['quagga']['interfaces'][$IF_NAME]` | The interface you wish to assign properties to (e.g. `eth0`). | Hash or Array (deprecated) | `nil`
 
-### BGP
+### BGP General
+General BGP settings, not specific to any neighbor or peer.
 
 Attribute        | Description |Type | Default
 -----------------|-------------|-----|--------
@@ -54,10 +56,22 @@ Attribute        | Description |Type | Default
 `node['quagga']['bgp'][$LOCAL_ASN]['multipath_relax']` | Allow for ECMP of different ASNs. | Boolean | `false`
 `node['quagga']['bgp'][$LOCAL_ASN]['compare_routerid']` | Enable comparison of the router-id during best path selection. | Boolean | `false`
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors']` | A hash containing neighbors and their configuration.  Keys are the neighbor IPs or group names (String), values are the data for that neighbor or group (Hash). | Hash | `nil`
+`node['quagga']['bgp'][$LOCAL_ASN]['address_family']` | A hash containing address families and their configuration.  Keys are the family-type names (String), values are the data for that family (Hash). | Hash | `nil`
+`node['quagga']['bgp'][$LOCAL_ASN]['address_family'][$FAMILY]['redistribute']` | Route types to redistribute into BGP (eg: `["connected","ripng","ospf6"]`. | String or Array | `nil`
+`node['quagga']['bgp'][$LOCAL_ASN]['address_family'][$FAMILY]['max_paths']` | Maximum number of ECMP paths in the address family. | Integer | `nil`
+`node['quagga']['bgp'][$LOCAL_ASN]['address_family'][$FAMILY]['aggregate_address']` | Hash of address ranges to aggregate, with optional values. (eg: `{ '100::/64': true, '200::/64': 'summary-only' }`) | Hash | `nil`
+
+### BGP Neighbour
+
+Attribute        | Description |Type | Default
+-----------------|-------------|-----|--------
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['description']` | String describing this neighbor or group. | String | `nil`
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['peer_group']` | Set to `true` if this is a peer-group. Set to string if peer-group member. | Boolean or String | `nil`
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['peer_type']` | The neighbor peer type to use with interface or peer-group. | String | `nil`
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['remote_as']` | The remote-as for this neighbor. | Integer or String | `nil`
+`node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['local_as']` | The local-as for this neighbor. | Integer or String | `nil`
+`node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['capability']` | `capability` flags for peer. | Array or String | `nil`
+`node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['ebgp_multihop']` | Allow eBGP-multihop up to N hops | Integer | `nil`
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['connect_timer']` | Time in seconds between connection attempts. | Integer | `nil`
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['default_originate']` | Set to `true` to advertise a default route to this neighbor. | Boolean | `false`
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['default_originate_v6']` | Set to `true` to advertise a default ipv6 route to this neighbor. | Boolean | `false`
@@ -72,10 +86,19 @@ Attribute        | Description |Type | Default
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['prefix_list_out_v6']` | Name of the prefix-list to use for filtering ipv6 outgoing routes. | String | `nil`
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['route_map_in']` | Name of the route-map to use for filtering incoming routes. | String | `nil`
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['route_map_out']` | Name of the route-map to use for filtering outgoing routes. | String | `nil`
-`node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR][$FAMILY_TYPE]` | Enable this neighbor for family `$FAMILY_TYPE`, e.g. `ipv6`. | Boolean | `false`
-`node['quagga']['bgp'][$LOCAL_ASN]['address_family']` | A hash containing address families and their configuration.  Keys are the family-type names (String), values are the data for that family (Hash). | Hash | `nil`
-`node['quagga']['bgp'][$LOCAL_ASN]['address_family'][$FAMILY]['redistribute']` | Route types to redistribute into BGP (eg: `["connected","ripng","ospf6"]`. | String or Array | `nil`
-`node['quagga']['bgp'][$LOCAL_ASN]['address_family'][$FAMILY]['max_paths']` | Maximum number of ECMP paths in the address family. | Integer | `nil`
+`node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['route_map_export']` | Name of the route-map to use for filtering exported routes (route-server). | String | `nil`
+`node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['route_map_import']` | Name of the route-map to use for filtering imported routes (route-server). | String | `nil`
+`node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR][$FAMILY]` | Enable this neighbor for family `$FAMILY`, e.g. `ipv6`. | Boolean or Hash | `false`
+`node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR][$FAMILY]['soft_reconfig_in']` | Enable soft-reconfiguration-inbound (to enable dispaly of received routes). | Boolean | `false`
+`node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR][$FAMILY]['capability']` | ... | String or Array | `nil`
+`node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR][$FAMILY]['default_originate']` | Set to `true` to advertise a default route to this neighbor, within this address-family. | Boolean | `false`
+`node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR][$FAMILY]['default_originate_map']` | The name of the route-map to use with default-originate, within this address-family. | String | `nil`
+`node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR][$FAMILY]['prefix_list_in']` | Name of the prefix-list to use for filtering incoming routes. | String | `nil`
+`node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR][$FAMILY]['prefix_list_out']` | Name of the prefix-list to use for filtering outgoing routes. | String | `nil`
+`node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR][$FAMILY]['route_map_in']` | Name of the route-map to use for filtering incoming routes. | String | `nil`
+`node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR][$FAMILY]['route_map_out']` | Name of the route-map to use for filtering outgoing routes. | String | `nil`
+`node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR][$FAMILY]['route_map_import']` | Name of the route-map to use for filtering exported routes (route-server). | String | `nil`
+`node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR][$FAMILY]['route_map_export']` | Name of the route-map to use for filtering imported routes (route-server). | String | `nil`
 
 ### OSPF
 
@@ -140,7 +163,7 @@ Attribute        | Description |Type | Default
 Attribute        | Description |Type | Default
 -----------------|-------------|-----|--------
 `node['quagga']['multiple_instance']` | Must be set to true in order to support multiple routing-instances or vrfs. Supported in Cumulus Linux 2.5.3SE and adopted in Cumulus Linux 3.0. | Boolean | `false`
-`node['quagga']['interfaces'][$IF_NAME]` | The interface you wish to assign to a routing table followed by a specific table. | Array | `nil`
+`node['quagga']['interfaces'][$IF_NAME]` | The interface you wish to assign to a routing table followed by a specific table (e.g. `swp1 table 100`). | Hash or Array | `nil`
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors']` | A hash containing neighbors and their configuration. Local ASN need to have the table specified. Keys are the neighbor IPs or group names followed by (String) values for that neighbor or group (Hash). | Hash | `nil`
 `node['quagga']['static_routes'][$ROUTE]` |  A hash, with a specified table, containing static routes to configure.  Keys are the prefixes, values are the next-hop addresses.  | Hash | `nil`
 
@@ -202,13 +225,13 @@ node.set['quagga']['static_routes']['10.0.0.0/24'] = '172.16.1.1'
 
 include_recipe 'quagga::zebra'
 ```
-### Mutliple Routing-Instaces (VRFs) Example
+### Multiple Routing-Instaces (VRFs) Example
 
 The following example will create a routing table with a static route, a bgp neighbor and a specific interface all on table 100.  
 
 ```ruby
 node.set['quagga']['multiple_instance'] = true
-node.set['quagga']['interfaces']['swp1 table 100'] = []
+node.set['quagga']['interfaces']['swp1 table 100'] = {}
 node.set['quagga']['bgp']['64512 table 100']['neighbors']['1.1.1.1']['remote_as'] = 64512
 node.set['quagga']['static_routes']['10.0.0.0/24'] = '172.16.1.1 table 100'
 ```
