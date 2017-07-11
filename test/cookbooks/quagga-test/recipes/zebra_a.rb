@@ -28,10 +28,10 @@ node.set['quagga']['interfaces']['test1'] = ['no ipv6 nd suppress-ra']
 node.set['quagga']['interfaces']['test2'] = ['ipv6 ospf6 passive']
 node.set['quagga']['interfaces']['test3'] = ['ipv6 ospf6 network point-to-point']
 node.set['quagga']['interfaces']['test4'] = []
-node.set['quagga']['interfaces']['test5'] = {'no ipv6 nd suppress-ra': true}
-node.set['quagga']['interfaces']['test6'] = {'no ipv6 nd suppress-ra': false}
-node.set['quagga']['interfaces']['test7'] = {'ip address 192.168.1.1/32': true}
-node.set['quagga']['interfaces']['test8'] = {'ipv6 address 2001:db8::1/128': true}
+node.set['quagga']['interfaces']['test5'] = {'no ipv6 nd suppress-ra' => true}
+node.set['quagga']['interfaces']['test6'] = {'no ipv6 nd suppress-ra' => false}
+node.set['quagga']['interfaces']['test7'] = {'ip address 192.168.1.1/32' => true}
+node.set['quagga']['interfaces']['test8'] = {'ipv6 address 2001:db8::1/128' => true}
 node.set['quagga']['interfaces']['test9'] = []
 node.set['quagga']['static_routes']['10.0.0.0/24'] = '172.16.1.1'
 node.set['quagga']['static_routes']['10.0.0.0/24'] = '172.16.1.1 table 12'
