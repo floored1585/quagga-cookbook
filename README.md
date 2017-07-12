@@ -63,6 +63,8 @@ Attribute        | Description |Type | Default
 
 ### BGP Neighbor
 
+Note! As indicated below, some neighbor options are also valid under address-family (eg: for address-family 'ipv6').
+
 Attribute        | Description |Type | Default
 -----------------|-------------|-----|--------
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['description']` | String describing this neighbor or group. | String | `nil`
@@ -74,31 +76,28 @@ Attribute        | Description |Type | Default
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['ebgp_multihop']` | Allow eBGP-multihop up to N hops | Integer | `nil`
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['connect_timer']` | Time in seconds between connection attempts. | Integer | `nil`
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['default_originate']` | Set to `true` to advertise a default route to this neighbor. | Boolean | `false`
-`node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['default_originate_v6']` | Set to `true` to advertise a default ipv6 route to this neighbor. | Boolean | `false`
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['default_originate_map']` | The name of the route-map to use with default-originate. | String | `nil`
-`node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['default_originate_map_v6']` | The name of the v6 route-map to use with default-originate. | String | `nil`
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['next_hop_self']` | Set to `true` to advertise ourselfs as nexthop, Set to `"all"` for iBGP. | Boolean or string. | `false`
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['peer_group_range']` | The IP range(s) to permit for this group (BGP Dynamic Neighbors). | String or Array | `nil`
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['soft_reconfig_in']` | Enable soft-reconfiguration-inbound (to enable dispaly of received routes). | Boolean | `false`
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['prefix_list_in']` | Name of the prefix-list to use for filtering incoming routes. | String | `nil`
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['prefix_list_out']` | Name of the prefix-list to use for filtering outgoing routes. | String | `nil`
-`node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['prefix_list_in_v6']` | Name of the prefix-list to use for filtering ipv6 incoming routes. | String | `nil`
-`node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['prefix_list_out_v6']` | Name of the prefix-list to use for filtering ipv6 outgoing routes. | String | `nil`
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['route_map_in']` | Name of the route-map to use for filtering incoming routes. | String | `nil`
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['route_map_out']` | Name of the route-map to use for filtering outgoing routes. | String | `nil`
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['route_map_export']` | Name of the route-map to use for filtering exported routes (route-server). | String | `nil`
 `node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR]['route_map_import']` | Name of the route-map to use for filtering imported routes (route-server). | String | `nil`
-`node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR][$FAMILY]` | Enable this neighbor for family `$FAMILY`, e.g. `ipv6`. | Boolean or Hash | `false`
-`node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR][$FAMILY]['soft_reconfig_in']` | Enable soft-reconfiguration-inbound (to enable dispaly of received routes). | Boolean | `false`
-`node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR][$FAMILY]['capability']` | ... | String or Array | `nil`
-`node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR][$FAMILY]['default_originate']` | Set to `true` to advertise a default route to this neighbor, within this address-family. | Boolean | `false`
-`node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR][$FAMILY]['default_originate_map']` | The name of the route-map to use with default-originate, within this address-family. | String | `nil`
-`node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR][$FAMILY]['prefix_list_in']` | Name of the prefix-list to use for filtering incoming routes. | String | `nil`
-`node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR][$FAMILY]['prefix_list_out']` | Name of the prefix-list to use for filtering outgoing routes. | String | `nil`
-`node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR][$FAMILY]['route_map_in']` | Name of the route-map to use for filtering incoming routes. | String | `nil`
-`node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR][$FAMILY]['route_map_out']` | Name of the route-map to use for filtering outgoing routes. | String | `nil`
-`node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR][$FAMILY]['route_map_import']` | Name of the route-map to use for filtering exported routes (route-server). | String | `nil`
-`node['quagga']['bgp'][$LOCAL_ASN]['neighbors'][$NEIGHBOR][$FAMILY]['route_map_export']` | Name of the route-map to use for filtering imported routes (route-server). | String | `nil`
+`node['quagga']['bgp'][$LOCAL_ASN]['address_family'][$FAMILY]['neighbors'][$NEIGHBOR]` | Enable neighbor for this address-family (use an empty hash if no options are needed). | Hash | `nil`
+`node['quagga']['bgp'][$LOCAL_ASN]['address_family'][$FAMILY]['neighbors'][$NEIGHBOR]['soft_reconfig_in']` | Enable soft-reconfiguration-inbound (to enable dispaly of received routes). | Boolean | `false`
+`node['quagga']['bgp'][$LOCAL_ASN]['address_family'][$FAMILY]['neighbors'][$NEIGHBOR]['next_hop_self']` | Set to `true` to advertise ourselfs as nexthop, Set to `"all"` for iBGP. | Boolean or string. | `false`
+`node['quagga']['bgp'][$LOCAL_ASN]['address_family'][$FAMILY]['neighbors'][$NEIGHBOR]['capability']` | `capability` flags for peer. | Array or String | `nil`
+`node['quagga']['bgp'][$LOCAL_ASN]['address_family'][$FAMILY]['neighbors'][$NEIGHBOR]['default_originate']` | Set to `true` to advertise a default route to this neighbor. | Boolean | `false`
+`node['quagga']['bgp'][$LOCAL_ASN]['address_family'][$FAMILY]['neighbors'][$NEIGHBOR]['default_originate_map']` | The name of the route-map to use with default-originate. | String | `nil`
+`node['quagga']['bgp'][$LOCAL_ASN]['address_family'][$FAMILY]['neighbors'][$NEIGHBOR]['prefix_list_in']` | Name of the prefix-list to use for filtering incoming routes. | String | `nil`
+`node['quagga']['bgp'][$LOCAL_ASN]['address_family'][$FAMILY]['neighbors'][$NEIGHBOR]['prefix_list_out']` | Name of the prefix-list to use for filtering outgoing routes. | String | `nil`
+`node['quagga']['bgp'][$LOCAL_ASN]['address_family'][$FAMILY]['neighbors'][$NEIGHBOR]['route_map_in']` | Name of the route-map to use for filtering incoming routes. | String | `nil`
+`node['quagga']['bgp'][$LOCAL_ASN]['address_family'][$FAMILY]['neighbors'][$NEIGHBOR]['route_map_out']` | Name of the route-map to use for filtering outgoing routes. | String | `nil`
+`node['quagga']['bgp'][$LOCAL_ASN]['address_family'][$FAMILY]['neighbors'][$NEIGHBOR]['route_map_export']` | Name of the route-map to use for filtering exported routes (route-server). | String | `nil`
+`node['quagga']['bgp'][$LOCAL_ASN]['address_family'][$FAMILY]['neighbors'][$NEIGHBOR]['route_map_import']` | Name of the route-map to use for filtering imported routes (route-server). | String | `nil`
 
 ### OSPF
 
