@@ -26,14 +26,7 @@ action :add do
   # This allows us to iterate through address_family to catch all the neighbor options instead
   # of having to repeat everything for ipv6.
   node['quagga']['bgp'].keys.each do |asn|
-    node.default['quagga']['bgp'][asn]['address_family']['ipv4 unicast'] ||= {}
-    node.default['quagga']['bgp'][asn]['neighbors'] ||= {}
-    node['quagga']['bgp'][asn]['neighbors'].each do |neighbor, opts|
-      if opts['ipv6']
-        node.override['quagga']['bgp'][asn]['address_family']['ipv6']['neighbors'][neighbor] = opts
-      end
-    end
-    node.override['quagga']['bgp'][asn]['address_family']['ipv4 unicast'] = node['quagga']['bgp'][asn]
+    node.default['quagga']['bgp'][asn]['address_family']['ipv4 unicast'] = node['quagga']['bgp'][asn]
   end
 
   bgpd_path = "#{node['quagga']['dir']}/bgpd.conf"
