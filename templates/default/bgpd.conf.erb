@@ -90,7 +90,7 @@ router bgp <%= asn %>
     <% next unless af_opts['neighbors'] -%>
     <% af_opts['neighbors'].sort_by(&method(:sort_by_bgp_neighbor)).each do |neighbor, n_opts| -%>
       <% next if n_opts['ipv6'] && address_family != 'ipv6' # Skip ipv6 neighbors in ipv4 AF -%>
-      <% if address_family.include?('ipv6') -%>
+      <% unless address_family.include?('ipv4') -%>
   neighbor <%= neighbor %> activate
       <% end -%>
       <% if n_opts['soft_reconfig_in'] -%>
