@@ -23,6 +23,7 @@ Requirements
 Tested on:
 * Cumulus Linux 1.5.3
 * Cumulus Linux 2.5.11
+* Cumulus Linux 3.2.68
 * Ubuntu 14.04
 
 Attributes
