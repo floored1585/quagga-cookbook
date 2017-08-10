@@ -64,6 +64,7 @@ Attribute        | Description |Type | Default
 ### BGP Neighbor
 
 Note! As indicated below, some neighbor options are also valid under address-family (eg: for address-family 'ipv6').
+Note #2! If you set attributes under the 'ipv4 unicast' address family, you must use override attributes.
 
 Attribute        | Description |Type | Default
 -----------------|-------------|-----|--------
