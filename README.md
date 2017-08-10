@@ -23,6 +23,7 @@ Requirements
 Tested on:
 * Cumulus Linux 1.5.3
 * Cumulus Linux 2.5.11
+* Cumulus Linux 3.2.68
 * Ubuntu 14.04
 
 Attributes
@@ -99,6 +100,7 @@ Attribute        | Description |Type | Default
 `node['quagga']['bgp'][$LOCAL_ASN]['address_family'][$FAMILY]['neighbors'][$NEIGHBOR]['route_map_out']` | Name of the route-map to use for filtering outgoing routes. | String | `nil`
 `node['quagga']['bgp'][$LOCAL_ASN]['address_family'][$FAMILY]['neighbors'][$NEIGHBOR]['route_map_export']` | Name of the route-map to use for filtering exported routes (route-server). | String | `nil`
 `node['quagga']['bgp'][$LOCAL_ASN]['address_family'][$FAMILY]['neighbors'][$NEIGHBOR]['route_map_import']` | Name of the route-map to use for filtering imported routes (route-server). | String | `nil`
+> NOTE - when using `node['quagga']['bgp'][$LOCAL_ASN]['address_family'][$FAMILY]` with `ipv4 unicast` as $FAMILY you must to use node.normal or higher (node.default will be overwritten)
 
 ### OSPF
 
