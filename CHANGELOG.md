@@ -1,3 +1,9 @@
+## 0.4.2 (2017-08-04)
+
+Breaking:
+
+  - Removed `ipv6 = true` support for BGP neighbors and changed how address-family is handled.  See README for details.
+
 ## 0.3.14 (unreleased)
 
 Features:
